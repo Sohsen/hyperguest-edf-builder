@@ -1,0 +1,5 @@
+{
+  "name": "HyperGuest EDF Builder",
+  "description": "A guided workflow tool for building hotel packaging definitions and generating External Data Feeds (EDF), featuring a global ARI simulation engine and GIATA Drive hotel identity normalization.",
+  "requestFramePermissions": []
+}

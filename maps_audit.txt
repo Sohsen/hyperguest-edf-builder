@@ -1,0 +1,561 @@
+84-    .filter(p => p !== null && p !== undefined && p !== "")
+85:    .map(String)
+86-    .join("-");
+--
+149-  if (Array.isArray(obj)) {
+150:    return `[${[...obj].map(deterministicStringify).join(',')}]`;
+151-  }
+152-  const keys = Object.keys(obj).sort();
+153:  return `{${keys.map(k => `${JSON.stringify(k)}:${deterministicStringify(obj[k])}`).join(',')}}`;
+154-}
+--
+439-const getPriceVector = (index: number, ari: ARIData[], durations: number[]): number[] => {
+440:  return durations.map(d => {
+441-    let sum = 0;
+--
+591-  
+592:  let currentSeasons = seasons.map(s => ({ ...s, chargeblocks: { ...s.chargeblocks } }));
+593-  let comboCount = combinations.length;
+--
+599-  const activeCombos = combinations.slice(0, comboCount);
+600:  return seasons.map(s => {
+601-    const newCB: Record<string, Record<number, number>> = {};
+--
+619-  // Rule 1: ChargeBlocks per room
+620:  rooms = rooms.map((room: any) => {
+621-    const originalCB = (room.seasons || []).reduce((acc: number, s: any) => acc + Object.keys(s.chargeblocks).length, 0);
+--
+675-  // Compliance checks
+676:  const maxCBPerRoom = rooms.length > 0 ? Math.max(...rooms.map((r: any) => r.roomChargeblocks)) : 0;
+677-  const roomsExceedingLimit = rooms.filter((r: any) => r.roomChargeblocks > MAX_CB_PER_ROOM).length;
+--
+783-  const roomEntries = Object.entries(hotelARI);
+784:  const roomsDerivation = roomEntries.map(([roomCode, roomRawData]: [string, any]) => {
+785-    // Basic board/occ filtering (same as before)
+--
+878-    // Deterministic Mutation for "Imperfection"
+879:    const ari = ariRaw.map(day => {
+880-      const dayRng = getSeededRandom(`${hotel.hgId}-${mp}-${occ}-${day.date}`);
+--
+913-    // Requirement 3: Apply jitterShift if variationSeed != 0
+914:    const shiftedTrack = Array.from(trackBreakpoints).map(dateStr => {
+915-      let finalDate = dateStr;
+--
+1148-
+1149:  const finalSeasons = finalProcessed.map((s, idx) => {
+1150-    const prices = Object.values(s.chargeblocks).flatMap(cb => Object.values(cb as Record<number, number>));
+--
+1516-          ) : (
+1517:            selected.map((val, idx) => (
+1518-              <span key={`ms-selected-chip-${label}-${val}-${idx}`} className="bg-hg-accent/10 border border-hg-accent/20 text-hg-accent text-[11px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1">
+--
+1563-                {filteredOptions.length > 0 ? (
+1564:                  filteredOptions.map((opt, idx) => (
+1565-                    <label 
+--
+1680-                      ExecutionStrategy.MAXIMIZE_PRODUCT
+1681:                    ] as const).map((s) => (
+1682-                      <button
+--
+1713-        <div className="hidden xl:flex items-center gap-6">
+1714:          {['My Supply', 'My Partners', 'Properties', 'Bookings', 'Contracts', 'Packaging Definitions'].map((item) => (
+1715-            <button 
+--
+1736-          <div className="hidden md:flex bg-hg-panel p-0.5 rounded-[4px] border border-hg-border shrink-0">
+1737:            {(['BASELINE', 'STRESS'] as const).map((mode) => (
+1738-              <button
+--
+1754-          <div className="hidden sm:flex bg-hg-panel p-0.5 rounded-[4px] border border-hg-border shrink-0">
+1755:            {(['BETA', 'PRODUCTION'] as const).map((mode) => (
+1756-              <button
+--
+1792-                        <div className="flex bg-hg-bg p-0.5 rounded-[4px] border border-hg-border">
+1793:                          {(['BASELINE', 'STRESS'] as const).map((mode) => (
+1794-                            <button
+--
+1814-                        <div className="flex bg-hg-bg p-0.5 rounded-[4px] border border-hg-border">
+1815:                          {(['BETA', 'PRODUCTION'] as const).map((mode) => (
+1816-                            <button
+--
+1840-                            ExecutionStrategy.MAXIMIZE_PRODUCT
+1841:                          ] as const).map((s) => (
+1842-                            <button
+--
+1947-      <div className="flex items-center justify-around h-14 px-2">
+1948:        {steps.map((step) => (
+1949-          <button
+--
+1994-                const starItems = Array.from({ length: count });
+1995:                const keys = starItems.map((_, i) => stableKey("star", getExecutionUnitKey(hotel), i));
+1996-                logKeyDuplication("MobileHotelCard (Stars)", keys, starItems);
+1997:                return starItems.map((_, i) => (
+1998-                  <Star key={keys[i]} size={8} className="text-hg-warning fill-hg-warning" />
+--
+2032-            <span className="text-[11px] font-mono font-bold text-hg-text">
+2033:              {Math.max(...(hotelData.model?.processedRooms?.map((r: any) => r.roomChargeblocks) || [0]))} <span className="text-hg-muted font-normal">CB</span>
+2034-            </span>
+--
+2332-                  <div className="space-y-4">
+2333:                    {hotels.map((h, idx) => {
+2334-                      const rooms = h.processedRooms || [];
+--
+2376-                                      <tbody>
+2377:                                        {rooms.map((room: any, rIdx: number) => {
+2378-                                          const status = room.roomChargeblocks > 31 ? 'exceeded' : room.roomChargeblocks >= 28 ? 'warning' : 'safe';
+--
+2459-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+2460:                              {hotels.slice(0, 8).map((h, i) => (
+2461-                                <div key={stableKey("debug-cb", h.hotelId, i)} className="p-3 bg-black/20 border border-hg-divider/50 rounded-lg">
+--
+2584-          { label: 'Logs', icon: History, active: activeView === 'logs', view: 'logs' as const },
+2585:        ].map((item) => (
+2586-          <button 
+--
+2625-              { onClick: onUploadMapping, label: 'Upload', icon: Upload, title: 'Upload Mapping' },
+2626:            ].map((btn) => (
+2627-              <button 
+--
+2706-      const starItems = Array.from({ length: 5 });
+2707:      const keys = starItems.map((_, i) => `star-icon-global-${i}`);
+2708-      // Usually used in many places, sibling uniqueness is enough, but adding log for total safety
+2709-      logKeyDuplication("StarRating", keys, starItems);
+2710:      return starItems.map((_, i) => (
+2711-        <span key={keys[i]} className={`text-[10px] ${i < rating ? "text-hg-warning" : "text-hg-border"}`}>★</span>
+--
+2812-            <div className="space-y-4">
+2813:              {diagnostics.map((h, i) => (
+2814-                <div key={stableKey("diag-hotel", h.hotelId, h.partId, h.partKey, i)} className="bg-hg-bg/30 border border-hg-border/50 rounded overflow-hidden">
+--
+2830-                      <tbody>
+2831:                        {h.rooms?.map((r: any, j: number) => (
+2832-                          <tr key={stableKey("diag-room", h.hotelId, h.partId, h.partKey, r.roomCode, j)} className="border-b border-hg-divider/10 hover:bg-white/5 transition-colors">
+--
+3058-            <div className="space-y-3">
+3059:              {Object.entries(plan.changes).map(([key, change], idx) => (
+3060-                <div key={stableKey("audit-change", key, idx)} className="flex items-center justify-between p-3 bg-hg-nav border border-hg-divider rounded-[4px]">
+--
+3082-              <div className="space-y-3">
+3083:                {plan.hotelLogs.filter((l: any) => l.reductions.length > 0 || l.after > 154).map((log: any, idx: number) => (
+3084-                  <div key={stableKey("audit-log", log.id, idx)} className="p-3 bg-black/20 rounded border border-hg-divider font-mono text-[10px]">
+--
+3096-                        <div className="text-hg-text mb-0.5">Applied reductions:</div>
+3097:                        {log.reductions.map((r: string, i: number) => (
+3098-                          <div key={stableKey("log-red", log.id, i)} className="pl-2">- {r}</div>
+--
+3304-
+3305:  const uniqueDests = Array.from(new Set(logs.map(l => l.destination))).sort();
+3306:  const uniqueCountries = Array.from(new Set(logs.map(l => l.country))).sort();
+3307:  const uniqueUsers = Array.from(new Set(logs.map(l => l.triggeredBy))).sort();
+3308-
+--
+3312-    const headers = ['Destination', 'IATA', 'Country', 'Status', 'Hotels in Scope', 'Hotels Generated', 'Hotels Trimmed', 'Hotels Blocked', 'Last Run', 'Config ID'];
+3313:    const rows = logs.map(l => [l.name, l.destination, l.country, l.status, l.hotelsInScope, l.hotelsGenerated, l.hotelsTrimmed, l.hotelsBlocked, l.lastGenerationTime, l.configId]);
+3314:    const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+3315-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+--
+3325-    const allHotels = log.chunks.flatMap(c => c.hotels);
+3326:    const rows = allHotels.map(h => [h.hgId, h.name, h.giataId, h.pwId, h.status, h.chargeblocks, h.trimApplied, h.notes]);
+3327:    const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+3328-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+--
+3357-          <span className="text-[10px] font-bold text-hg-muted uppercase block mb-1 tracking-widest opacity-50">Destinations Processed</span>
+3358:          <span className="text-[26px] font-bold text-hg-text font-mono tracking-tighter">{new Set(logs.map(l => l.destination)).size}</span>
+3359-        </div>
+--
+3435-                placeholder="All Countries"
+3436:                options={uniqueCountries.map(c => ({ label: c, value: c }))}
+3437-                selectedValues={filter.countries}
+--
+3443-                placeholder="All Destinations"
+3444:                options={uniqueDests.map(d => ({ label: d, value: d }))}
+3445-                selectedValues={filter.destinations}
+--
+3451-                placeholder="All Users"
+3452:                options={uniqueUsers.map(u => ({ label: u, value: u }))}
+3453-                selectedValues={filter.users}
+--
+3462-                {(() => {
+3463:                  const keys = filteredLogs.map((log, idx) => stableKey("mobile-log-card", log.id, log.destination, log.configId, idx));
+3464-                  logKeyDuplication("LogsView (Mobile)", keys, filteredLogs);
+3465:                  return filteredLogs.map((log, idx) => {
+3466-                    const isExpanded = selectedLogDestination === log.id + log.destination;
+--
+3580-                {(() => {
+3581:                  const keys = filteredLogs.map((log, idx) => stableKey("log-row", log.id, log.destination, log.configId, idx));
+3582-                  logKeyDuplication("LogsView (Desktop)", keys, filteredLogs);
+3583:                  return filteredLogs.map((log, idx) => (
+3584-                    <React.Fragment key={keys[idx]}>
+--
+3747-                                        const markets = log.manifest?.pdSnapshot?.markets || [];
+3748:                                        const keys = markets.map((m, mIdx) => `log-market-badge-${log.id}-${m}-${mIdx}`);
+3749-                                        logKeyDuplication(`Log ${log.id} Markets`, keys, markets);
+3750:                                        return markets.map((m, mIdx) => <span key={keys[mIdx]} className="px-1.5 py-0.5 bg-hg-accent/10 text-hg-accent rounded text-[10px] font-bold">{m}</span>);
+3751-                                      })()}
+--
+3778-                                   const events = log.events || [];
+3779:                                   const keys = events.map((event: any, idx: number) => stableKey("log", log.id, "event", event.type, event.timestamp, idx));
+3780-                                   logKeyDuplication(`Log ${log.id} Events`, keys, events);
+3781:                                   return events.map((event: any, idx: number) => (
+3782-                                     <div key={keys[idx]} className="flex gap-3 relative pb-4 last:pb-0">
+--
+3838-                                      const chunks = log.chunks || [];
+3839:                                      const keys = chunks.map((chunk, idx) => stableKey("log", log.id, "chunk", chunk.id, chunk.fileName, idx));
+3840-                                      logKeyDuplication(`Log ${log.id} Chunks`, keys, chunks);
+3841:                                      return chunks.map((chunk, idx) => (
+3842-                                        <tr key={keys[idx]} className="hover:bg-white/5 transition-colors group/chunk">
+--
+3925-                                    {(() => {
+3926:                                      const hotels = (log.chunks || []).flatMap(c => (c.hotels || []).map(h => ({ ...h, chunkId: c.id })));
+3927:                                      const keys = hotels.map((h, idx) => stableKey("log", log.id, "hotel", getExecutionUnitKey(h), idx));
+3928-                                      logKeyDuplication(`Log ${log.id} Inventory`, keys, hotels);
+3929:                                      return hotels.map((h, idx) => (
+3930-                                        <tr key={keys[idx]} className="hover:bg-white/5 transition-colors group/row">
+--
+4241-    // INITIALIZATION: All missions selected by default
+4242:    const allHotelIds = HOTELS.map(h => h.id);
+4243:    const allDestinations = Array.from(new Set(HOTELS.map(h => {
+4244-      const resolved = h.destination || CITY_TO_IATA[h.city as string];
+--
+4282-  const loadDemoScenario = () => {
+4283:    const allHotelIds = HOTELS.map(h => h.id);
+4284:    const allDestinations = Array.from(new Set(HOTELS.map(h => h.destination).filter(Boolean)));
+4285-
+--
+4496-        let updatedCount = 0;
+4497:        const updatedHotels = currentHotels.map(h => {
+4498-          const newGiata = mappingMap.get(h.hgId);
+--
+4552-      Hotels:
+4553:      ${hotelsToMap.map(h => `- ${h.name} in ${h.city}, ${h.country} (HG ID: ${h.hgId})`).join('\n')}`;
+4554-
+--
+4580-        const currentHotels = customHotels || HOTELS;
+4581:        const updatedHotels = currentHotels.map(h => {
+4582-          const newGiata = mappingMap.get(h.hgId);
+--
+4655-  const hotelsWithIata = useMemo(() => {
+4656:    return activeHotels.map(hotel => {
+4657-      const hotelDest = hotel.destination || hotel.city;
+--
+4714-      complete: (results) => {
+4715:        const parsedHotels: Hotel[] = results.data.map((row: any, index: number) => {
+4716-          // Robust header matching
+--
+4740-        if (parsedHotels.length > 0) {
+4741:          const allIds = parsedHotels.map(h => h.id);
+4742:          const allDests = Array.from(new Set(parsedHotels.map(h => {
+4743-             const val = h.destination || h.city || '';
+--
+4792-        
+4793:        const parsedHistory = data.map(row => {
+4794-          const getVal = (keys: string[]) => {
+--
+4888-      : hotelsWithIata.filter(h => (product.destinations || []).includes(h.resolvedIata));
+4889:    const cities = new Set(hotelsInScope.map(h => h.city));
+4890-    return Array.from(cities).sort();
+--
+4897-      : hotelsWithIata.filter(h => (p.destinations || []).includes(h.resolvedIata));
+4898:    const countries = new Set(hotelsInScope.map(h => h.country));
+4899-    return Array.from(countries).sort();
+--
+4971-            .slice(0, limit)
+4972:            .map(([val]) => val);
+4973-
+--
+4976-          markets: getTop(marketFreq, 5),
+4977:          durations: getTop(durationFreq, 5).map(Number).sort((a,b) => a-b),
+4978-          bookingWindow: Math.round(totalWindow / filtered.length),
+--
+5053-  const applyRecommendedOccupancies = () => {
+5054:    const recommendedOccs = recommendations.occupancies.map(key => ({
+5055-      id: crypto.randomUUID(),
+--
+5120-      c.id.toLowerCase().includes(search)
+5121:    ).map(c => ({ ...c, isCluster: true, code: c.id }));
+5122-    
+--
+5125-      c.code.toLowerCase().includes(search)
+5126:    ).map(c => ({ ...c, isCluster: false }));
+5127-    
+--
+5447-    const airportsCount = (product.markets || []).reduce((acc, mc) => {
+5448:      const marketPorts = (product.marketAirports?.[mc]) || (AIRPORT_MAPPING[mc] || []).map(p => p.code);
+5449-      return acc + (marketPorts?.length || 0);
+--
+5470-
+5471:    const inScopeHotels = p.selectedHotels.map(id => activeHotelsMap.get(id)).filter(Boolean) as Hotel[];
+5472-    let totalComplexity = 0;
+--
+5544-      const p = state.productDefinition || {} as any;
+5545:      const inScopeHotels = (p.selectedHotels || []).map((id: string) => 
+5546-        hotelsWithIataMap.get(id)
+--
+5606-        return m?.processedRooms?.some((r: any) => r.roomChargeblocks > 31);
+5607:      }).map(h => h.name);
+5608-      const hotelsWithRealARI = inScopeHotels.filter(h => state.importedARI[h.hgId]).length;
+--
+5626-      setFinalGeneratedEdfModel({
+5627:        hotels: inScopeHotels.map(h => {
+5628-          const m = hotelComplexityMap[h.id]?.model;
+--
+5691-    const getMaxForecast = (p: ProductDefinition, ari: Record<string, any>) => {
+5692:      return Math.max(...metrics.inScopeHotels.map(h => forecastHotel(p, h, ari).afterChargeblocks));
+5693-    };
+--
+5820-      nextProduct.markets.forEach(mc => {
+5821:        const ports = [...(nextProduct.marketAirports[mc] || (AIRPORT_MAPPING[mc] || []).map(p => p.code))];
+5822-        while (ports.length > 0 && !checkAllHotels(nextProduct, nextARI)) {
+--
+5880-    // We sort hotels by complexity to optimize chunk packing
+5881:    const allSelectedHotels = metrics.inScopeHotels.map(h => {
+5882-      const forecast = forecastHotel(p, h, ari);
+--
+5894-      
+5895:      const newLogs: DestinationLog[] = currentDestinations.map(destCode => {
+5896-        const hotelsInDestGroup = allSelectedHotels.filter(item => item.hotel.resolvedIata === destCode || item.hotel.destination === destCode);
+5897:        const hotelsInDestSub = hotelsInDestGroup.map(item => item.hotel);
+5898-        
+5899:        const countriesFound = Array.from(new Set(hotelsInDestSub.map(h => h.country).filter(Boolean)));
+5900-        const resolvedCountry = countriesFound.length === 1 ? countriesFound[0] : (countriesFound.length > 1 ? 'Multiple countries' : (DESTINATION_COUNTRY_MAP[destCode] || 'Unknown'));
+5901-        
+5902:        const destNamesFound = Array.from(new Set(hotelsInDestSub.map(h => h.destination).filter(Boolean)));
+5903-        const destName: string = (destNamesFound.length === 1 ? destNamesFound[0] : (destinationNameLookup.get(destCode) || destCode)) as string;
+--
+6002-        const auditInput_sim = {
+6003:          hotels: hotelsInDestGroup.map(h => h.hgId).sort(),
+6004-          destinations: [destCode],
+--
+6009-            mealPlans: [...state.productDefinition.mealPlans].sort(),
+6010:            occupancies: state.productDefinition.occupancies.map(o => ({ adults: o.adults, children: o.children })),
+6011-            bookingWindow: state.productDefinition.bookingWindow
+--
+6029-        const auditExecution_sim = {
+6030:          hotelDecisions: hotelsInDestGroup.map(h => ({
+6031-            id: h.hgId,
+--
+6036-          })).sort((a, b) => a.id.localeCompare(b.id)),
+6037:          chunkStructure: chunks.map(c => ({
+6038-            id: c.id,
+--
+6085-            markets: product.markets,
+6086:            airports: product.destinations.map(d => ({ code: d, name: destinationNameLookup.get(d) || d })),
+6087-            bookingWindow: product.bookingWindow,
+--
+6158-  const toggleAllHotels = () => {
+6159:    const allFilteredIds = filteredHotels.map(h => h.id);
+6160-    
+--
+6243-          ...p,
+6244:          occupancies: p.occupancies.map(o => o.id === id ? updatedOcc : o)
+6245-        }
+--
+6430-    // ARI Requirement Check
+6431:    const inScopeHotels = (selectedHotelIds || []).map(id => activeHotelsMap.get(id)).filter(Boolean) as Hotel[];
+6432-    const missingARI = inScopeHotels.filter(h => h && !state.importedARI[h.hgId]);
+--
+6501-
+6502:            return parts.map((part, idx) => {
+6503-              const xml = generateEDFXML(hotel, part.rooms, state);
+--
+6578-
+6579:        const diagnostics = allRecoveryResults.map(r => ({
+6580-          hotelId: r.hotel.hgId,
+--
+6586-          compliance: (r.res.validation as any).constraintCompliance,
+6587:          rooms: (r.res.validation as any).processedRooms?.map((rom: any) => ({
+6588-            roomCode: rom.roomCode,
+--
+6634-            // SINGLE BATCH EXECUTION
+6635:            const validLogs: HotelLog[] = validResultsPool.map(item => {
+6636-              const hotel = item.hotel;
+--
+6655-
+6656:            const failLogs: HotelLog[] = blockedResultsPool.map(item => {
+6657-              const hotel = item.hotel;
+--
+6761-              const chunkId = `CHUNK_${String(cIdx + 1).padStart(2, '0')}`;
+6762:              const uniqueInChunk = new Set(cHotels.map(h => h.hgId)).size;
+6763-              cHotels.forEach(hl => hl.chunkId = chunkId);
+--
+6776-            if (blockedResultsPool.length > 0) {
+6777:              const failLogs: HotelLog[] = blockedResultsPool.map(item => {
+6778-                const hotel = item.hotel;
+--
+6799-
+6800:        const maxChunkCB = finalChunks.length > 0 ? Math.max(...finalChunks.map(c => c.actualChargeblocks)) : totalFinalCB;
+6801-        const cbReductionRatio = totalFinalCB > 0 ? (totalFinalCB - maxChunkCB) / totalFinalCB : 0;
+--
+6845-          hotels: [...selectedHotelIds].sort(),
+6846:          destinations: Array.from(new Set(inScopeHotels.map(h => h.resolvedIata || h.destination))).sort(),
+6847-          productDefinition: {
+--
+6851-            mealPlans: [...state.productDefinition.mealPlans].sort(),
+6852:            occupancies: state.productDefinition.occupancies.map(o => ({ adults: o.adults, children: o.children })),
+6853-            bookingWindow: state.productDefinition.bookingWindow
+--
+6871-        const auditExecution = {
+6872:          hotelDecisions: allRecoveryResults.map(r => ({
+6873-            id: r.hotel.hgId,
+--
+6878-          })).sort((a, b) => a.id.localeCompare(b.id)),
+6879:          chunkStructure: finalChunks.map(c => ({
+6880-            id: c.id,
+--
+6938-        const runId = `RUN_EXP_${now.slice(0, 19).replace(/[-:]/g, '_').replace('T', '_')}`;
+6939:        const destCodes = Array.from(new Set(inScopeHotels.map(h => h.resolvedIata || h.destination)));
+6940-        
+6941:        const newLogs: DestinationLog[] = destCodes.map(destCode => {
+6942-            const hotelsInDest = inScopeHotels.filter(h => h.resolvedIata === destCode || h.destination === destCode);
+6943:            const hotelIdsInDest = new Set(hotelsInDest.map(h => h.hgId));
+6944-            
+--
+6953-
+6954:            const countriesFound = Array.from(new Set(hotelsInDest.map(h => h.country).filter(Boolean)));
+6955-            const logCountry = countriesFound.length === 1 ? countriesFound[0] : (countriesFound.length > 1 ? 'Multiple countries' : 'Unknown');
+--
+6989-                  markets: state.productDefinition.markets,
+6990:                  airports: state.productDefinition.airports.map(code => ({ code, name: destinationNameLookup.get(code) || code })),
+6991-                  bookingWindow: state.productDefinition.bookingWindow,
+--
+7094-                    const clusters = product.selectedClusters;
+7095:                    const keys = clusters.map((cid, idx) => `sel-cluster-${cid}-${idx}`);
+7096-                    logKeyDuplication("Builder (Selected Clusters)", keys, clusters);
+7097:                    return clusters.map((cid, idx) => (
+7098-                      <button 
+--
+7121-
+7122:                  {product.markets.filter(m => !MARKET_CLUSTERS.some(c => product.selectedClusters.includes(c.id) && c.countries.includes(m))).map((m, idx) => (
+7123-                    <Badge key={`market-badge-indiv-${m}-${idx}`} onRemove={() => toggleMarketInCluster(m)} active>
+--
+7150-                          <div className="flex flex-col gap-1">
+7151:                            {filteredMarketOptions.map((opt, idx) => {
+7152-                              const isSelected = opt.isCluster 
+--
+7177-                {/* Expanded Cluster Management (Nested Rows) */}
+7178:                {MARKET_CLUSTERS.filter(c => expandedClusters.has(c.id)).map(cluster => (
+7179-                  <motion.div 
+--
+7202-                    <div className="p-2 space-y-1">
+7203:                      {cluster.countries.map((mCode, idx) => {
+7204-                        const isIncluded = product.markets.includes(mCode);
+--
+7222-                                  <div className="flex flex-col items-end">
+7223:                                    <span className="text-[9px] font-mono text-hg-muted uppercase tracking-tighter">{(product.marketAirports[mCode] || (AIRPORT_MAPPING[mCode] || []).map(p => p.code)).length} Airports</span>
+7224-                                    <span className={`text-[8px] font-bold uppercase px-1 rounded border leading-tight ${
+--
+7257-              <div className="space-y-4 max-h-[600px] overflow-y-auto no-scrollbar pr-1">
+7258:                {product.markets.map((marketCode, idx) => {
+7259-                  const country = COUNTRIES.find(c => c.code === marketCode);
+7260:                  const marketPorts = product.marketAirports[marketCode] || (AIRPORT_MAPPING[marketCode] || []).map(p => p.code);
+7261-                  const isOverridden = product.marketOverrideStates[marketCode] === 'override';
+--
+7277-                            onClick={() => {
+7278:                              const allMarketPorts = (AIRPORT_MAPPING[marketCode] || []).map(p => p.code);
+7279-                              setState(prev => ({
+--
+7310-                      <div className="p-3 bg-hg-input/30 min-h-[40px] flex flex-wrap gap-1.5 items-center">
+7311:                        {marketPorts.map((apCode, idx) => {
+7312-                          const apName = AIRPORT_MAPPING[marketCode]?.find(p => p.code === apCode)?.name || apCode;
+--
+7363-                                    ap.code.toLowerCase().includes(airportSearch.toLowerCase())
+7364:                                  ).map((ap, idx) => {
+7365-                                  const isSelected = marketPorts.includes(ap.code);
+--
+7369-                                      onClick={() => {
+7370:                                        const current = product.marketAirports[marketCode] || (AIRPORT_MAPPING[marketCode] || []).map(p => p.code);
+7371-                                        const isIncluded = current.includes(ap.code);
+--
+7408-                                        const val = (e.currentTarget.value || '').toUpperCase();
+7409:                                        const codes = val.split(',').map(s => s.trim()).filter(Boolean);
+7410:                                        const current = product.marketAirports[marketCode] || (AIRPORT_MAPPING[marketCode] || []).map(p => p.code);
+7411-                                        setState(prev => ({
+--
+7518-                  const durations = Array.from({ length: 30 }, (_, i) => i + 1);
+7519:                  const keys = durations.map(n => `duration-chip-builder-${n}`);
+7520-                  logKeyDuplication("Builder (Durations)", keys, durations);
+7521:                  return durations.map((n, idx) => {
+7522-                    const isRecommended = recommendations.durations.includes(n);
+--
+7565-                {(() => {
+7566:                  const keys = MEAL_PLANS.map(mp => `meal-plan-chip-builder-${mp}`);
+7567-                  logKeyDuplication("Builder (Meal Plans)", keys, MEAL_PLANS);
+7568:                  return MEAL_PLANS.map((mp, idx) => {
+7569-                    const isSelected = product.mealPlans.includes(mp);
+--
+7627-                      const occupancies = product.occupancies;
+7628:                      const keys = occupancies.map((occ, index) => `occupancy-builder-row-${occ.id}-${index}`);
+7629-                      logKeyDuplication("Builder (Occupancy Matrix)", keys, occupancies);
+7630:                      return occupancies.map((occ, index) => {
+7631-                      const isDuplicate = product.occupancies.some((o, i) => {
+--
+8009-                              placeholder="All Countries"
+8010:                              options={allDestinationCountries.map(c => ({ label: c, value: c }))}
+8011-                              selected={destCountryFilter}
+--
+8025-                              onClick={() => {
+8026:                                const allFilteredCodes = filteredDestOptions.map(d => d.code);
+8027-                                if (allFilteredCodes.length > 0) {
+--
+8082-                                  }
+8083:                                  return product.destinations.map((d, idx) => (
+8084-                                    <Badge key={`dest-badge-${d}-${idx}`} onRemove={() => toggleTag('destinations', d)} active>
+--
+8130-                                          });
+8131:                                        const keys = recommendedDests.map((d, idx) => `dest-rec-builder-${d.code}-${idx}`);
+8132-                                        logKeyDuplication("Builder (Recommended Destinations)", keys, recommendedDests);
+8133:                                        return recommendedDests.map((d, idx) => (
+8134-                                          <button 
+--
+8162-                                  {filteredDestOptions.length > 0 ? (
+8163:                                    filteredDestOptions.map((d, idx) => (
+8164-                                      <button 
+--
+8310-                                const stars = [5,4,3,2,1];
+8311:                                const keys = stars.map(s => `hotel-sidebar-star-filter-${s}`);
+8312-                                logKeyDuplication("HotelFilters (Stars)", keys, stars);
+8313:                                return stars.map((star, idx) => (
+8314-                                  <button 
+--
+8339-                                    placeholder="All Cities"
+8340:                                    options={uniqueCities.map(city => ({ label: city, value: city }))}
+8341-                                    selected={cityFilter}
+--
+8346-                                    placeholder="All Countries"
+8347:                                    options={uniqueCountries.map(country => ({ label: country, value: country }))}
+8348-                                    selected={countryFilter}
+--
+8388-                                {(() => {
+8389:                                  const keys = visibleHotels.map((hotel, idx) => stableKey("hotel-out", getExecutionUnitKey(hotel), idx));
+8390-                                  logKeyDuplication("MobileHotelList", keys, visibleHotels);
+8391:                  return visibleHotels.map((hotel, idx) => {
+8392-                    const isSelected = selectedHotelsSet.has(hotel.id);
+--
+8450-                                {(() => {
+8451:                                  const keys = visibleHotels.map((hotel, idx) => stableKey("hotel-out", getExecutionUnitKey(hotel), idx));
+8452-                                  logKeyDuplication("DesktopHotelTable", keys, visibleHotels);
+8453:                                  return visibleHotels.map((hotel, idx) => {
+8454-                                    const isSelected = selectedHotelsSet.has(hotel.id);
+--
+8516-                                          {(() => {
+8517:                                            const roomCBs = hotelData.model?.processedRooms?.map((r: any) => r.roomChargeblocks) || [];
+8518-                                            const isExceeded = roomCBs.some((cb: number) => cb > 31);
+--
+8526-                                        <td className="hg-table-cell px-6 font-mono text-[11px] font-bold tabular-nums">
+8527:                                          {Math.max(...(hotelData.model?.processedRooms?.map((r: any) => r.roomChargeblocks) || [0]))} / 31
+8528-                                        </td>
+--
+8545-                                                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
+8546:                                                  {hotelData.model?.processedRooms?.map((room: any, rIdx: number) => {
+8547-                                                    const cb = room.roomChargeblocks;
+--
+8641-                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+8642:                                                  {hotelData.model.debugLogs.map((log: any, lIdx: number) => (
+8643-                                                    <div key={`hotel-debug-log-${getExecutionUnitKey(hotel)}-${lIdx}`} className={`p-3 rounded-lg border flex flex-col gap-2 shadow-sm ${
+--
+8657-                                                          <div className="space-y-1">
+8658:                                                            {log.rejects.slice(0, 3).map((r: any, rIdx: number) => (
+8659-                                                              <div key={`hotel-debug-rejection-${getExecutionUnitKey(hotel)}-${lIdx}-${rIdx}`} className="text-[10px] font-mono leading-none flex items-center gap-1.5 opacity-80">
+--
+8892-                        { label: 'Combinations', value: metrics.valid, icon: Users },
+8893:                      ].map((item, idx) => (
+8894-                        <div key={`preview-stat-metric-${item.label}-${idx}`} className="space-y-1">
