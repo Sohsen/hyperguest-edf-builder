@@ -6988,9 +6988,11 @@ function App() {
         const totalValid = validResultsPool.length;
 
         // DECISION: Only chunk if we exceed safe operational limits
-        const chunkingApplied = false;
+        const needsChunking = totalFinalCB > INFRA_CHUNK_THRESHOLD;
+        let chunkingApplied = false;
 
         if (totalValid > 0) {
+          if (!needsChunking) {
             // SINGLE BATCH EXECUTION
             const validLogs: HotelLog[] = validResultsPool.map(item => {
               const hotel = item.hotel;
@@ -7044,6 +7046,138 @@ function App() {
               strategy: 'Single Export (No Chunking)', outcome: 'SUCCESS', generatedAt: now, durationMs: 400,
               notes: 'All items grouped in one batch', hotels: hLogs
             });
+          } else {
+        // UTILITY-DRIVEN DYNAMIC CHUNKING (Bin-Packing with Rebalancing)
+            chunkingApplied = true;
+            let chunkBuckets: HotelLog[][] = [];
+            let chunkCBs: number[] = [];
+            
+            // First pass: First-Fit Bin Packing
+            validResultsPool.forEach((item) => {
+              const hotel = item.hotel;
+              const res = item.res!;
+              
+              hotelsGeneratedSet.add(hotel.hgId);
+              totalHotelPartsGenerated++;
+              if (res.validation.postProcessingApplied) hotelsTrimmedSet.add(hotel.hgId);
+              
+              const partSuffix = (res.partId && res.isPartitioned) ? `_${res.partId}` : '';
+              zip.file(`HG_${hotel.hgId}${partSuffix}_${state.executionMode}.xml`, res.xml);
+              hotelValidations.push(res.validation as any);
+
+              const diag = res.validation.diagnosticStats?.ariDiagnostics?.[0];
+              const derivationStatus = diag?.fallback?.matchType === 'DERIVED' ? ' (Derived)' : '';
+              
+              const hLog: HotelLog = {
+                hgId: hotel.hgId, name: hotel.name, giataId: hotel.giataId, pwId: hotel.peakworkId || `PW-${hotel.hgId}`,
+                status: (res.validation.postProcessingApplied ? 'Generated with Trim' : 'Generated') + derivationStatus,
+                chargeblocks: res.validation.chargeblockCount, trimApplied: res.validation.postProcessingApplied ? 'Deterministic dimension reduction' : 'None',
+                lastGenerated: now, 
+                notes: diag?.fallback?.matchType === 'DERIVED' 
+                  ? `Duration Derived: ${diag.fallback.reason}` 
+                  : ((res as any).partId && (res as any).isPartitioned) ? `Part ${(res as any).partId} (${(res as any).partKey})` : 'Generated successfully', 
+                chunkId: ''
+              };
+
+              // Better bucket selection (Balanced Load Distribution)
+              let bestBucketIdx = -1;
+              let minCurrentCB = Infinity;
+              
+              for (let i = 0; i < chunkBuckets.length; i++) {
+                if (chunkCBs[i] + hLog.chargeblocks <= INFRA_CHUNK_THRESHOLD) {
+                  if (chunkCBs[i] < minCurrentCB) {
+                    minCurrentCB = chunkCBs[i];
+                    bestBucketIdx = i;
+                  }
+                }
+              }
+              
+              if (bestBucketIdx !== -1) {
+                chunkBuckets[bestBucketIdx].push(hLog);
+                chunkCBs[bestBucketIdx] += hLog.chargeblocks;
+              } else {
+                chunkBuckets.push([hLog]);
+                chunkCBs.push(hLog.chargeblocks);
+              }
+            });
+
+            // Second pass: Rebalance tiny remainder chunks if possible
+            if (chunkBuckets.length > 1) {
+              const lastIdx = chunkBuckets.length - 1;
+              const lastChunkSize = chunkCBs[lastIdx];
+              const avgCB = totalFinalCB / chunkBuckets.length;
+              
+              // If last chunk is very small (< 40% of average), try to pull items from neighbors
+              if (lastChunkSize < avgCB * 0.4) {
+                 // Simple greedy rebalancing: try to merge last small chunk into previous ones if they have space
+                 for (let i = 0; i < lastIdx; i++) {
+                   const itemsToMove = [...chunkBuckets[lastIdx]];
+                   let potentialNewCB = chunkCBs[i];
+                   let canStashAll = true;
+                   
+                   for (const item of itemsToMove) {
+                     if (potentialNewCB + item.chargeblocks > INFRA_CHUNK_THRESHOLD) {
+                       canStashAll = false;
+                       break;
+                     }
+                     potentialNewCB += item.chargeblocks;
+                   }
+                   
+                   if (canStashAll) {
+                     chunkBuckets[i].push(...chunkBuckets[lastIdx]);
+                     chunkCBs[i] = potentialNewCB;
+                     chunkBuckets.splice(lastIdx, 1);
+                     chunkCBs.splice(lastIdx, 1);
+                     break;
+                   }
+                 }
+              }
+            }
+
+            // Finalize chunks
+            chunkBuckets.forEach((cHotels, cIdx) => {
+              const chunkId = `CHUNK_${String(cIdx + 1).padStart(2, '0')}`;
+              const uniqueInChunk = new Set(cHotels.map(h => h.hgId)).size;
+              cHotels.forEach(hl => hl.chunkId = chunkId);
+              
+              finalChunks.push({
+                id: chunkId, index: cIdx + 1, fileName: `export_P${cIdx + 1}.zip`,
+                status: cHotels.every(hl => hl.status === 'Generated') ? 'Success' : 'Trimmed',
+                hotelCount: uniqueInChunk, predictedChargeblocks: chunkCBs[cIdx], actualChargeblocks: chunkCBs[cIdx],
+                trimApplied: 'Mixed', strategy: 'Bin-Packing (Optimized)', outcome: 'SUCCESS',
+                generatedAt: now, durationMs: 800 + (cHotels.length * 50),
+                notes: `Load-balanced batch ${cIdx + 1}: ${cHotels.length} items from ${uniqueInChunk} hotels`,
+                hotels: [...cHotels]
+              });
+            });
+
+            if (blockedResultsPool.length > 0) {
+              const failLogs: HotelLog[] = blockedResultsPool.map(item => {
+                const hotel = item.hotel;
+                const res = item.res!;
+                const diag = res.validation.diagnosticStats?.ariDiagnostics?.[0];
+                const displayReason = diag?.failureReason || (res.validation.chargeblockCount === 0 ? 'EXCLUDED_NO_ARI' : 'VALIDATION_FAILED');
+
+                return {
+                  hgId: hotel.hgId, name: hotel.name, giataId: hotel.giataId, pwId: hotel.peakworkId || `PW-${hotel.hgId}`,
+                  status: res.validation.chargeblockCount === 0 ? displayReason : 'Failed',
+                  chargeblocks: 0, trimApplied: 'None',
+                  lastGenerated: now, notes: res.validation.chargeblockCount === 0 ? (diag?.fallback?.applied ? `Fallback Level: ${diag.fallback.level}` : 'Exhausted board/occupancy fallbacks') : 'Seasons validation failed',
+                  chunkId: 'FAILED_POOL'
+                };
+              });
+              
+              finalChunks.push({
+                id: 'FAILED_POOL', index: chunkBuckets.length + 1, fileName: 'none',
+                status: 'Failed', hotelCount: failLogs.length, predictedChargeblocks: 0, actualChargeblocks: 0,
+                trimApplied: 'None', strategy: 'Failure Reporting', outcome: 'FAILED',
+                generatedAt: now, durationMs: 0, notes: 'Hotels that failed validation or produced no data',
+                hotels: failLogs
+              });
+            }
+          }
+        }
+
         const maxChunkCB = finalChunks.length > 0 ? Math.max(...finalChunks.map(c => c.actualChargeblocks)) : totalFinalCB;
         const cbReductionRatio = totalFinalCB > 0 ? (totalFinalCB - maxChunkCB) / totalFinalCB : 0;
         
@@ -7058,7 +7192,7 @@ function App() {
 
         let strategyLabel = 'Single Batch (Non-Partitioned)';
         if (chunkingApplied) {
-          strategyLabel = 'Single Batch (Non-Partitioned)';
+          strategyLabel = 'Chunked Execution';
         } else if (partitioningApplied) {
           strategyLabel = 'Partitioned Execution';
         }
