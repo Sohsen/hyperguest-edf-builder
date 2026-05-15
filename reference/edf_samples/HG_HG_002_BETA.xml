@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Hotel hgId="HG_002" giataId="200002" giataStatus="active" name="EDF Demo Hotel 02">
+  <Rooms>
+    <Room code="DBL">
+      <Seasons>
+        <Season id="S1" type="LOW">
+          <StartDate>2026-05-01</StartDate>
+          <EndDate>2026-05-27</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">504.32</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>2</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S2" type="LOW">
+          <StartDate>2026-05-28</StartDate>
+          <EndDate>2026-05-30</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">578.48</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>2</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S3" type="LOW">
+          <StartDate>2026-05-31</StartDate>
+          <EndDate>2026-06-27</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">610.53</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S4" type="WEEKEND">
+          <StartDate>2026-06-28</StartDate>
+          <EndDate>2026-06-29</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">702.10</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S5" type="SHOULDER">
+          <StartDate>2026-06-30</StartDate>
+          <EndDate>2026-07-28</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">739.47</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>2</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>10</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S7" type="SHOULDER">
+          <StartDate>2026-07-29</StartDate>
+          <EndDate>2026-08-28</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">853.10</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>2</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S8" type="PEAK">
+          <StartDate>2026-08-29</StartDate>
+          <EndDate>2026-09-27</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">972.40</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>2</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S9" type="PEAK">
+          <StartDate>2026-09-28</StartDate>
+          <EndDate>2026-10-21</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">1072.95</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+      </Seasons>
+    </Room>
+  </Rooms>
+</Hotel>

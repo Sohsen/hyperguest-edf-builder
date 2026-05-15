@@ -1,0 +1,113 @@
+{
+  "timestamp": "2026-04-21T06:36:49.524Z",
+  "mode": "BETA",
+  "hotels": [
+    {
+      "hotelId": "HG_001",
+      "roomCount": 2,
+      "seasonCount": 119,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 119,
+      "dateSpan": {
+        "start": "2026-05-03",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 122,
+        "mergedTotal": 119,
+        "ratio": "1.0"
+      },
+      "warnings": []
+    },
+    {
+      "hotelId": "HG_002",
+      "roomCount": 3,
+      "seasonCount": 39,
+      "mealPlanCount": 2,
+      "occupancyCount": 2,
+      "chargeblockCount": 156,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 203,
+        "mergedTotal": 39,
+        "ratio": "5.2"
+      },
+      "warnings": [
+        "Chargeblock limit exceeded (156 > 150): Total possible blocks reduced by 6."
+      ]
+    },
+    {
+      "hotelId": "HG_003",
+      "roomCount": 4,
+      "seasonCount": 35,
+      "mealPlanCount": 3,
+      "occupancyCount": 1,
+      "chargeblockCount": 105,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 190,
+        "mergedTotal": 35,
+        "ratio": "5.4"
+      },
+      "warnings": [
+        "Chargeblock limit exceeded (105 > 100): Total possible blocks reduced by 5."
+      ]
+    },
+    {
+      "hotelId": "HG_004",
+      "roomCount": 2,
+      "seasonCount": 20,
+      "mealPlanCount": 4,
+      "occupancyCount": 2,
+      "chargeblockCount": 160,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 179,
+        "mergedTotal": 20,
+        "ratio": "8.9"
+      },
+      "warnings": [
+        "Chargeblock limit exceeded (160 > 150): Total possible blocks reduced by 10."
+      ]
+    },
+    {
+      "hotelId": "HG_005",
+      "roomCount": 3,
+      "seasonCount": 70,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 70,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 71,
+        "mergedTotal": 70,
+        "ratio": "1.0"
+      },
+      "warnings": []
+    }
+  ],
+  "similarities": []
+}

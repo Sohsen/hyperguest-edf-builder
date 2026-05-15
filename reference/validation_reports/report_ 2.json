@@ -1,0 +1,927 @@
+{
+  "timestamp": "2026-04-23T09:58:05.062Z",
+  "mode": "BETA",
+  "hotels": [
+    {
+      "hotelId": "HG_001",
+      "roomCount": 1,
+      "seasonCount": 8,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 8,
+      "dateSpan": {
+        "start": "2026-05-03",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 13,
+        "mergedTotal": 8,
+        "ratio": "1.6"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 11,
+        "afterChargeblockCount": 8,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 26,
+        "mergesPerformed": 3,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 27
+      }
+    },
+    {
+      "hotelId": "HG_002",
+      "roomCount": 1,
+      "seasonCount": 8,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 8,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 13,
+        "mergedTotal": 8,
+        "ratio": "1.6"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 9,
+        "afterChargeblockCount": 8,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 9,
+        "mergesPerformed": 1,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 31
+      }
+    },
+    {
+      "hotelId": "HG_003",
+      "roomCount": 1,
+      "seasonCount": 6,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 6,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 11,
+        "mergedTotal": 6,
+        "ratio": "1.8"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 7,
+        "afterChargeblockCount": 6,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 11,
+        "mergesPerformed": 1,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 26
+      }
+    },
+    {
+      "hotelId": "HG_004",
+      "roomCount": 1,
+      "seasonCount": 8,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 8,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 13,
+        "mergedTotal": 8,
+        "ratio": "1.6"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 9,
+        "afterChargeblockCount": 8,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 5,
+        "mergesPerformed": 1,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 31
+      }
+    },
+    {
+      "hotelId": "HG_005",
+      "roomCount": 1,
+      "seasonCount": 6,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 6,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 10,
+        "mergedTotal": 6,
+        "ratio": "1.7"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 9,
+        "afterChargeblockCount": 6,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 26,
+        "mergesPerformed": 3,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 25
+      }
+    },
+    {
+      "hotelId": "HG_006",
+      "roomCount": 2,
+      "seasonCount": 12,
+      "mealPlanCount": 2,
+      "occupancyCount": 2,
+      "chargeblockCount": 48,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 38,
+        "mergedTotal": 12,
+        "ratio": "3.2"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "MEDIUM",
+        "beforeChargeblockCount": 60,
+        "afterChargeblockCount": 48,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 6,
+        "mergesPerformed": 3,
+        "ariRowCount": 1440,
+        "priceChangeCount": 1432,
+        "restrictionChangeCount": 232
+      }
+    },
+    {
+      "hotelId": "HG_007",
+      "roomCount": 1,
+      "seasonCount": 6,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 12,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 13,
+        "mergedTotal": 6,
+        "ratio": "2.2"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "MEDIUM",
+        "beforeChargeblockCount": 14,
+        "afterChargeblockCount": 12,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 11,
+        "mergesPerformed": 1,
+        "ariRowCount": 360,
+        "priceChangeCount": 358,
+        "restrictionChangeCount": 48
+      }
+    },
+    {
+      "hotelId": "HG_008",
+      "roomCount": 2,
+      "seasonCount": 15,
+      "mealPlanCount": 2,
+      "occupancyCount": 2,
+      "chargeblockCount": 60,
+      "dateSpan": {
+        "start": "2026-05-02",
+        "end": "2026-10-23"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 60,
+        "mergedTotal": 15,
+        "ratio": "4.0"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "MEDIUM",
+        "beforeChargeblockCount": 84,
+        "afterChargeblockCount": 60,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 28,
+        "mergesPerformed": 6,
+        "ariRowCount": 1440,
+        "priceChangeCount": 1432,
+        "restrictionChangeCount": 288
+      }
+    },
+    {
+      "hotelId": "HG_009",
+      "roomCount": 1,
+      "seasonCount": 5,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 10,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 12,
+        "mergedTotal": 5,
+        "ratio": "2.4"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "MEDIUM",
+        "beforeChargeblockCount": 12,
+        "afterChargeblockCount": 10,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 9,
+        "mergesPerformed": 1,
+        "ariRowCount": 360,
+        "priceChangeCount": 358,
+        "restrictionChangeCount": 48
+      }
+    },
+    {
+      "hotelId": "HG_010",
+      "roomCount": 2,
+      "seasonCount": 12,
+      "mealPlanCount": 2,
+      "occupancyCount": 2,
+      "chargeblockCount": 48,
+      "dateSpan": {
+        "start": "2026-05-03",
+        "end": "2026-10-23"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 50,
+        "mergedTotal": 12,
+        "ratio": "4.2"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "MEDIUM",
+        "beforeChargeblockCount": 72,
+        "afterChargeblockCount": 48,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 21,
+        "mergesPerformed": 6,
+        "ariRowCount": 1440,
+        "priceChangeCount": 1432,
+        "restrictionChangeCount": 200
+      }
+    },
+    {
+      "hotelId": "HG_011",
+      "roomCount": 3,
+      "seasonCount": 14,
+      "mealPlanCount": 3,
+      "occupancyCount": 2,
+      "chargeblockCount": 84,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 56,
+        "mergedTotal": 14,
+        "ratio": "4.0"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeChargeblockCount": 108,
+        "afterChargeblockCount": 84,
+        "appliedMergeThreshold": "0.050",
+        "mergesAttempted": 35,
+        "mergesPerformed": 4,
+        "ariRowCount": 3240,
+        "priceChangeCount": 3222,
+        "restrictionChangeCount": 126
+      }
+    },
+    {
+      "hotelId": "HG_012",
+      "roomCount": 3,
+      "seasonCount": 16,
+      "mealPlanCount": 4,
+      "occupancyCount": 2,
+      "chargeblockCount": 128,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 73,
+        "mergedTotal": 16,
+        "ratio": "4.6"
+      },
+      "warnings": [],
+      "postProcessingApplied": false,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeChargeblockCount": 128,
+        "afterChargeblockCount": 128,
+        "appliedMergeThreshold": "0.080",
+        "mergesAttempted": 7,
+        "mergesPerformed": 0,
+        "ariRowCount": 4320,
+        "priceChangeCount": 4296,
+        "restrictionChangeCount": 192
+      }
+    },
+    {
+      "hotelId": "HG_013",
+      "roomCount": 3,
+      "seasonCount": 17,
+      "mealPlanCount": 2,
+      "occupancyCount": 2,
+      "chargeblockCount": 68,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 73,
+        "mergedTotal": 17,
+        "ratio": "4.3"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeChargeblockCount": 76,
+        "afterChargeblockCount": 68,
+        "appliedMergeThreshold": "0.050",
+        "mergesAttempted": 27,
+        "mergesPerformed": 2,
+        "ariRowCount": 2160,
+        "priceChangeCount": 2148,
+        "restrictionChangeCount": 36
+      }
+    },
+    {
+      "hotelId": "HG_014",
+      "roomCount": 3,
+      "seasonCount": 16,
+      "mealPlanCount": 3,
+      "occupancyCount": 2,
+      "chargeblockCount": 96,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 73,
+        "mergedTotal": 16,
+        "ratio": "4.6"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeChargeblockCount": 126,
+        "afterChargeblockCount": 96,
+        "appliedMergeThreshold": "0.050",
+        "mergesAttempted": 57,
+        "mergesPerformed": 5,
+        "ariRowCount": 3240,
+        "priceChangeCount": 3222,
+        "restrictionChangeCount": 126
+      }
+    },
+    {
+      "hotelId": "HG_015",
+      "roomCount": 3,
+      "seasonCount": 15,
+      "mealPlanCount": 4,
+      "occupancyCount": 2,
+      "chargeblockCount": 120,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 102,
+        "mergedTotal": 15,
+        "ratio": "6.8"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeChargeblockCount": 136,
+        "afterChargeblockCount": 120,
+        "appliedMergeThreshold": "0.080",
+        "mergesAttempted": 21,
+        "mergesPerformed": 2,
+        "ariRowCount": 4320,
+        "priceChangeCount": 4296,
+        "restrictionChangeCount": 144
+      }
+    },
+    {
+      "hotelId": "HG_016",
+      "roomCount": 4,
+      "seasonCount": 12,
+      "mealPlanCount": 4,
+      "occupancyCount": 3,
+      "chargeblockCount": 144,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 276,
+        "mergedTotal": 12,
+        "ratio": "23.0"
+      },
+      "warnings": [],
+      "postProcessingApplied": false,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeChargeblockCount": 144,
+        "afterChargeblockCount": 144,
+        "appliedMergeThreshold": "0.140",
+        "mergesAttempted": 0,
+        "mergesPerformed": 0,
+        "ariRowCount": 8640,
+        "priceChangeCount": 8592,
+        "restrictionChangeCount": 432
+      }
+    },
+    {
+      "hotelId": "HG_017",
+      "roomCount": 4,
+      "seasonCount": 12,
+      "mealPlanCount": 4,
+      "occupancyCount": 3,
+      "chargeblockCount": 144,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 229,
+        "mergedTotal": 12,
+        "ratio": "19.1"
+      },
+      "warnings": [],
+      "postProcessingApplied": false,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeChargeblockCount": 144,
+        "afterChargeblockCount": 144,
+        "appliedMergeThreshold": "0.170",
+        "mergesAttempted": 0,
+        "mergesPerformed": 0,
+        "ariRowCount": 8640,
+        "priceChangeCount": 8592,
+        "restrictionChangeCount": 384
+      }
+    },
+    {
+      "hotelId": "HG_018",
+      "roomCount": 4,
+      "seasonCount": 12,
+      "mealPlanCount": 4,
+      "occupancyCount": 3,
+      "chargeblockCount": 144,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-22"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 228,
+        "mergedTotal": 12,
+        "ratio": "19.0"
+      },
+      "warnings": [],
+      "postProcessingApplied": false,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeChargeblockCount": 144,
+        "afterChargeblockCount": 144,
+        "appliedMergeThreshold": "0.170",
+        "mergesAttempted": 0,
+        "mergesPerformed": 0,
+        "ariRowCount": 8640,
+        "priceChangeCount": 8592,
+        "restrictionChangeCount": 384
+      }
+    },
+    {
+      "hotelId": "HG_019",
+      "roomCount": 4,
+      "seasonCount": 12,
+      "mealPlanCount": 4,
+      "occupancyCount": 3,
+      "chargeblockCount": 144,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-21"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 247,
+        "mergedTotal": 12,
+        "ratio": "20.6"
+      },
+      "warnings": [],
+      "postProcessingApplied": false,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeChargeblockCount": 144,
+        "afterChargeblockCount": 144,
+        "appliedMergeThreshold": "0.170",
+        "mergesAttempted": 0,
+        "mergesPerformed": 0,
+        "ariRowCount": 8640,
+        "priceChangeCount": 8592,
+        "restrictionChangeCount": 336
+      }
+    }
+  ],
+  "similarities": [
+    {
+      "hotelA": "HG_006",
+      "hotelB": "HG_008",
+      "similarityScore": 0.7,
+      "reasons": [
+        "Season boundary overlap too high (67%)",
+        "Identical Room/Chargeblock count structural pattern"
+      ]
+    },
+    {
+      "hotelA": "HG_006",
+      "hotelB": "HG_010",
+      "similarityScore": 0.7,
+      "reasons": [
+        "Season boundary overlap too high (83%)",
+        "Identical Room/Chargeblock count structural pattern"
+      ]
+    },
+    {
+      "hotelA": "HG_016",
+      "hotelB": "HG_018",
+      "similarityScore": 0.7,
+      "reasons": [
+        "Season boundary overlap too high (67%)",
+        "Identical Room/Chargeblock count structural pattern"
+      ]
+    },
+    {
+      "hotelA": "HG_016",
+      "hotelB": "HG_019",
+      "similarityScore": 0.7,
+      "reasons": [
+        "Season boundary overlap too high (67%)",
+        "Identical Room/Chargeblock count structural pattern"
+      ]
+    },
+    {
+      "hotelA": "HG_018",
+      "hotelB": "HG_019",
+      "similarityScore": 0.7,
+      "reasons": [
+        "Season boundary overlap too high (100%)",
+        "Identical Room/Chargeblock count structural pattern"
+      ]
+    }
+  ],
+  "chunks": [
+    {
+      "id": "CHUNK_01",
+      "index": 1,
+      "fileName": "export_part_01.zip",
+      "status": "Partial",
+      "hotelCount": 20,
+      "predictedChargeblocks": 1442,
+      "actualChargeblocks": 1442,
+      "trimApplied": "Mixed",
+      "strategy": "Hotel Splitting (20/file)",
+      "outcome": "PARTIAL",
+      "generatedAt": "2026-04-23T09:58:05.843Z",
+      "durationMs": 500,
+      "notes": "Chunk 1 for export",
+      "hotels": [
+        {
+          "hgId": "HG_001",
+          "name": "EDF Demo Hotel 01",
+          "giataId": "200001",
+          "pwId": "PW-200001",
+          "status": "Generated with Trim",
+          "chargeblocks": 8,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_002",
+          "name": "EDF Demo Hotel 02",
+          "giataId": "200002",
+          "pwId": "PW-200002",
+          "status": "Generated with Trim",
+          "chargeblocks": 8,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_003",
+          "name": "EDF Demo Hotel 03",
+          "giataId": "200003",
+          "pwId": "PW-200003",
+          "status": "Generated with Trim",
+          "chargeblocks": 6,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_004",
+          "name": "EDF Demo Hotel 04",
+          "giataId": "200004",
+          "pwId": "PW-200004",
+          "status": "Generated with Trim",
+          "chargeblocks": 8,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_005",
+          "name": "EDF Demo Hotel 05",
+          "giataId": "200005",
+          "pwId": "PW-200005",
+          "status": "Generated with Trim",
+          "chargeblocks": 6,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_006",
+          "name": "EDF Demo Hotel 06",
+          "giataId": "200006",
+          "pwId": "PW-200006",
+          "status": "Generated with Trim",
+          "chargeblocks": 48,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_007",
+          "name": "EDF Demo Hotel 07",
+          "giataId": "200007",
+          "pwId": "PW-200007",
+          "status": "Generated with Trim",
+          "chargeblocks": 12,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_008",
+          "name": "EDF Demo Hotel 08",
+          "giataId": "200008",
+          "pwId": "PW-200008",
+          "status": "Generated with Trim",
+          "chargeblocks": 48,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_009",
+          "name": "EDF Demo Hotel 09",
+          "giataId": "200009",
+          "pwId": "PW-200009",
+          "status": "Generated with Trim",
+          "chargeblocks": 10,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_010",
+          "name": "EDF Demo Hotel 10",
+          "giataId": "200010",
+          "pwId": "PW-200010",
+          "status": "Generated with Trim",
+          "chargeblocks": 48,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_011",
+          "name": "EDF Demo Hotel 11",
+          "giataId": "200011",
+          "pwId": "PW-200011",
+          "status": "Generated with Trim",
+          "chargeblocks": 84,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_012",
+          "name": "EDF Demo Hotel 12",
+          "giataId": "200012",
+          "pwId": "PW-200012",
+          "status": "Generated",
+          "chargeblocks": 128,
+          "trimApplied": "None",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_013",
+          "name": "EDF Demo Hotel 13",
+          "giataId": "200013",
+          "pwId": "PW-200013",
+          "status": "Generated with Trim",
+          "chargeblocks": 68,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_014",
+          "name": "EDF Demo Hotel 14",
+          "giataId": "200014",
+          "pwId": "PW-200014",
+          "status": "Generated with Trim",
+          "chargeblocks": 96,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_015",
+          "name": "EDF Demo Hotel 15",
+          "giataId": "200015",
+          "pwId": "PW-200015",
+          "status": "Generated with Trim",
+          "chargeblocks": 120,
+          "trimApplied": "Deterministic dimension reduction",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_016",
+          "name": "EDF Demo Hotel 16",
+          "giataId": "200016",
+          "pwId": "PW-200016",
+          "status": "Generated",
+          "chargeblocks": 144,
+          "trimApplied": "None",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_017",
+          "name": "EDF Demo Hotel 17",
+          "giataId": "200017",
+          "pwId": "PW-200017",
+          "status": "Generated",
+          "chargeblocks": 144,
+          "trimApplied": "None",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_018",
+          "name": "EDF Demo Hotel 18",
+          "giataId": "200018",
+          "pwId": "PW-200018",
+          "status": "Generated",
+          "chargeblocks": 144,
+          "trimApplied": "None",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_019",
+          "name": "EDF Demo Hotel 19",
+          "giataId": "200019",
+          "pwId": "PW-200019",
+          "status": "Generated",
+          "chargeblocks": 144,
+          "trimApplied": "None",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "Generated successfully",
+          "chunkId": "CHUNK_01"
+        },
+        {
+          "hgId": "HG_020",
+          "name": "EDF Demo Hotel 20",
+          "giataId": "200020",
+          "pwId": "PW-200020",
+          "status": "Blocked",
+          "chargeblocks": 168,
+          "trimApplied": "None",
+          "lastGenerated": "2026-04-23T09:58:05.062Z",
+          "notes": "BLOCKED: Chargeblock limit exceeded (168 > 150)",
+          "chunkId": "CHUNK_01"
+        }
+      ]
+    }
+  ],
+  "inventorySummary": {
+    "inScope": 20,
+    "generated": 19,
+    "trimmed": 14,
+    "blocked": 1
+  },
+  "strategy": "Hotel-based chunking (20 per file)"
+}

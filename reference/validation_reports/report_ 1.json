@@ -1,0 +1,231 @@
+{
+  "timestamp": "2026-04-22T09:21:19.364Z",
+  "mode": "BETA",
+  "hotels": [
+    {
+      "hotelId": "HG_001",
+      "roomCount": 1,
+      "seasonCount": 7,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 7,
+      "dateSpan": {
+        "start": "2026-05-03",
+        "end": "2026-10-27"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 73,
+        "mergedTotal": 7,
+        "ratio": "10.4"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 43,
+        "afterChargeblockCount": 7,
+        "appliedMergeThreshold": "0.200",
+        "mergesAttempted": 814,
+        "mergesPerformed": 36,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 27
+      }
+    },
+    {
+      "hotelId": "HG_003",
+      "roomCount": 1,
+      "seasonCount": 8,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 8,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-27"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 72,
+        "mergedTotal": 8,
+        "ratio": "9.0"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 18,
+        "afterChargeblockCount": 8,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 132,
+        "mergesPerformed": 10,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 26
+      }
+    },
+    {
+      "hotelId": "HG_002",
+      "roomCount": 1,
+      "seasonCount": 9,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 9,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-27"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 62,
+        "mergedTotal": 9,
+        "ratio": "6.9"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 20,
+        "afterChargeblockCount": 9,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 102,
+        "mergesPerformed": 11,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 31
+      }
+    },
+    {
+      "hotelId": "HG_004",
+      "roomCount": 1,
+      "seasonCount": 13,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 13,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-27"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 66,
+        "mergedTotal": 13,
+        "ratio": "5.1"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 21,
+        "afterChargeblockCount": 13,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 99,
+        "mergesPerformed": 8,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 31
+      }
+    },
+    {
+      "hotelId": "HG_005",
+      "roomCount": 1,
+      "seasonCount": 6,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 6,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-27"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 67,
+        "mergedTotal": 6,
+        "ratio": "11.2"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 17,
+        "afterChargeblockCount": 6,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 126,
+        "mergesPerformed": 11,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 25
+      }
+    },
+    {
+      "hotelId": "HG_006",
+      "roomCount": 2,
+      "seasonCount": 13,
+      "mealPlanCount": 2,
+      "occupancyCount": 2,
+      "chargeblockCount": 52,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-27"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 240,
+        "mergedTotal": 13,
+        "ratio": "18.5"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "MEDIUM",
+        "beforeChargeblockCount": 224,
+        "afterChargeblockCount": 52,
+        "appliedMergeThreshold": "0.200",
+        "mergesAttempted": 1015,
+        "mergesPerformed": 43,
+        "ariRowCount": 1440,
+        "priceChangeCount": 1432,
+        "restrictionChangeCount": 232
+      }
+    },
+    {
+      "hotelId": "HG_007",
+      "roomCount": 1,
+      "seasonCount": 19,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 38,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-27"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 64,
+        "mergedTotal": 19,
+        "ratio": "3.4"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "MEDIUM",
+        "beforeChargeblockCount": 50,
+        "afterChargeblockCount": 38,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 147,
+        "mergesPerformed": 6,
+        "ariRowCount": 360,
+        "priceChangeCount": 358,
+        "restrictionChangeCount": 48
+      }
+    }
+  ],
+  "similarities": []
+}

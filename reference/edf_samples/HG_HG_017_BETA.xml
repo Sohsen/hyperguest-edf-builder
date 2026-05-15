@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Hotel hgId="HG_017" giataId="200017" giataStatus="active" name="EDF Demo Hotel 17">
+  <Rooms>
+    <Room code="DBL">
+      <Seasons>
+        <Season id="S1" type="SHOULDER">
+          <StartDate>2026-05-01</StartDate>
+          <EndDate>2026-06-29</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">2842.17</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">3032.22</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">3167.58</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">2950.73</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">3127.63</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">3271.97</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">3098.86</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">3260.75</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">3420.64</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">3206.96</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">3354.54</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">3526.55</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>10</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S2" type="SHOULDER">
+          <StartDate>2026-06-30</StartDate>
+          <EndDate>2026-08-28</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3146.60</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">3264.86</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">3590.63</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">3241.46</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">3372.86</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">3692.76</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">3378.67</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">3523.98</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">3841.70</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">3471.44</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">3634.22</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">3940.25</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>2</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>10</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S3" type="SHOULDER">
+          <StartDate>2026-08-29</StartDate>
+          <EndDate>2026-10-21</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3379.88</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">3669.41</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">3725.67</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">3491.92</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">3768.38</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">3826.60</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">3650.56</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">3913.79</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">3978.39</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">3763.88</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">4009.40</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">4081.88</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+      </Seasons>
+    </Room>
+    <Room code="SGL">
+      <Seasons>
+        <Season id="S1" type="SHOULDER">
+          <StartDate>2026-05-01</StartDate>
+          <EndDate>2026-06-29</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3098.08</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">3261.69</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">3419.98</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">3206.19</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">3355.54</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">3525.76</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">3356.53</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">3489.90</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">3679.20</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">3463.55</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">3582.67</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">3786.22</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>10</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S2" type="SHOULDER">
+          <StartDate>2026-06-30</StartDate>
+          <EndDate>2026-08-28</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3377.85</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">3524.85</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">3841.19</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">3470.63</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">3635.16</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">3939.61</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">3608.81</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">3791.32</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">4088.08</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">3700.20</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">3903.52</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">4182.77</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>2</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>10</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S3" type="SHOULDER">
+          <StartDate>2026-08-29</StartDate>
+          <EndDate>2026-10-21</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3650.30</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">3913.91</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">3978.25</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">3763.58</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">4009.55</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">4081.72</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">3926.53</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">4154.43</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">4239.47</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">4040.44</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">4247.00</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">4345.73</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+      </Seasons>
+    </Room>
+    <Room code="FAM">
+      <Seasons>
+        <Season id="S1" type="SHOULDER">
+          <StartDate>2026-05-01</StartDate>
+          <EndDate>2026-06-29</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3358.80</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">3507.70</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">3664.98</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">3468.39</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">3598.98</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">3772.49</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">3622.87</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">3733.36</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">3931.26</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">3730.99</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">3823.61</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">4040.36</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>10</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S2" type="SHOULDER">
+          <StartDate>2026-06-30</StartDate>
+          <EndDate>2026-08-28</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3608.00</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">3792.30</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">4087.35</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">3699.42</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">3904.53</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">4181.90</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">3839.26</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">4065.39</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">4329.80</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">3930.18</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">4178.91</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">4420.73</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>2</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>10</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S3" type="SHOULDER">
+          <StartDate>2026-08-29</StartDate>
+          <EndDate>2026-10-21</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3926.22</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">4154.60</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">4239.26</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">4040.14</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">4247.19</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">4345.50</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">4206.59</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">4391.93</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">4509.36</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">4320.26</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">4482.00</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">4618.35</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+      </Seasons>
+    </Room>
+    <Room code="JS">
+      <Seasons>
+        <Season id="S1" type="SHOULDER">
+          <StartDate>2026-05-01</StartDate>
+          <EndDate>2026-06-29</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3613.36</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">3763.05</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">3907.34</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">3724.36</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">3852.39</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">4015.43</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">3882.85</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">3987.51</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">4178.34</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">3992.31</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">4075.59</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">4288.42</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>10</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S2" type="SHOULDER">
+          <StartDate>2026-06-30</StartDate>
+          <EndDate>2026-08-28</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">3820.44</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">4090.19</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">4305.47</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">3913.26</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">4203.53</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">4394.64</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">4057.29</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">4368.59</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">4539.94</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">4151.39</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">4481.40</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">4626.75</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>2</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>10</Alloc>
+          </Inventory>
+        </Season>
+        <Season id="S3" type="SHOULDER">
+          <StartDate>2026-08-29</StartDate>
+          <EndDate>2026-10-21</EndDate>
+          <Chargeblocks>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-2">
+              <Charge duration="7">4202.88</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="ADL-1">
+              <Charge duration="7">4347.99</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="RO" occupancyCode="FAM1">
+              <Charge duration="7">4600.73</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-2">
+              <Charge duration="7">4304.40</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="ADL-1">
+              <Charge duration="7">4448.61</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="BB" occupancyCode="FAM1">
+              <Charge duration="7">4704.90</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-2">
+              <Charge duration="7">4459.87</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="ADL-1">
+              <Charge duration="7">4605.96</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="HB" occupancyCode="FAM1">
+              <Charge duration="7">4868.10</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-2">
+              <Charge duration="7">4559.79</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="ADL-1">
+              <Charge duration="7">4707.18</Charge>
+            </Chargeblock>
+            <Chargeblock mealPlan="FB" occupancyCode="FAM1">
+              <Charge duration="7">4971.03</Charge>
+            </Chargeblock>
+          </Chargeblocks>
+          <Inventory>
+            <MinStay>1</MinStay>
+            <MaxStay>28</MaxStay>
+            <Alloc>9</Alloc>
+          </Inventory>
+        </Season>
+      </Seasons>
+    </Room>
+  </Rooms>
+</Hotel>

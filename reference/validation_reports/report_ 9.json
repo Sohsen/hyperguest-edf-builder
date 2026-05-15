@@ -1,0 +1,166 @@
+{
+  "timestamp": "2026-04-21T12:06:33.331Z",
+  "mode": "BETA",
+  "hotels": [
+    {
+      "hotelId": "HG_001",
+      "roomCount": 2,
+      "seasonCount": 30,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 30,
+      "dateSpan": {
+        "start": "2026-05-03",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 122,
+        "mergedTotal": 30,
+        "ratio": "4.1"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeSeasonCount": 56,
+        "afterSeasonCount": 30,
+        "beforeChargeblockCount": 56,
+        "afterChargeblockCount": 30,
+        "appliedMergeThreshold": "0.200",
+        "mergesAttempted": 1079,
+        "mergesPerformed": 26
+      }
+    },
+    {
+      "hotelId": "HG_002",
+      "roomCount": 3,
+      "seasonCount": 38,
+      "mealPlanCount": 2,
+      "occupancyCount": 2,
+      "chargeblockCount": 152,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 203,
+        "mergedTotal": 38,
+        "ratio": "5.3"
+      },
+      "warnings": [
+        "Chargeblock limit exceeded (152 > 150): Total possible blocks reduced by 2."
+      ],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeSeasonCount": 41,
+        "afterSeasonCount": 38,
+        "beforeChargeblockCount": 164,
+        "afterChargeblockCount": 152,
+        "appliedMergeThreshold": "0.200",
+        "mergesAttempted": 146,
+        "mergesPerformed": 3
+      }
+    },
+    {
+      "hotelId": "HG_003",
+      "roomCount": 4,
+      "seasonCount": 48,
+      "mealPlanCount": 3,
+      "occupancyCount": 1,
+      "chargeblockCount": 144,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 190,
+        "mergedTotal": 48,
+        "ratio": "4.0"
+      },
+      "warnings": [],
+      "postProcessingApplied": false,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeSeasonCount": 48,
+        "afterSeasonCount": 48,
+        "beforeChargeblockCount": 144,
+        "afterChargeblockCount": 144,
+        "appliedMergeThreshold": "0.110",
+        "mergesAttempted": 0,
+        "mergesPerformed": 0,
+        "noMergeReason": "Price variance between adjacent seasons exceeds the 8% tolerance limit."
+      }
+    },
+    {
+      "hotelId": "HG_004",
+      "roomCount": 2,
+      "seasonCount": 18,
+      "mealPlanCount": 4,
+      "occupancyCount": 2,
+      "chargeblockCount": 144,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 179,
+        "mergedTotal": 18,
+        "ratio": "9.9"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "COMPLEX",
+        "beforeSeasonCount": 20,
+        "afterSeasonCount": 18,
+        "beforeChargeblockCount": 160,
+        "afterChargeblockCount": 144,
+        "appliedMergeThreshold": "0.200",
+        "mergesAttempted": 35,
+        "mergesPerformed": 2
+      }
+    },
+    {
+      "hotelId": "HG_005",
+      "roomCount": 3,
+      "seasonCount": 55,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 55,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-25"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 71,
+        "mergedTotal": 55,
+        "ratio": "1.3"
+      },
+      "warnings": [],
+      "postProcessingApplied": false,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeSeasonCount": 55,
+        "afterSeasonCount": 55,
+        "beforeChargeblockCount": 55,
+        "afterChargeblockCount": 55,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 0,
+        "mergesPerformed": 0,
+        "noMergeReason": "Price variance between adjacent seasons exceeds the 12% tolerance limit."
+      }
+    }
+  ],
+  "similarities": []
+}

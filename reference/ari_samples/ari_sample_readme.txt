@@ -1,0 +1,1 @@
+sample_ari_for_builder_20_hotels.csv = uses Gemini builder's exact current schema\nrecommended_ari_schema_example.csv = richer schema recommended for real EDF assembly\nDate range: 2026-06-01 to 2026-06-14\nHotels: 20\n

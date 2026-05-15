@@ -1,0 +1,896 @@
+Message-ID: <773899677.3.1730200892511@0023628cf4b1>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_2_1551144445.1730200892510"
+
+------=_Part_2_1551144445.1730200892510
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>ARI-D (Dynamic columns)</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>ARI-D (Dynamic columns)</h1>
+    <div class=3D"Section1">
+        <p>
+<style>[data-colorid=3Dbspfbpz0r6]{color:#c0c0c0} html[data-color-mode=3Dda=
+rk] [data-colorid=3Dbspfbpz0r6]{color:#3f3f3f}[data-colorid=3Dju639jmfg2]{c=
+olor:#c0c0c0} html[data-color-mode=3Ddark] [data-colorid=3Dju639jmfg2]{colo=
+r:#3f3f3f}[data-colorid=3Dzx4pj7xhru]{color:#c0c0c0} html[data-color-mode=
+=3Ddark] [data-colorid=3Dzx4pj7xhru]{color:#3f3f3f}[data-colorid=3Dzhw0sg36=
+ze]{color:#c0c0c0} html[data-color-mode=3Ddark] [data-colorid=3Dzhw0sg36ze]=
+{color:#3f3f3f}[data-colorid=3Dwn1o2phex4]{color:#c0c0c0} html[data-color-m=
+ode=3Ddark] [data-colorid=3Dwn1o2phex4]{color:#3f3f3f}[data-colorid=3Deo9lg=
+nlix5]{color:#c0c0c0} html[data-color-mode=3Ddark] [data-colorid=3Deo9lgnli=
+x5]{color:#3f3f3f}[data-colorid=3Dwjnhopc1w5]{color:#c0c0c0} html[data-colo=
+r-mode=3Ddark] [data-colorid=3Dwjnhopc1w5]{color:#3f3f3f}[data-colorid=3Dre=
+sqo2zx2i]{color:#c0c0c0} html[data-color-mode=3Ddark] [data-colorid=3Dresqo=
+2zx2i]{color:#3f3f3f}[data-colorid=3Duq6ruz9xqq]{color:#c0c0c0} html[data-c=
+olor-mode=3Ddark] [data-colorid=3Duq6ruz9xqq]{color:#3f3f3f}[data-colorid=
+=3Dlexzgt3zq0]{color:#c0c0c0} html[data-color-mode=3Ddark] [data-colorid=3D=
+lexzgt3zq0]{color:#3f3f3f}[data-colorid=3Dave87fcd4u]{color:#c0c0c0} html[d=
+ata-color-mode=3Ddark] [data-colorid=3Dave87fcd4u]{color:#3f3f3f}[data-colo=
+rid=3Dl2scxwe9tl]{color:#c0c0c0} html[data-color-mode=3Ddark] [data-colorid=
+=3Dl2scxwe9tl]{color:#3f3f3f}[data-colorid=3Dxylvnn58ty]{color:#c0c0c0} htm=
+l[data-color-mode=3Ddark] [data-colorid=3Dxylvnn58ty]{color:#3f3f3f}[data-c=
+olorid=3Dtp3z7i51vc]{color:#c0c0c0} html[data-color-mode=3Ddark] [data-colo=
+rid=3Dtp3z7i51vc]{color:#3f3f3f}[data-colorid=3Dni50jpyaip]{color:#c0c0c0} =
+html[data-color-mode=3Ddark] [data-colorid=3Dni50jpyaip]{color:#3f3f3f}[dat=
+a-colorid=3Dtqfwsiz9u2]{color:#c0c0c0} html[data-color-mode=3Ddark] [data-c=
+olorid=3Dtqfwsiz9u2]{color:#3f3f3f}[data-colorid=3Dx23rxhwd2p]{color:#c0c0c=
+0} html[data-color-mode=3Ddark] [data-colorid=3Dx23rxhwd2p]{color:#3f3f3f}[=
+data-colorid=3Dx7hz7iq3dh]{color:#c0c0c0} html[data-color-mode=3Ddark] [dat=
+a-colorid=3Dx7hz7iq3dh]{color:#3f3f3f}[data-colorid=3Dijyv81nmh8]{color:#c0=
+c0c0} html[data-color-mode=3Ddark] [data-colorid=3Dijyv81nmh8]{color:#3f3f3=
+f}</style><strong><u>Contents</u></strong></p>
+<style type=3D"text/css">/*<![CDATA[*/
+div.rbtoc1730200892419 {padding: 0px;}
+div.rbtoc1730200892419 ul {list-style: disc;margin-left: 0px;}
+div.rbtoc1730200892419 li {margin-left: 0px;padding-left: 0px;}
+
+/*]]>*/</style>
+<div class=3D"toc-macro rbtoc1730200892419">
+<ul class=3D"toc-indentation">
+<li><a href=3D"#ARI-D(Dynamiccolumns)-1.Structure">1. Structure</a></li>
+<li><a href=3D"#ARI-D(Dynamiccolumns)-2.Example">2. Example</a></li>
+<li><a href=3D"#ARI-D(Dynamiccolumns)-3.Samples">3. Samples</a>
+<ul class=3D"toc-indentation">
+<li><a href=3D"#ARI-D(Dynamiccolumns)-3.1.Default(nooptionaldata):">3.1. De=
+fault (no optional data):</a></li>
+<li><a href=3D"#ARI-D(Dynamiccolumns)-3.2.WithDynamicRoomnames:">3.2. With =
+Dynamic Room names:</a></li>
+<li><a href=3D"#ARI-D(Dynamiccolumns)-3.3.Withinformationonnon-refundablera=
+tes:">3.3. With information on non-refundable rates:</a></li>
+</ul></li>
+</ul>
+</div>
+<h1 id=3D"ARI-D(Dynamiccolumns)-1.Structure">1.&nbsp;Structure</h1>
+<div class=3D"table-wrap">
+<table data-layout=3D"full-width" data-local-id=3D"860b5308-ca1b-46d2-870e-=
+e6912cdee16a" class=3D"confluenceTable">
+<colgroup>
+<col>
+<col style=3D"width: 197.0px;">
+<col style=3D"width: 413.0px;">
+<col style=3D"width: 637.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"numberingColumn confluenceTh"></th>
+<th class=3D"confluenceTh">
+<p><span class=3D"legacy-color-text-blue1">column name </span></p></th>
+<th class=3D"confluenceTh">
+<p><span class=3D"legacy-color-text-blue1">column description </span></p></=
+th>
+<th class=3D"confluenceTh">
+<p><span class=3D"legacy-color-text-blue1">remarks</span></p></th>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">1</td>
+<td class=3D"confluenceTd">
+<p><strong>tlc</strong></p></td>
+<td class=3D"confluenceTd">
+<p>3-letter destination codes corresponding with locations defined in <a hr=
+ef=3D"/wiki/spaces/UM/pages/165773613/Blender" data-linked-resource-id=3D"1=
+65773613" data-linked-resource-version=3D"10" data-linked-resource-type=3D"=
+page">Resfinity Blender </a></p></td>
+<td class=3D"confluenceTd">
+<p>one or multiple comma-separated values</p></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">2</td>
+<td class=3D"confluenceTd">
+<p><strong>mhc</strong></p></td>
+<td class=3D"confluenceTd">
+<p>master hotel code</p></td>
+<td class=3D"confluenceTd">
+<p>anixe's master hotel code</p></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">3</td>
+<td class=3D"confluenceTd">
+<p><strong>room_code</strong></p></td>
+<td class=3D"confluenceTd">
+<p>code corresponding with room type<br>
+(by default, one of following, corresponding with room's occupancy type: SR=
+, DR, TR, QR)</p></td>
+<td class=3D"confluenceTd">
+<p>clients can define their own room codes corresponding with the default o=
+nes, or based corresponding with their own definitions of <a href=3D"/wiki/=
+spaces/UM/pages/165675179/Dynamic+Room+Types" data-linked-resource-id=3D"16=
+5675179" data-linked-resource-version=3D"27" data-linked-resource-type=3D"p=
+age">Dynamic Room Types</a> mapping rules.</p></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">4</td>
+<td class=3D"confluenceTd">
+<p><strong>ext_code</strong></p></td>
+<td class=3D"confluenceTd">
+<p>field for internal use only</p></td>
+<td class=3D"confluenceTd">
+<p>-</p></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">5</td>
+<td class=3D"confluenceTd">
+<p><strong>meal_code</strong></p></td>
+<td class=3D"confluenceTd">
+<p>one of following meal codes: RO,SC, BB, HB, FB, AI</p></td>
+<td class=3D"confluenceTd">
+<p>clients can define their own meal codes corresponding with the default o=
+nes, so that they'd be used in the export instead, eg.:</p>
+<ul>
+<li>
+<p>RO&nbsp;=E2=86=92 U</p></li>
+<li>
+<p>BB&nbsp;=E2=86=92 F</p></li>
+<li>
+<p>AI&nbsp;=E2=86=92 I</p></li>
+<li>
+<p>HB&nbsp;=E2=86=92H<br>
+etc.</p></li>
+</ul></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">6</td>
+<td class=3D"confluenceTd">
+<p><strong>checkin</strong></p></td>
+<td class=3D"confluenceTd">
+<p>check-in date</p></td>
+<td class=3D"confluenceTd">
+<p>format: <strong>yyyymmdd</strong></p></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">7</td>
+<td class=3D"confluenceTd">
+<p><strong>adt</strong></p></td>
+<td class=3D"confluenceTd">
+<p>exact number of adults required in room</p></td>
+<td class=3D"confluenceTd">
+<p>value: 1-4</p></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">8</td>
+<td class=3D"confluenceTd">
+<p><strong>chd</strong></p></td>
+<td class=3D"confluenceTd">
+<p>exact number of children required in room</p></td>
+<td class=3D"confluenceTd">
+<p>value: 0-2</p>
+<p>Please note that ARI-D is calculated with CHD age =3D 11, for all suppli=
+ers.</p></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">9</td>
+<td class=3D"confluenceTd">
+<p><strong>prices</strong></p></td>
+<td class=3D"confluenceTd">
+<p>total prices for the room for consecutive stay durations</p></td>
+<td class=3D"confluenceTd">
+<ul>
+<li>
+<p>format: [stay length]=3D[price]:[provider]</p></li>
+<li>
+<p>one or multiple semicolon-separated values</p></li>
+<li>
+<p>no entries for stay durations were there were no prices provided by the =
+suppliers</p></li>
+<li>
+<p>by default: <strong>total</strong><br>
+optional: <strong>per pax </strong>[total/(adt+chd)]</p></li>
+</ul></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">10</td>
+<td class=3D"confluenceTd">
+<p><strong><span data-colorid=3D"uq6ruz9xqq">room_name</span> <span class=
+=3D"legacy-color-text-blue5">(optional)</span></strong></p></td>
+<td class=3D"confluenceTd">
+<p>Dynamic Room name</p></td>
+<td class=3D"confluenceTd">
+<p><a href=3D"/wiki/spaces/UM/pages/165675179/Dynamic+Room+Types" data-link=
+ed-resource-id=3D"165675179" data-linked-resource-version=3D"27" data-linke=
+d-resource-type=3D"page">Dynamic Room Types</a>&nbsp;name corresponding wit=
+h the code from col. 3 (as defined in Resfinity Res)<br>
+If not activated for the export, this data is not included in ("prices" bei=
+ng the last column of data)</p></td>
+</tr>
+<tr>
+<td class=3D"numberingColumn confluenceTd">11</td>
+<td class=3D"confluenceTd">
+<p><strong><span data-colorid=3D"tqfwsiz9u2">Non Refundable Information&nbs=
+p;</span><span class=3D"legacy-color-text-blue5">(optional)</span></strong>=
+</p></td>
+<td class=3D"confluenceTd">
+<p>The marker if the offer is non refundable</p></td>
+<td class=3D"confluenceTd">
+<p>Value: N - in case if it is non refundable</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Empty - if it is fully refundable or =
+fee applies</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Delimiter:</strong> pipe ("|")</p>
+<p><strong>Quotation:</strong> none</p>
+<h1 id=3D"ARI-D(Dynamiccolumns)-2.Example">2. Example</h1>
+<div class=3D"table-wrap">
+<table data-layout=3D"full-width" data-local-id=3D"aa273a29-58bd-479c-b49c-=
+9bc0acf2be7d" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 87.0px;">
+<col style=3D"width: 94.0px;">
+<col style=3D"width: 102.0px;">
+<col style=3D"width: 86.0px;">
+<col style=3D"width: 98.0px;">
+<col style=3D"width: 87.0px;">
+<col style=3D"width: 48.0px;">
+<col style=3D"width: 48.0px;">
+<col style=3D"width: 698.0px;">
+<col style=3D"width: 160.0px;">
+<col style=3D"width: 146.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p>tlcs</p></th>
+<th class=3D"confluenceTh">
+<p>mhc</p></th>
+<th class=3D"confluenceTh">
+<p>room_code</p></th>
+<th class=3D"confluenceTh">
+<p>ext_code</p></th>
+<th class=3D"confluenceTh">
+<p>meal_code</p></th>
+<th class=3D"confluenceTh">
+<p>checkin</p></th>
+<th class=3D"confluenceTh">
+<p>adt</p></th>
+<th class=3D"confluenceTh">
+<p>chd</p></th>
+<th class=3D"confluenceTh">
+<p>prices</p></th>
+<th class=3D"confluenceTh">
+<p><strong>room_name</strong></p>
+<p><strong><span class=3D"legacy-color-text-blue5">(optional)</span></stron=
+g></p></th>
+<th class=3D"confluenceTh">
+<p>Non Ref</p>
+<p><strong><span class=3D"legacy-color-text-blue5">(optional)</span></stron=
+g></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181113</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:GTA;4=3D311.28:GTA;5=3D389.10:GT=
+A;6=3D466.92:GTA;7=3D544.74:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"x7hz7iq3dh">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"ju639jmfg2">N</span></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181114</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:GTA;4=3D311.28:GTA;5=3D389.10:GT=
+A;6=3D466.92:GTA;7=3D544.74:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"lexzgt3zq0">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181115</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:GTA;4=3D311.28:GTA;5=3D389.10:GT=
+A;6=3D466.92:GTA;7=3D544.74:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"ave87fcd4u">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181116</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:GTA;4=3D311.28:GTA;5=3D389.10:GT=
+A;6=3D466.92:GTA;7=3D544.74:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"zx4pj7xhru">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"resqo2zx2i">N</span></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181117</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:GTA;4=3D311.28:GTA;5=3D389.10:GT=
+A;6=3D466.92:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"ni50jpyaip">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181118</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:GTA;4=3D311.28:GTA;5=3D389.10:GT=
+A</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"xylvnn58ty">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"wjnhopc1w5">N</span></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181119</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:GTA;4=3D311.28:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"l2scxwe9tl">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181120</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"x23rxhwd2p">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181121</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"bspfbpz0r6">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181122</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"eo9lgnlix5">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181127</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"wn1o2phex4">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181201</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"zhw0sg36ze">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181202</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA;2=3D155.64:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"ijyv81nmh8">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>ACE,FUE</p></td>
+<td class=3D"confluenceTd">
+<p>ACE0000P</p></td>
+<td class=3D"confluenceTd">
+<p>SYTYYYY</p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+<td class=3D"confluenceTd">
+<p>HB</p></td>
+<td class=3D"confluenceTd">
+<p>20181203</p></td>
+<td class=3D"confluenceTd">
+<p>2</p></td>
+<td class=3D"confluenceTd">
+<p>0</p></td>
+<td class=3D"confluenceTd">
+<p>1=3D77.82:GTA</p></td>
+<td class=3D"confluenceTd">
+<p><span data-colorid=3D"tp3z7i51vc">Standard Twin</span></p></td>
+<td class=3D"confluenceTd">
+<p><br></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id=3D"ARI-D(Dynamiccolumns)-3.Samples">3. Samples</h1>
+<h3 id=3D"ARI-D(Dynamiccolumns)-3.1.Default(nooptionaldata):">3.1. Default =
+(no optional data):</h3>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: text; gutter: false; theme: Confluence" data-theme=3D"Confluence">ACE,FUE=
+|ACE0000P|SYTYYYY||HB|20160216|2|0|1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.46:=
+GTA;4=3D311.28:GTA;5=3D389.10:GTA;6=3D466.92:GTA
+ACE,FUE|ACE0000P|SYTYYYY||HB|20160217|2|0|1=3D77.82:GTA;2=3D155.64:GTA;3=3D=
+233.46:GTA;4=3D311.28:GTA;5=3D389.10:GTA;6=3D466.92:GTA
+ACE,FUE|ACE0000P|SYTYYYY||HB|20160218|2|0|1=3D77.82:GTA;2=3D155.64:GTA;3=3D=
+233.46:GTA;4=3D311.28:GTA;5=3D389.10:GTA</pre>
+</div>
+</div>
+<h3 id=3D"ARI-D(Dynamiccolumns)-3.2.WithDynamicRoomnames:">3.2. With Dynami=
+c Room names:</h3>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: jscript; gutter: false; theme: Confluence" data-theme=3D"Confluence">ACE,=
+FUE|ACE0000P|SYTYYYY||HB|20160216|2|0|1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.=
+46:GTA;4=3D311.28:GTA;5=3D389.10:GTA;6=3D466.92:GTA|Standard Twin
+ACE,FUE|ACE0000P|SYTYYYY||HB|20160217|2|0|1=3D77.82:GTA;2=3D155.64:GTA;3=3D=
+233.46:GTA;4=3D311.28:GTA;5=3D389.10:GTA;6=3D466.92:GTA|Standard Twin
+ACE,FUE|ACE0000P|SYTYYYY||HB|20160218|2|0|1=3D77.82:GTA;2=3D155.64:GTA;3=3D=
+233.46:GTA;4=3D311.28:GTA;5=3D389.10:GTA|Standard Twin</pre>
+</div>
+</div>
+<h3 id=3D"ARI-D(Dynamiccolumns)-3.3.Withinformationonnon-refundablerates:">=
+3.3. With information on non-refundable rates:</h3>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: jscript; gutter: false; theme: Confluence" data-theme=3D"Confluence">ACE,=
+FUE|ACE0000P|SYTYYYY||HB|20160216|2|0|1=3D77.82:GTA;2=3D155.64:GTA;3=3D233.=
+46:GTA;4=3D311.28:GTA;5=3D389.10:GTA;6=3D466.92:GTA|N
+ACE,FUE|ACE0000P|SYTYYYY||HB|20160217|2|0|1=3D77.82:GTA;2=3D155.64:GTA;3=3D=
+233.46:GTA;4=3D311.28:GTA;5=3D389.10:GTA;6=3D466.92:GTA|
+ACE,FUE|ACE0000P|SYTYYYY||HB|20160218|2|0|1=3D77.82:GTA;2=3D155.64:GTA;3=3D=
+233.46:GTA;4=3D311.28:GTA;5=3D389.10:GTA|N</pre>
+</div>
+</div>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+    </div>
+</body>
+</html>
+------=_Part_2_1551144445.1730200892510--

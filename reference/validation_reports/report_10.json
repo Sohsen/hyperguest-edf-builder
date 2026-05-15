@@ -1,0 +1,103 @@
+{
+  "timestamp": "2026-04-22T23:39:32.745Z",
+  "mode": "BETA",
+  "hotels": [
+    {
+      "hotelId": "HG_001",
+      "roomCount": 1,
+      "seasonCount": 7,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 7,
+      "dateSpan": {
+        "start": "2026-05-03",
+        "end": "2026-10-24"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 41,
+        "mergedTotal": 7,
+        "ratio": "5.9"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 30,
+        "afterChargeblockCount": 7,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 420,
+        "mergesPerformed": 23,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 27
+      }
+    },
+    {
+      "hotelId": "HG_003",
+      "roomCount": 1,
+      "seasonCount": 5,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 5,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-24"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 21,
+        "mergedTotal": 5,
+        "ratio": "4.2"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 9,
+        "afterChargeblockCount": 5,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 30,
+        "mergesPerformed": 4,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 26
+      }
+    },
+    {
+      "hotelId": "HG_002",
+      "roomCount": 1,
+      "seasonCount": 6,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 6,
+      "dateSpan": {
+        "start": "2026-05-01",
+        "end": "2026-10-24"
+      },
+      "isProvisionalGiata": false,
+      "isSynthetic": false,
+      "compressionStats": {
+        "rawTotal": 23,
+        "mergedTotal": 6,
+        "ratio": "3.8"
+      },
+      "warnings": [],
+      "postProcessingApplied": true,
+      "debug": {
+        "classification": "SIMPLE",
+        "beforeChargeblockCount": 12,
+        "afterChargeblockCount": 6,
+        "appliedMergeThreshold": "0.020",
+        "mergesAttempted": 21,
+        "mergesPerformed": 6,
+        "ariRowCount": 180,
+        "priceChangeCount": 179,
+        "restrictionChangeCount": 31
+      }
+    }
+  ],
+  "similarities": []
+}

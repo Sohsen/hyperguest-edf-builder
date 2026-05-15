@@ -1,0 +1,340 @@
+{
+  "timestamp": "2026-04-20T07:21:18.441Z",
+  "mode": "BETA",
+  "hotels": [
+    {
+      "hotelId": "47395",
+      "roomCount": 2,
+      "seasonCount": 29,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 150,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 33,
+        "mergedTotal": 29,
+        "ratio": "0.88"
+      }
+    },
+    {
+      "hotelId": "47403",
+      "roomCount": 2,
+      "seasonCount": 33,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 176,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 38,
+        "mergedTotal": 33,
+        "ratio": "0.87"
+      }
+    },
+    {
+      "hotelId": "61474",
+      "roomCount": 2,
+      "seasonCount": 29,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 114,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 34,
+        "mergedTotal": 29,
+        "ratio": "0.85"
+      }
+    },
+    {
+      "hotelId": "61486",
+      "roomCount": 2,
+      "seasonCount": 36,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 186,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 44,
+        "mergedTotal": 36,
+        "ratio": "0.82"
+      }
+    },
+    {
+      "hotelId": "61489",
+      "roomCount": 2,
+      "seasonCount": 30,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 156,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 36,
+        "mergedTotal": 30,
+        "ratio": "0.83"
+      }
+    },
+    {
+      "hotelId": "74027",
+      "roomCount": 2,
+      "seasonCount": 32,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 123,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 37,
+        "mergedTotal": 32,
+        "ratio": "0.86"
+      }
+    },
+    {
+      "hotelId": "74028",
+      "roomCount": 2,
+      "seasonCount": 31,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 79,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 34,
+        "mergedTotal": 31,
+        "ratio": "0.91"
+      }
+    },
+    {
+      "hotelId": "74029",
+      "roomCount": 2,
+      "seasonCount": 33,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 87,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 38,
+        "mergedTotal": 33,
+        "ratio": "0.87"
+      }
+    },
+    {
+      "hotelId": "74031",
+      "roomCount": 2,
+      "seasonCount": 27,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 144,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 31,
+        "mergedTotal": 27,
+        "ratio": "0.87"
+      }
+    },
+    {
+      "hotelId": "74032",
+      "roomCount": 2,
+      "seasonCount": 41,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 182,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 52,
+        "mergedTotal": 41,
+        "ratio": "0.79"
+      }
+    },
+    {
+      "hotelId": "74033",
+      "roomCount": 2,
+      "seasonCount": 31,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 81,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 36,
+        "mergedTotal": 31,
+        "ratio": "0.86"
+      }
+    },
+    {
+      "hotelId": "88448",
+      "roomCount": 2,
+      "seasonCount": 30,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 120,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 32,
+        "mergedTotal": 30,
+        "ratio": "0.94"
+      }
+    },
+    {
+      "hotelId": "88969",
+      "roomCount": 2,
+      "seasonCount": 28,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 105,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 33,
+        "mergedTotal": 28,
+        "ratio": "0.85"
+      }
+    },
+    {
+      "hotelId": "92650",
+      "roomCount": 2,
+      "seasonCount": 34,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 132,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 40,
+        "mergedTotal": 34,
+        "ratio": "0.85"
+      }
+    },
+    {
+      "hotelId": "93759",
+      "roomCount": 2,
+      "seasonCount": 45,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 192,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 53,
+        "mergedTotal": 45,
+        "ratio": "0.85"
+      }
+    },
+    {
+      "hotelId": "97282",
+      "roomCount": 2,
+      "seasonCount": 32,
+      "mealPlanCount": 1,
+      "occupancyCount": 1,
+      "chargeblockCount": 84,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 38,
+        "mergedTotal": 32,
+        "ratio": "0.84"
+      }
+    },
+    {
+      "hotelId": "105750",
+      "roomCount": 2,
+      "seasonCount": 51,
+      "mealPlanCount": 2,
+      "occupancyCount": 1,
+      "chargeblockCount": 192,
+      "dateSpan": {
+        "start": "2026-04-23",
+        "end": "2027-04-13"
+      },
+      "isProvisionalGiata": true,
+      "isSynthetic": true,
+      "compressionStats": {
+        "rawTotal": 59,
+        "mergedTotal": 51,
+        "ratio": "0.86"
+      }
+    }
+  ],
+  "similarities": [
+    {
+      "hotelA": "88448",
+      "hotelB": "88969",
+      "similarityScore": 0.7,
+      "reasons": [
+        "Near-identical season boundaries (>90% overlap)",
+        "Identical room code structure"
+      ]
+    }
+  ]
+}
