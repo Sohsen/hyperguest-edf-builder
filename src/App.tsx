@@ -6988,7 +6988,7 @@ function App() {
         const totalValid = validResultsPool.length;
 
         // DECISION: Only chunk if we exceed safe operational limits
-        const needsChunking = totalFinalCB > INFRA_CHUNK_THRESHOLD;
+        const needsChunking = false; // Chunking intentionally disabled
         let chunkingApplied = false;
 
         if (totalValid > 0) {
@@ -7192,7 +7192,7 @@ function App() {
 
         let strategyLabel = 'Single Batch (Non-Partitioned)';
         if (chunkingApplied) {
-          strategyLabel = 'Chunked Execution';
+          strategyLabel = 'Single Batch (Non-Partitioned)';
         } else if (partitioningApplied) {
           strategyLabel = 'Partitioned Execution';
         }
