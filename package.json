@@ -10,8 +10,9 @@
     "start": "node server.ts",
     "lint": "tsc --noEmit",
     "edf:smoke": "tsx src/edf-engine/smoke-test.ts",
-    "edf:schema-map": "tsx src/edf-engine/write-schema-map.ts",   
-    "edf:smoke:write": "tsx src/edf-engine/export-smoke-output.ts"
+    "edf:schema-map": "tsx src/edf-engine/write-schema-map.ts",
+    "edf:smoke:write": "tsx src/edf-engine/export-smoke-output.ts",
+    "edf:validate-xml": "tsx src/edf-engine/run-schema-comparison.ts"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",

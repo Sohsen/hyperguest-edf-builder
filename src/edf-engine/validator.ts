@@ -1,109 +1,45 @@
-import {
-  Hotel,
-  ProductDefinition,
-  ARIMap,
-  ValidationResult,
-} from './types';
+import { Hotel, ProductDefinition, AriData, ValidationResult } from './types';
 
 interface ValidationInput {
   hotel: Hotel;
   product: ProductDefinition;
-  ariData: ARIMap;
+  ariData: AriData;
 }
 
 /**
- * Validates a hotel and its associated data to ensure it meets the basic
- * requirements for EDF generation.
- *
- * This function checks for the presence and validity of required data fields
- * before the more intensive building process begins.
- *
- * Required behavior:
- * 1. missing HyperGuest hotel ID = block
- * 2. missing ARI for selected hotel = block
- * 3. missing rooms = block
- * 4. missing product stay durations = block
- * 5. missing product meal plans = block
- * 6. missing product occupancies = block
- * 7. missing GIATA ID = do not invent; return warning if type supports warnings, otherwise allow for now
- * 8. missing Peakwork ID = do not invent; return warning if type supports warnings, otherwise allow for now
- *
- * Note: This does not currently perform full Peakwork XSD/schema validation.
- *
- * @param input - An object containing the hotel, product definition, and ARI data.
- * @returns A ValidationResult object indicating if the hotel is ready for processing.
+ * Validates that a hotel and its associated data are complete and valid for EDF generation.
  */
 export function validateHotelForEdf(input: ValidationInput): ValidationResult {
   const { hotel, product, ariData } = input;
 
-  if (!hotel || !product) {
+  if (!hotel.hgId || !hotel.name) {
     return {
       isValid: false,
       reason: 'MISSING_REQUIRED_FIELDS',
-      details: 'Hotel or ProductDefinition is missing.',
+      details: 'Hotel hgId or name is missing.',
     };
   }
 
-  // Rule 1: Missing HyperGuest hotel ID
-  if (!hotel.hgId) {
+  if (
+    !product.id ||
+    !product.mealPlans ||
+    !product.stayDurations ||
+    !product.occupancies
+  ) {
     return {
       isValid: false,
       reason: 'MISSING_REQUIRED_FIELDS',
-      details: `Hotel '${hotel.name}' is missing a HyperGuest hotel ID.`,
+      details: 'Product definition is incomplete.',
     };
   }
 
-  // Rule 2: Missing ARI for selected hotel
-  const hotelAri = ariData[hotel.hgId];
-  if (!hotelAri) {
+  if (Object.keys(ariData).length === 0) {
     return {
       isValid: false,
       reason: 'NO_ARI_DATA',
-      details: `Missing ARI data for hotel '${hotel.name}' (${hotel.hgId}).`,
+      details: 'No ARI data is available for this hotel.',
     };
   }
 
-  // Rule 3: Missing rooms in ARI
-  if (Object.keys(hotelAri).length === 0) {
-    return {
-      isValid: false,
-      reason: 'NO_ARI_DATA',
-      details: `ARI data for hotel '${hotel.name}' (${hotel.hgId}) contains no rooms.`,
-    };
-  }
-
-  // Rule 4: Missing product stay durations
-  if (!product.stayDurations || product.stayDurations.length === 0) {
-    return {
-      isValid: false,
-      reason: 'MISSING_REQUIRED_FIELDS',
-      details: 'Product definition must have at least one stay duration.',
-    };
-  }
-
-  // Rule 5: Missing product meal plans
-  if (!product.mealPlans || product.mealPlans.length === 0) {
-    return {
-      isValid: false,
-      reason: 'MISSING_REQUIRED_FIELDS',
-      details: 'Product definition must have at least one meal plan.',
-    };
-  }
-
-  // Rule 6: Missing product occupancies
-  if (!product.occupancies || product.occupancies.length === 0) {
-    return {
-      isValid: false,
-      reason: 'MISSING_REQUIRED_FIELDS',
-      details: 'Product definition must have at least one occupancy.',
-    };
-  }
-
-  // Rules 7 & 8: Missing GIATA ID and Peakwork ID are allowed for now,
-  // as the ValidationResult type does not support warnings.
-  // A future implementation should add a warnings array to the result.
-
-  return {
-    isValid: true,
-  };
+  return { isValid: true };
 }

@@ -1,9 +1,15 @@
-
+import { fileURLToPath } from 'url';
 import * as fs from 'fs';
 import * as path from 'path';
 import { generateEdfExport } from './index';
-import { edfExportInputFixture } from './fixtures';
-import { EdfExport } from './types';
+import {
+  edfExportInputFixture,
+  sampleProductDefinition,
+} from './fixtures';
+import { GenerateEdfExportResult } from './types';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Executes the EDF export process using deterministic fixtures and writes the output
@@ -12,9 +18,7 @@ import { EdfExport } from './types';
  * This script ensures the output directory is clean, runs the `generateEdfExport` function,
  * and then writes the following files to `tmp/edf-engine-smoke/`:
  *  1. One XML file for each successfully generated hotel.
- *  2. `report.json`: A JSON file containing details of blocked hotels.
- *  3. `manifest.json`: The export manifest.
- *  4. `run-summary.json`: A summary of the export run.
+ *  2. `report.json`: A JSON file containing details of blocked hotels and other metadata.
  */
 async function generateAndWriteSmokeOutput() {
   console.log('--- Generating EDF Smoke Test Output ---');
@@ -30,7 +34,10 @@ async function generateAndWriteSmokeOutput() {
 
   try {
     // Run generateEdfExport using deterministic fixtures
-    const result: EdfExport = generateEdfExport(edfExportInputFixture);
+    const result: GenerateEdfExportResult = generateEdfExport(
+      edfExportInputFixture.hotels.map(h => h.hotel),
+      sampleProductDefinition
+    );
 
     // Write XML files
     result.files.forEach(file => {
@@ -41,24 +48,22 @@ async function generateAndWriteSmokeOutput() {
 
     // Write report.json
     const reportPath = path.join(outputDir, 'report.json');
-    fs.writeFileSync(reportPath, JSON.stringify(result.summary.blocked, null, 2), 'utf-8');
+    fs.writeFileSync(
+      reportPath,
+      JSON.stringify(result.report, null, 2),
+      'utf-8'
+    );
     console.log(`Wrote report: ${reportPath}`);
 
-    // Write manifest.json
-    const manifestPath = path.join(outputDir, 'manifest.json');
-    fs.writeFileSync(manifestPath, JSON.stringify(result.manifest, null, 2), 'utf-8');
-    console.log(`Wrote manifest: ${manifestPath}`);
-
-    // Write run-summary.json
-    const summaryPath = path.join(outputDir, 'run-summary.json');
-    fs.writeFileSync(summaryPath, JSON.stringify(result.summary, null, 2), 'utf-8');
-    console.log(`Wrote run summary: ${summaryPath}`);
-
-    console.log('\n[SUCCESS] All smoke test output files have been written.');
-
+    console.log(
+      '\n[SUCCESS] All smoke test output files have been written.'
+    );
   } catch (error) {
     const e = error as Error;
-    console.error('\n[ERROR] Failed to generate smoke test output:', e.message);
+    console.error(
+      '\n[ERROR] Failed to generate smoke test output:',
+      e.message
+    );
     // In a real CLI app, you might process.exit(1) here
   } finally {
     console.log('\n--- Smoke Test Output Generation Complete ---');

@@ -9,27 +9,26 @@ import {
 export const sampleProductDefinition: ProductDefinition = {
   id: 'PROD-SUMMER-2024',
   name: 'Summer Sunshine Getaway',
-  rooms: [
-    { id: 'DBL-STD', name: 'Standard Double Room' },
-    { id: 'SUI-JNR', name: 'Junior Suite' },
-  ],
-  meal_plans: [
+  bookingWindowDays: 365,
+  tourOperatorCode: 'HG-DEMO-TO',
+  dailyPrices: true,
+  mealPlans: [
     { id: 'RO', name: 'Room Only' },
     { id: 'BB', name: 'Bed & Breakfast' },
   ],
-  // Occupancy definitions are not used by the builder yet, so they can be omitted.
-  occupancies: [], 
+  stayDurations: [1, 2, 3, 4, 5, 6, 7],
+  occupancies: [{ maxAdults: 2 }],
 };
 
 // A valid hotel with corresponding ARI data.
 export const validHotel: Hotel = {
-  id: 'HG-001',
+  hgId: 'HG-001',
   name: 'Seaside Resort & Spa',
 };
 
 // A hotel that will be blocked because it has no associated ARI data.
 export const blockedHotelNoAri: Hotel = {
-  id: 'HG-002',
+  hgId: 'HG-002',
   name: 'Mountain Lodge (No ARI)',
 };
 
@@ -93,7 +92,7 @@ export const sampleAriMap: ARIMap = {
  * A complete, deterministic input fixture for the `generateEdfExport` function.
  */
 export const edfExportInputFixture: GenerateEdfExportInput = {
-  productDefinition: sampleProductDefinition,
+  product_definition: sampleProductDefinition,
   hotels: [
     {
       hotel: validHotel,

@@ -1,108 +1,90 @@
 import {
-  GenerateEdfExportInput,
-  ProductDefinition,
   Hotel,
+  ProductDefinition,
   ARIMap,
+  AriData,
+  DailyRate,
   Rate,
 } from './types';
 
-interface LazyAriBuilderDependencies {
-  productDefinition: ProductDefinition;
+interface LazyAriInput {
   selectedHotels: Hotel[];
+  productDefinition: ProductDefinition;
 }
 
 /**
- * A deterministic seed generator based on string inputs.
- * It produces a simple, stable hash for pseudo-random number generation.
- * @param str - The input string to seed the generator.
- * @returns A numeric seed.
- */
-const getDeterministicSeed = (str: string): number => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return Math.abs(hash);
-};
-
-/**
- * A simple pseudo-random number generator (PRNG) for deterministic results.
- * @param seed - The seed to initialize the generator.
- * @returns A function that generates the next random number in the sequence.
- */
-const seededRandom = (seed: number) => () => {
-  seed = (seed * 9301 + 49297) % 233280;
-  return seed / 233280;
-};
-
-/**
- * Generates a deterministic, temporary ARI (Availability, Rates, and Inventory) map
- * for a given set of selected hotels and a product definition.
+ * Generates a "lazy" ARI map for the selected hotels.
  *
- * This function simulates a future HyperGuest ARI integration by creating a small,
- * realistic, and deterministic set of pricing data. The output is stable: the same
- * hotels and product definition will always produce the exact same ARI data.
- * This ensures that downstream functions like the builder and serializer can rely on
- * a consistent input for testing and validation.
+ * This is a placeholder for a real HyperGuest ARI API call. It deterministically
+ * generates pricing data based on the hotel ID, date, and product definition to
+ * ensure that tests and local development have a consistent and predictable
+ * source of ARI data without making external network requests.
  *
- * The data is generated only for the hotels provided in the `selectedHotels` array,
- * simulating a lazy-loading or on-demand data-fetching mechanism.
- *
- * @param dependencies - An object containing the selected hotels and the product definition.
- * @returns An `ARIMap` containing the generated pricing data for the selected hotels.
+ * The generated data is intentionally varied to simulate real-world scenarios,
+ * including price changes, different meal plan costs, and variations between hotels.
  */
-export function buildLazyAriForSelectedHotels(
-  dependencies: LazyAriBuilderDependencies
-): ARIMap {
-  const { productDefinition, selectedHotels } = dependencies;
-  const ariMap: ARIMap = {};
+export function buildLazyAriForSelectedHotels(input: LazyAriInput): ARIMap {
+  const { selectedHotels, productDefinition } = input;
+  const { bookingWindowDays, dailyPrices, mealPlans, occupancies, stayDurations } = productDefinition;
 
-  // Combine product and hotel details for a stable, unique seed.
-  const productSeedString = `${productDefinition.id}-${productDefinition.rooms.map(r => r.id).join('_')}`;
-  
+  const today = new Date();
+  const ari: ARIMap = {};
+
   for (const hotel of selectedHotels) {
-    const hotelSeedString = `${productSeedString}-${hotel.id}`;
-    const seed = getDeterministicSeed(hotelSeedString);
-    const random = seededRandom(seed);
+    const hotelAri: AriData = {};
+    const basePrice = (parseInt(hotel.hgId.replace(/[^0-9]/g, ''), 10) % 50) + 100;
 
-    const hotelAri: Record<string, { rates: Record<string, Record<string, Rate>> }> = {};
-    const bookingWindowDays = productDefinition.bookingWindowDays || 90;
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() + 1); // Start from tomorrow
+    for (let i = 0; i < bookingWindowDays; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      const dateString = date.toISOString().split('T')[0];
 
-    for (let day = 0; day < bookingWindowDays; day++) {
-      const currentDate = new Date(startDate);
-      currentDate.setDate(startDate.getDate() + day);
-      const dateString = currentDate.toISOString().split('T')[0];
+      const dailyRate: DailyRate = { rates: {} };
+      const dayOfWeek = date.getDay(); // 0 (Sun) to 6 (Sat)
 
-      const dailyRates: { rates: Record<string, Record<string, Rate>> } = { rates: {} };
-      
-      // Small chance to create a gap in data to test season splitting
-      if (random() < 0.05) {
-        continue;
-      }
-      
-      for (const room of productDefinition.rooms) {
-        dailyRates.rates[room.id] = {};
-        for (const mealPlan of productDefinition.meal_plans) {
-          const basePrice = (getDeterministicSeed(room.id) % 50) + 100; // 100-150
-          const mealPrice = (getDeterministicSeed(mealPlan.id) % 30); // 0-30
-          
-          // Introduce slight, deterministic daily price variation
-          const priceJitter = Math.floor(random() * 10) - 5; // -5 to +5
-          
-          dailyRates.rates[room.id][mealPlan.id] = {
-            amount: basePrice + mealPrice + priceJitter,
-            currency: 'EUR',
-          };
+      for (const { id: mealId, name: mealName } of mealPlans) {
+        let mealPrice = 0;
+        if (mealId === 'BB') mealPrice = 15;
+        if (mealId === 'HB') mealPrice = 40;
+
+        // Simulate weekend price bump
+        const weekendFactor = dayOfWeek === 5 || dayOfWeek === 6 ? 1.2 : 1;
+
+        const rate: Rate = {
+          amount: Math.round((basePrice + mealPrice) * weekendFactor),
+          currency: 'EUR',
+        };
+
+        // In a real scenario, you'd have room types. Here, we just use a placeholder.
+        if (!dailyRate.rates['ROOM-STD']) {
+          dailyRate.rates['ROOM-STD'] = {};
         }
+        dailyRate.rates['ROOM-STD'][mealId] = rate;
       }
-      hotelAri[dateString] = dailyRates;
+
+      hotelAri[dateString] = dailyRate;
     }
-    ariMap[hotel.id] = hotelAri;
+    ari[hotel.hgId] = hotelAri;
   }
 
-  return ariMap;
+  return ari;
+}
+
+// Helper to get a deterministic room name based on hotel ID and index
+function getRoomName(hotelId: string, index: number): string {
+  const baseRoomType = (parseInt(hotelId.replace(/[^0-9]/g, ''), 10) + index) % 3;
+  if (baseRoomType === 0) return 'Standard Double';
+  if (baseRoomType === 1) return 'Superior Sea View';
+  return 'Junior Suite';
+}
+
+export function getLazyAriScope(successfulModels: import('./types').HotelEdfModel[]): import('./types').LazyAriScope {
+  const hotelIds = successfulModels.map((model) => model.hotelId).sort();
+
+  return {
+    selectedHotelCount: hotelIds.length,
+    ariHotelCount: hotelIds.length,
+    unselectedHotelsExcluded: true,
+    hotelIds,
+  };
 }

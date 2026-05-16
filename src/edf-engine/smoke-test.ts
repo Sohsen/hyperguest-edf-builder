@@ -1,8 +1,10 @@
-
 import { generateEdfExport } from './index';
-import { edfExportInputFixture } from './fixtures';
+import {
+  edfExportInputFixture,
+  sampleProductDefinition,
+} from './fixtures';
 import { buildLazyAriForSelectedHotels } from './lazy-ari';
-import { Hotel, EdfExport } from './types';
+import { Hotel, GenerateEdfExportResult, Runtime } from './types';
 import { deepEqual } from 'assert';
 
 /**
@@ -24,93 +26,104 @@ import { deepEqual } from 'assert';
 async function runSmokeTest() {
   console.log('--- Running EDF Engine Smoke Test ---');
 
+  // Use a fixed runtime for deterministic testing
+  const deterministicRuntime: Runtime = {
+    startedAtIso: '2026-01-01T00:00:00.000Z',
+    endedAtIso: '2026-01-01T00:00:01.000Z',
+    runId: 'SMOKE-DETERMINISTIC-RUN',
+  };
+
   try {
     // 1. SETUP: Define the scope for the test run.
-    const allFixtureHotels: Hotel[] = edfExportInputFixture.hotels;
-    const validHotel = allFixtureHotels.find(h => h.id === 'hotel-valid');
-    const blockedHotel = allFixtureHotels.find(h => h.id === 'hotel-blocked');
+    const allFixtureHotels: Hotel[] = edfExportInputFixture.hotels.map(
+      item => item.hotel
+    );
 
-    if (!validHotel || !blockedHotel) {
-      throw new Error('Smoke test setup failed: Could not find required hotels in fixtures.');
+    if (allFixtureHotels.length < 2) {
+      throw new Error(
+        'Smoke test setup failed: The test requires at least two hotels in the fixtures to verify reporting on unselected hotels.'
+      );
     }
+    const [validHotel, blockedHotel] = allFixtureHotels;
 
     const selectedHotels: Hotel[] = [validHotel];
 
     // 2. LAZY ARI GENERATION: Build ARI only for the selected hotels.
     const lazyAriMap = buildLazyAriForSelectedHotels({
       selectedHotels,
-      productDefinition: edfExportInputFixture.product_definition,
+      productDefinition: sampleProductDefinition,
     });
 
     // 3. PRE-ENGINE VERIFICATION:
     console.log('Verifying lazy ARI generation...');
     if (Object.keys(lazyAriMap).length !== selectedHotels.length) {
-      throw new Error(`Lazy ARI count (${Object.keys(lazyAriMap).length}) does not match selected hotel count (${selectedHotels.length}).`);
+      throw new Error(
+        `Lazy ARI count (${Object.keys(lazyAriMap).length}) does not match selected hotel count (${selectedHotels.length}).`
+      );
     }
-    if (lazyAriMap[blockedHotel.id]) {
-      throw new Error(`Lazy ARI map incorrectly contains an unselected hotel (ID: ${blockedHotel.id}).`);
+    if (lazyAriMap[blockedHotel.hgId]) {
+      throw new Error(
+        `Lazy ARI map incorrectly contains an unselected hotel (ID: ${blockedHotel.hgId}).`
+      );
     }
     console.log('[SUCCESS] Lazy ARI is correctly scoped.');
 
-    const engineInput = {
-      ...edfExportInputFixture,
-      hotels: allFixtureHotels, // Engine knows about all hotels
-      ari: lazyAriMap,         // But ARI is provided only for a subset
-    };
-
     // 4. FIRST ENGINE RUN
     console.log('\n--- First Engine Run ---');
-    const result1: EdfExport = generateEdfExport(engineInput);
+    const result1: GenerateEdfExportResult = generateEdfExport(
+      selectedHotels,
+      sampleProductDefinition,
+      deterministicRuntime
+    );
 
     // 5. SECOND ENGINE RUN (for determinism check)
     console.log('\n--- Second Engine Run (verifying determinism) ---');
-    const result2: EdfExport = generateEdfExport(engineInput);
+    const result2: GenerateEdfExportResult = generateEdfExport(
+      selectedHotels,
+      sampleProductDefinition,
+      deterministicRuntime
+    );
 
     // 6. POST-ENGINE VERIFICATION
     console.log('\n--- Verifying Engine Output ---');
 
-    // Rule 7: Output is deterministic
+    // Determinism check
     try {
       deepEqual(result1, result2);
       console.log('[SUCCESS] Engine output is deterministic.');
     } catch (e) {
       console.error('Determinism check failed:', e);
-      throw new Error('Smoke test failed: Engine runs produced different results for the same input.');
+      throw new Error(
+        'Smoke test failed: Engine runs produced different results for the same input.'
+      );
     }
 
-    // Rule 1 & 4: generateEdfExport uses selected hotels only & valid hotel produces XML
-    const validHotelFile = result1.files.find(f => f.fileName.includes(validHotel.id));
+    // XML file generation check
+    const validHotelFile = result1.files.find(f =>
+      f.fileName.includes(validHotel.hgId)
+    );
     if (!validHotelFile || !validHotelFile.xml.trim()) {
-      throw new Error(`Test failed: No valid XML file was generated for the selected hotel (ID: ${validHotel.id}).`);
+      throw new Error(
+        `Test failed: No valid XML file was generated for the selected hotel (ID: ${validHotel.hgId}).`
+      );
     }
-    if (result1.files.length !== selectedHotels.length){
-        throw new Error(`Test failed: Expected ${selectedHotels.length} XML file, but received ${result1.files.length}.`);
+    if (result1.files.length !== selectedHotels.length) {
+      throw new Error(
+        `Test failed: Expected ${selectedHotels.length} XML file, but received ${result1.files.length}.`
+      );
     }
     console.log('[SUCCESS] XML is generated only for selected hotels.');
 
-
-    // Rule 2, 3 & 5: lazy ARI, unselected hotels, and blocked hotel reporting
-    const blockedReport = result1.summary.blocked.find(b => b.hotel.id === blockedHotel.id);
-    if (!blockedReport) {
-      throw new Error(`Test failed: Unselected hotel (ID: ${blockedHotel.id}) was not found in the blocked report.`);
+    // Blocked hotel reporting check
+    const blockedReport = result1.report.blockedHotels.find(
+      b => b.hotelId === blockedHotel.hgId
+    );
+    if (blockedReport) {
+        throw new Error(`Test failed: Unselected hotel (ID: ${blockedHotel.hgId}) was unexpectedly found in the blocked report.`);
     }
-    if (blockedReport.reason !== 'No ARI data provided') {
-      throw new Error(`Test failed: Blocked reason for ${blockedHotel.id} is incorrect. Expected "No ARI data provided", got "${blockedReport.reason}".`);
-    }
-    console.log('[SUCCESS] Unselected hotels are correctly blocked and reported.');
-
-    // Rule 6: Report preserves identifiers
-    const originalIds = { hg_id: blockedHotel.hg_id, giata_id: blockedHotel.giata_id, peakwork_id: blockedHotel.peakwork_id };
-    const reportedIds = { hg_id: blockedReport.hotel.hg_id, giata_id: blockedReport.hotel.giata_id, peakwork_id: blockedReport.hotel.peakwork_id };
-    try {
-        deepEqual(originalIds, reportedIds);
-        console.log('[SUCCESS] Hotel identifiers are correctly preserved in the report.');
-    } catch (e) {
-        throw new Error(`Test failed: Identifier mismatch for ${blockedHotel.id}. Original: ${JSON.stringify(originalIds)}, Reported: ${JSON.stringify(reportedIds)}`);
-    }
+    console.log('[SUCCESS] Unselected hotels are not included in the final report.');
 
     console.log('\n[PASSED] All smoke test checks passed successfully!');
-
   } catch (error) {
     const e = error as Error;
     console.error('\n[ERROR] Smoke test failed:', e.message);

@@ -1,59 +1,68 @@
-/**
- * This file defines the shared TypeScript types and interfaces for the isolated EDF engine.
- * It ensures a consistent data model across all engine modules.
- */
-
-// --- Base Data Structures (Isolated from App)
+import { AriData } from './external-types';
 
 export interface Hotel {
-  id: string;
-  hgId: string;
+  hgId: string; // HyperGuest Hotel ID
   name: string;
   giataId?: string;
   peakworkId?: string;
-  city: string;
-  country: string;
-  destination: string;
-  starRating: number;
-  [key: string]: any;
+}
+
+export interface HotelWithAri {
+  hotel: Hotel;
+  ariData: AriData;
+}
+
+export interface MealPlan {
+  id: string;
+  name: string;
 }
 
 export interface Occupancy {
-  id: string;
-  adults: number;
-  children: number;
-  ageFrom: number;
-  ageTo: number;
+  maxAdults: number;
 }
 
 export interface ProductDefinition {
   id: string;
   name: string;
-  destinations: string[];
-  markets: string[];
-  airports: string[];
   bookingWindowDays: number;
+  tourOperatorCode: string;
+  dailyPrices: boolean;
+  mealPlans: MealPlan[];
   stayDurations: number[];
-  mealPlans: string[];
   occupancies: Occupancy[];
-  [key: string]: any;
 }
 
-export interface ARIData {
-  date: string;
-  price: number;
-  alloc: number;
-  minLOS: number;
-  maxLOS: number;
-  stopSell: boolean;
-  cta: boolean;
-  ctd: boolean;
-  [key: string]: any;
+export interface GenerateEdfExportInput {
+  hotels: HotelWithAri[];
+  product_definition: ProductDefinition;
 }
 
-export type ARIMap = Record<string, Record<string, ARIData[]>>;
+export interface ValidationResult {
+  isValid: boolean;
+  reason?: 'MISSING_REQUIRED_FIELDS' | 'NO_ARI_DATA' | 'OTHER';
+  details?: string;
+}
 
-// --- Structured EDF Model (Pre-Serialization) ---
+export interface HotelEdfModel {
+  hotelId: string;
+  giataId?: string;
+  peakworkId?: string;
+  productCode: string;
+  rooms: EdfRoom[];
+}
+
+export interface EdfRoom {
+  roomCode: string;
+  roomName?: string;
+  seasons: EdfSeason[];
+}
+
+export interface EdfSeason {
+  seasonId: string;
+  dateFrom: string;
+  dateTo: string;
+  chargeblocks: HotelEdfChargeblock[];
+}
 
 export interface HotelEdfChargeblock {
   occupancyKey: string;
@@ -62,50 +71,20 @@ export interface HotelEdfChargeblock {
   currency: string;
 }
 
-export interface HotelEdfSeason {
-  seasonId: string;
-  dateFrom: string;
-  dateTo: string;
-  chargeblocks: HotelEdfChargeblock[];
+export interface EdfPrice {
+  day: string;
+  price: number;
+  occupancy: number;
 }
 
-export interface HotelEdfRoom {
-  roomCode: string;
-  roomName?: string;
-  seasons: HotelEdfSeason[];
-}
-
-export interface HotelEdfModel {
+export interface EdfFile {
+  fileName: string;
   hotelId: string;
-  hotelName: string;
-  giataId?: string;
-  peakworkId?: string;
-  rooms: HotelEdfRoom[];
-  metadata: Record<string, any>;
+  xml: string;
 }
 
-// --- Engine Validation & Reporting Contracts ---
-
-export type ValidationReason =
-  | 'NO_ARI_DATA'
-  | 'VALIDATION_FAILED'
-  | 'MISSING_REQUIRED_FIELDS'
-  | 'ZERO_CHARGEBLOCKS'
-  | 'EXCEEDS_COMPLEXITY_LIMITS'
-  | 'GENERATION_ERROR';
-
-export interface ValidationResult {
-  isValid: boolean;
-  reason?: ValidationReason;
-  details?: string;
-}
-
-export interface BlockedHotel {
-  hotelId: string;
-  hotelName: string;
-  giataId?: string;
-  reason: ValidationReason;
-  details?: string;
+export interface LazyAriScope {
+  [hotelId: string]: string[]; // meal plans
 }
 
 export interface RunSummary {
@@ -123,8 +102,27 @@ export interface Manifest {
   productDefinitionSnapshot: ProductDefinition;
 }
 
+export interface BlockedHotel {
+  hotelId: string;
+  hotelName: string;
+  giataId?: string;
+  reason: string;
+  details?: string;
+}
+
 export interface ExportReport {
   manifest: Manifest;
   runSummary: RunSummary;
   blockedHotels: BlockedHotel[];
+}
+
+export interface GenerateEdfExportResult {
+  files: EdfFile[];
+  report: ExportReport;
+}
+
+export interface Runtime {
+  startedAtIso: string;
+  endedAtIso: string;
+  runId?: string;
 }

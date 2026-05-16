@@ -1,80 +1,61 @@
 import {
-  BlockedHotel,
   HotelEdfModel,
-  Manifest,
+  BlockedHotel,
   ProductDefinition,
+  Manifest,
   RunSummary,
+  LazyAriScope,
 } from './types';
 
-// --- Input Contracts for Exported Functions ---
-
-interface CreateRunSummaryInput {
-  successfulHotels: { edfModel: HotelEdfModel }[];
+interface RunSummaryInput {
+  totalHotels: number;
+  successfulModels: HotelEdfModel[];
   blockedHotels: BlockedHotel[];
-  startTime: number;
+  startTime: string;
+  endTime: string;
+  lazyAriScope: LazyAriScope;
 }
 
-interface CreateManifestInput {
+interface ManifestInput {
   productDefinition: ProductDefinition;
+  runId?: string;
+  timestamp?: string;
 }
 
-// --- Exported Functions ---
-
 /**
- * Creates a run summary object based on the outcome of the EDF generation process.
- *
- * @param input - The results of the hotel processing, including successful and blocked hotels, and the start time.
- * @returns A RunSummary object detailing the results of the run.
+ * Creates the manifest file, which is a snapshot of the export configuration.
  */
-export function createRunSummary(input: CreateRunSummaryInput): RunSummary {
-  const { successfulHotels, blockedHotels, startTime } = input;
-  const endTime = Date.now();
+export function createManifest(input: ManifestInput): Manifest {
+  const {
+    productDefinition,
+    runId = `RUN-${Date.now()}`,
+    timestamp = new Date().toISOString(),
+  } = input;
 
-  const successfulHotelCount = successfulHotels.length;
-  const blockedHotelCount = blockedHotels.length;
-
-  /*
-   * NOTE: The calculation for 'totalChargeblocks' is prepared below.
-   * It will be added to the returned object once the RunSummary type in types.ts is updated to include it.
-   *
-   * const totalChargeblocks = successfulHotels.reduce((acc, { edfModel }) => {
-   *   return acc + edfModel.rooms.reduce((roomAcc, room) => {
-   *     return roomAcc + room.seasons.reduce((seasonAcc, season) => {
-   *       return seasonAcc + season.chargeblocks.length;
-   *     }, 0);
-   *   }, 0);
-   * }, 0);
-   */
+  // Deep copy to prevent mutations from affecting the original object
+  const productDefSnapshot: ProductDefinition = JSON.parse(
+    JSON.stringify(productDefinition)
+  );
 
   return {
-    totalHotels: successfulHotelCount + blockedHotelCount,
-    successfulHotels: successfulHotelCount,
-    blockedHotels: blockedHotelCount,
-    startTime: new Date(startTime).toISOString(),
-    endTime: new Date(endTime).toISOString(),
-    durationMs: endTime - startTime,
+    runId: runId,
+    timestamp: timestamp,
+    productDefinitionSnapshot: productDefSnapshot,
   };
 }
 
 /**
- * Creates an export manifest containing a snapshot of the configuration used for the run.
- *
- * @param input - The product definition used for the export.
- * @returns A Manifest object.
+ * Creates a summary of the export run.
  */
-export function createExportManifest(input: CreateManifestInput): Manifest {
-  const { productDefinition } = input;
-  const now = new Date();
-
-  // A simple timestamp-based run ID is used for now.
-  const runId = `RUN-${now.getTime()}`;
-
-  // Create a deep copy for the snapshot to prevent mutation of the original object.
-  const productDefinitionSnapshot = JSON.parse(JSON.stringify(productDefinition));
+export function createRunSummary(input: RunSummaryInput): RunSummary {
+  const { totalHotels, successfulModels, blockedHotels, startTime, endTime } = input;
 
   return {
-    runId,
-    timestamp: now.toISOString(),
-    productDefinitionSnapshot,
-  };
+    totalHotels: totalHotels,
+    successfulHotels: successfulModels.length,
+    blockedHotels: blockedHotels.length,
+    startTime: startTime,
+    endTime: endTime,
+    durationMs: new Date(endTime).getTime() - new Date(startTime).getTime(),
+    };
 }
