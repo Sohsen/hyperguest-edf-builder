@@ -1,0 +1,78 @@
+<xs:schema>
+    <xs:annotation>
+        <xs:documentation>
+            Changelog:
+            v1.1.0 (02.12.2021):
+            - Room/DistributionChannelExclusion
+            v1.0.0 (11.12.2019):
+            - initial version
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="DCAssignments">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="Brand" name="Brand"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="Brand">
+        <xs:sequence>
+            <xs:element type="Contract" name="Contract" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="BrandCode" use="required"/>
+        <xs:attribute type="UsageType" name="BrandUsage" use="required"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="Contract">
+        <xs:sequence>
+            <xs:element type="DistributionChannel" name="DistributionChannel" minOccurs="0"
+                maxOccurs="unbounded"/>
+            <xs:element type="Room" name="Room" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <!-- Either Supplier and HotelCode must be present, or Uuid -->
+        <xs:attribute type="xs:string" name="SupplierCode"/>
+        <xs:attribute type="xs:string" name="HotelCode"/>
+        <xs:attribute type="xs:string" name="Key"/>
+        <xs:attribute type="xs:string" name="TravelType"/>
+        <xs:attribute type="xs:string" name="ProgramType"/>
+        <xs:attribute type="xs:string" name="Uuid"/>
+    </xs:complexType>
+
+
+    <xs:simpleType name="UsageType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="HotelOnly"/>
+            <xs:enumeration value="Package"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:complexType name="DistributionChannel">
+        <xs:attribute name="Operation" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="assign"/>
+                    <xs:enumeration value="unassign"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="Code" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Room">
+        <xs:sequence>
+            <xs:element type="DistributionChannelExclusion" name="DistributionChannelExclusion"
+                minOccurs="0"
+                maxOccurs="unbounded">
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:int" name="RoomId" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="DistributionChannelExclusion">
+        <xs:attribute name="Code" type="xs:string" use="required"/>
+    </xs:complexType>
+</xs:schema>

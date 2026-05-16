@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns="http://www.peakwork.com/edf/box/portfolio/external/GlobalExtras" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.peakwork.com/edf/box/portfolio/external/GlobalExtras"
+	   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   version="5.0.0">
+	<xs:include schemaLocation="EDF_HOTEL_GLOBALEXTRA_PXB_MERGE.XSD" />
+	<xs:element name="HotelGlobalExtraRoots">
+	<xs:annotation>
+		<xs:documentation xml:lang="de">
+
+			Changelog:
+			================================================================================================
+
+			* Version 5.0.0
+					* 2019-11-27:
+								Now includes PXB Merge XSD, to reduce redundancy
+
+			* Version 4.1.0
+					* 2019-11-14:
+								Format now nearly equal to PXB Merge, just with wrapper element
+
+			* Version 3.0.0
+
+					* 2017-08-24(POR-683):
+                                Copy EDF_HOTEL_GLOBAL_EXTRA.XSD to EDF_HOTEL_GLOBAL_EXTRA_EXTERNAL.XSD
+			                    Set namespace from "http://www.peakwork.com/edf/GlobalExtra" to "http://www.peakwork.com/edf/box/portfolio/external/GlobalExtras"
+
+			                    BasicData -> @OverwriteDRVGlobalTypes attribute removed
+			                    BasicData -> @HotelKey attribute removed
+                                WeekdayRestriction/ApplyToMode - gelöscht
+                                Extra/SortIndex - gelöscht
+                                Extra/Mandatory - gelöscht
+                                Extra/Distribution - gelöscht
+
+					* 2017-08-28(POR-683):
+								Type INFXEnum -> 1 renamed to INFX1 and 2 renamed to INFX2
+								Extras -> Extra -> Descriptions -> @Visible removed
+								Extra -> Reductions removed
+								Extra -> @ApplianceCode removed
+
+            * Version 2.0.0
+
+					* 2017-07-25:
+						BasicData @HotelKey: Added
+						SeasonRestrictions: Removed Completely (Remove also used ApplyToSeasonEnum simpleType)
+						HotelRestriction @Location: Removed (Remove also used LocationTypeEnum simpleType)
+						HotelRestriction @Code: Removed Wildcard Support
+						Reduction @SeasonLabel @BoardId @GuestId @Calculation="PR" @AddToBaseCharge: Removed
+						Charge @Calculation="PR" @AddToBaseCharge: Removed
+
+						CompatibleExtras: Removed
+						Extra @CombiGroupId: Removed
+
+						Appliance @Type="Extra" @Type="GuestCharge" @Type=Fixed: Removed
+						Appliance @Code="BasePrice" @Code="Board" @Code="ExtraDay" @Code="AllExtraDays"
+						PersonTypeEnum: Only Support A, C, I
+
+					* 2017-07-19: Removed:
+
+						SellingData -> SellingTypes
+						HotelRestriction -> @HotelChainCode
+						SeasonRestriction -> @Label
+						SeasonRestriction -> @FlightPriceTable
+						SeasonRestriction -> @HotelPriceTable
+						Reduction -> @HotelPriceTable
+						Extra -> @FlightReferenceCode
+						Extra -> @OffersAllowed
+						Extras -> @SeasonIdentifier
+
+				* Version 1.1.0
+
+					* 2017-05-23: BasicData -> OverwriteDRVGlobalTypes attribute added
+
+				* Version 1.0.1
+
+					* 2017-03-28: Extra -> Appliance -> Code - has no restricted types anymore
+					* 2017-03-28: Extra -> Appliance -> Type - added types: Date and GuestRestriction
+
+				* Version 1.0.0
+
+					* 2017-03-08: Initial version
+
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="HotelGlobalExtraRoot" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="Status" type="DeleteStatusType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="DeleteStatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Delete"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,1788 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns="http://www.peakwork.com/edf/box/portfolio/external/GlobalExtras" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.peakwork.com/edf/box/portfolio/external/GlobalExtras"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	version="5.2.0"
+>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+
+			Changelog:
+			================================================================================================
+
+			* Version 5.3.1
+					* 2023-02-14:
+						Fixed XSD schema errors in ExtraApplianceGroups tag.
+
+			* Version 5.3.0
+					* 2023-02-14:
+						Added support for appliance of Extras to other Extras.
+
+			* Version 5.2.0
+					* 2023-01-10:
+						Add support for Optional Extras, using Extra / @Mandatory.
+
+			* Version 5.1.0
+					* 2022-07-19:
+						Remove BasicData -> OverwriteDRVGlobalTypes
+						Add DRVGlobalTypes -> @Action
+
+			* Version 5.0.0
+					* 2019-11-27:
+						Namespace set to "http://www.peakwork.com/edf/box/portfolio/external/GlobalExtras" to be includeable in BOX.XSD
+
+			* Version 4.1.0
+
+					* 2019-09-23:
+						Add HotelRestriction -> @GiataID
+						Add HotelRestriction -> @GoalID
+
+			* Version 4.0.0
+
+					* 2019-08-16:
+						Major cleanup: Removed all attributes and enum-values that are not actually supported in the PxbMerge GlobalExtra concept.
+						Remove DateRestriction -> @ReleaseTime, @Request, @MaxExtraApply
+						Remove DateRestrictions -> @ApplyToMode "StayDays"
+						Remove GuestRestriction -> @MinAge, @MaxAge
+						Remove Reduction -> @DiscountedNights, @Nights, @Mode
+						Remove Charge -> @Mode, @Nights
+						Removed WeekdayRestriction -> @ApplyTo
+						Remove StayRestrictions -> @ApplyTo="Paid"
+						Remove Charge -> @Duration attribute
+						Remove Reduction -> @Duration attribute
+						Remove Appliance -> @Type=Charge
+						Remove Condition
+						Remove AirTypeEnum, AllotmentBindingEnum, BasicDataTypeEnum, ApplyToCompatibleEnum, ReductionModeEnum, ChargeModeEnum, RequestEnum
+						The attribute WeekdayRestriction -> @Mask is required
+						Move OperatorEnum description into OperatorEnum type
+						Remove Appliance -> @Invert attribute
+						Remove GuestRestrictions -> @Invert
+						Removed the HotelRestriction -> @IataCode. The same can be achieved with an flight restriction
+						Remove any mention of SeasonIdentifier, SellingType, TravelType and ProgramType in documentation
+						Set Restriction -> @maxOccurs to 1. It's not allowed to have multiple Restriction elements.
+						Fix BasicData -> @FileKey documentation
+						Fix SchemaVersion documentation
+						SchemaVersion 4.0.0
+						Set @minOccurs for most sub-restrictions to 1 instead of 0.
+						Remove Appliance -> @Type="Date" and @Type="Stay" enum values that are not supported
+					* New:
+						Moved Appliances -> Appliance -> WeekdayMask into new Appliances -> WeekdayAppliance element.
+
+			* Version 3.2.0
+
+					* 2019-07-25:
+						INFXEnum: Renamed INFX1 and INFX2 to 1 and 2 again for compatibility with old GlobalExtra format.
+						INFXAttribute -> @Value required
+						INFXAttributes and INFXAttribute: Set minOccurs to 1
+
+			* Version 3.1.0
+
+					* 2019-05-28:
+						FlightRestrictions -> @Type: Added
+						FlightRestriction -> @Airline: Added
+						FlightRestriction -> Source: Added
+
+			* Version 3.0.0
+
+				* 2017-08-24: Renamed xsd file from EDF_HOTEL_GLOBAL_EXTRA.XSD to EDF_HOTEL_GLOBAL_EXTRA_INTERNAL.XSD
+						Set namespace from "http://www.peakwork.com/edf/GlobalExtra" to "http://www.peakwork.com/edf/box/portfolio/internal/GlobalExtras"
+
+					* 2017-08-28: Type INFXEnum -> 1 renamed to INFX1 and 2 renamed to INFX2
+
+			* Version 2.0.0
+
+					* 2017-07-25:
+						BasicData @HotelKey: Added
+						SeasonRestrictions: Removed Completely (Remove also used ApplyToSeasonEnum simpleType)
+						HotelRestriction @Location: Removed (Remove also used LocationTypeEnum simpleType)
+						HotelRestriction @Code: Removed Wildcard Support
+						Reduction @SeasonLabel @BoardId @GuestId @Calculation="PR" @AddToBaseCharge: Removed
+						Charge @Calculation="PR" @AddToBaseCharge: Removed
+
+						CompatibleExtras: Removed
+						Extra @CombiGroupId: Removed
+
+						Appliance @Type="Extra" @Type="GuestCharge" @Type=Fixed: Removed
+						Appliance @Code="BasePrice" @Code="Board" @Code="ExtraDay" @Code="AllExtraDays"
+						PersonTypeEnum: Only Support A, C, I
+
+					* 2017-07-19: Removed:
+
+						SellingData -> SellingTypes
+						HotelRestriction -> @HotelChainCode
+						SeasonRestriction -> @Label
+						SeasonRestriction -> @FlightPriceTable
+						SeasonRestriction -> @HotelPriceTable
+						Reduction -> @HotelPriceTable
+						Extra -> @FlightReferenceCode
+						Extra -> @OffersAllowed
+						Extras -> @SeasonIdentifier
+
+				* Version 1.1.0
+
+					* 2017-05-23: BasicData -> OverwriteDRVGlobalTypes attribute added
+
+				* Version 1.0.1
+
+					* 2017-03-28: Extra -> Appliance -> Code - has no restricted types anymore
+					* 2017-03-28: Extra -> Appliance -> Type - added types: Date and GuestRestriction
+
+				* Version 1.0.0
+
+					* 2017-03-08: Initial version
+		</xs:documentation>
+	</xs:annotation>
+
+<xs:element name="HotelGlobalExtraRoot">
+	<xs:annotation>
+		<xs:documentation xml:lang="de">GlobalExtras sind Extras, die produktübergreifend (hotel- bzw. unterkunfts-übergreifend) gelten.
+			Das Peakwork Einheitliche Datenformat bietet mittels der GlobalExtras die Möglichkeit zum Transport von produktübergreifenden Zu- und Abschlägen oder Incentives.
+			Beispiele für Hotel GlobalExtras sind:
+			- Zielgebietsabhängige Zu- oder Abschläge
+			- Produktabhängige Zu- oder Abschläge
+			- Globale Incentives oder Sonderleistungen
+			- Geburtstags- oder Jubiläumsrabatte
+			- Sparwochen
+			- Einreisekarten, Visa für bestimmte Zielgebiete
+
+			Die Struktur der GlobalExtras ist wie folgt:
+			Je Usage wird eine eigene Datenlieferung in dem Zip Ordner geliefert. Die Struktur und der Dateiname ist gleich.
+			GlobalExtraRoot
+			//BasicData
+			//SellingData
+			//Extras (1 ...n)
+			//Extra (1 ...n)
+
+			Verarbeitung der GlobalExtras durch ein Vertriebssystem:
+			Die GlobalExtras werden von einem Vertriebs- bzw. Kalkulationssystem in die "normale"Extra Verarbeitung des Hotels einsortiert. Sie werden dem Produkt zugeorndet. GlobalExtras unterliegen damit der gleichen Verarbeitungslogik wie Extras auf Hotel- oder Flug Ebene.
+			Negative SortIndices können dabei verwendet werden. Negative SortIndices werden vor 0er SortIndices einsortiert. Eine Einschränkung auf eine maximale Zahl bei der Vergabe von SortIndices besteht nicht.
+
+			Einschränkung auf Reisearten und Programmarten:
+			Sofern keine Reise- und Programmarten angegeben ist, gilt ein globales Extra für alle Reise- und Prgrammarten, die im Hotel EDF angegeben sind.
+
+			Folgende Anforderungen werden in der GlobalExtra Verarbeitung bei Nutzung von PXBMerge/innerhalb der Box aus technischen Gründen aktuell nicht unterstützt:
+			1) Ein GlobalExtra, welches einen prozentualen Auf- bzw. Abschlag definiert, der nur anteilig auf bestimmte Tage/Nächte innerhalb einer Reise angewendet werden soll.
+			   (z.B. nur 2 Nächte einer 7-Tage Reise sollen mit diesem Extra verrechnet werden).
+
+			   Hierzu reicht schon ein einfaches GlobalExtra aus, welches gezielt mit einer DateRestriction mit ApplyTo="Stay" die Anwendung des Auf-/Zuschlag auf bestimmte Tage einer Reise einschränkt:
+			   //Extra
+			   //Restrictions
+			   //Restriction
+			   //DateRestrictions
+			   //DateRestriction Start="2017-07-01" End="2017-07-04" ApplyTo="Stay"
+			   //Charges
+			   //Charge Percent=3.0
+
+		</xs:documentation>
+		<xs:documentation xml:lang="en">GlobalExtras are overall Extras which are valid for all or multiple hotels.
+			The GlobalExtra concepts allows the definition and transport of overall charges, reductions, incentives and additional services.
+
+			Examples for Hotel GlobalExtras:
+			- destination relating charges or reductions
+			- product relating charges or reductions
+			- globale incentives or additional services
+			- jubilee incentives
+			- special offers
+			- visa costs for specific destinations
+
+			The structure of GlobalExtras is as follows:
+			The data delivery is needed per "usage" (HotelOnly or Package) in the final EDF zip file.
+			GlobalExtraRoot
+			//BasicData
+			//SellingData
+			//Extras (1 ...n)
+			//Extra (1 ...n)
+
+			Processing of GlobalExtras in a distribution system:
+			GlobalExtras are sorted in the "normal" Extra processing of the hotel. GlobalExtras underlie the same processing logic as Extras on hotel level.
+			The use of negative SortIndices is possible. Negative SortIndices are sorted before a null SortIndex. There is no restriction on a minimum count of SortIndices.
+
+			Restriction on TravelTypes or ProgramTypes :
+			A GlobalExtra is valid for all TravelTypes and ProgramTypes
+
+			<!--  TODO: ENGLISH TRANSLATION -->
+
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BasicData" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Das Element BasicData beinhaltet alle relevanten Basisdaten der GlobalExtra Datei.
+							Anhand der Basisdaten ist es einem Vertriebssystem möglich, die GlobalExtra Datei der entsprechenden "Usage" (HotelOnly oder Package) und dem Veranstalter zuzuordnen.
+
+							Die BasicData enthalten damit die folgenden Informationen:
+							//BasicData TourOperatorCode="XYZ" TourOperatorName="XYZ Reisen" Usage="HotelOnly"</xs:documentation>
+						<xs:documentation xml:lang="en">The BasicData element comprises all the relevant basic data of the GlobalExtra file.
+							It is possible via the basic data to assign a GlobalExtra file to the right "Usage" (HotelOnly or Package) and to the right tour operator.
+
+							The element BasicData contains the following information:
+							//BasicData TourOperatorCode="XYZ" TourOperatorName="XYZ Reisen" Usage="HotelOnly"</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="TourOperatorCode" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Das Attribut TourOperatorCode transportiert den Veranstaltercode. Da der Veranstaltercode für eine technische Buchung und für die Zuordnung einer GlobalExtra Datei zu dem richtigen Veranstalter benötigt wird, ist dieses Attribut ein Pflichtattribut.
+
+									Beispiel:
+									//BasicData TourOperatorCode="XYZ" TourOperatorName="XYZ Reisen" Usage="HotelOnly"</xs:documentation>
+								<xs:documentation xml:lang="en">The attribute TourOperatorCode is used for the transport of the tour operator code. This attribute is required because the tour operator code is needed for a technical booking and for the allocation of a GlonbalExtra file to the right tour operator.
+
+									Example:
+									//BasicData TourOperatorCode="XYZ" TourOperatorName="XYZ Reisen" Usage="HotelOnly"</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Usage" type="UsageEnum" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Das Attribut Usage beinhaltet die Verkaufsart des Produktes. Dieses Attribut ist ein Pflichtattribut, da die Usage für die Verarbeitung der Produkte in den Vertriebssystemen relevant ist.
+
+									Folgende Verkaufsarten sind möglich:
+									HotelOnly: Produkt wird als Nur Hotel angeboten.
+                                    FlightOnly: Produkt wird als Nur Flug angeboten.
+									Package: Produkt wird als Pauschalprodukt angeboten.
+
+									Wichtige Regel:
+									Analog zu der Hotel EDF Logik wird je Usage ein GlobalExtra File geschrieben. Der Output ist 1 XML File für die Usage "HotelOnly" und 1 XML File für die Usage "Package" etc. Diese Trennung ist notwendig, da unterschiedliche Zu- und Abschläge in Abhängigkeit der Produktart gesteuert werden.</xs:documentation>
+								<xs:documentation xml:lang="en">The Usage attribute contains the product sales type. The use of the attribute is required because the selling type is relevant for data processing on the sales system side.
+
+									Following product sales types are possible:
+									HotelOnly:  the product is sold as hotel only
+                                    FlightOnly:  the product is sold as hotel only
+									Package: the product is sold as package product
+
+									Important rule:
+									According to the Hotel EDF logic one GlobalExtra file is written for each "Usage". The Output is 1 xml file for the usage "HotelOnly" and 1 xml file for the usage "Package", etc. This Analog zu der Hotel EDF Logik wird je Usage ein GlobalExtra File geschrieben. Der Output ist 1 XML File für die Usage "HotelOnly" und 1 XML File für die Usage "Package" etc. This classification is needed because there are different charges or incentives according the usage.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Source" type="xs:string">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Das Attribut Source bezeichnet die Herkunft des GlobalExtras, sofern der Veranstalter die Leistung von externen Quellen bezieht (Incoming Agentur, Bettendatenbank, etc.). Das Attribut kann optional genutzt werden.
+									Da einige Veranstalter unter anderem für die dynamische Paketierung ihre Produkte aus unterschiedlichen Quellen beziehen, kann hier die Angabe der Quelle hinterlegt werden.
+
+									Beispiel:
+									/BasicData Usage="Package" TourOperatorCode="XYZ" " Source="Hotelbeds"</xs:documentation>
+								<xs:documentation xml:lang="en">The Source attribute designates the global extra, if the tour operator procures services from external sources (incoming agency, hotel beds database, etc.). The use of the attribute is optional.
+									Since some tour operators procure their products from different sources, for example, for dynamic packaging, the source may be indicated here.
+									The attribute is relevant for dynamic packaging in order to update a sales system with information indicating the source when booking a hotel service.
+
+									Example:
+									/BasicData Usage="Package" TourOperatorCode="XYZ"  Source="Hotelbeds"
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+                        <xs:attribute name="FileKey" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation xml:lang="de">Der FileKey kann dazu genutzt werden, mehrere GlobalExtra Dateien anzuliefern, die ansonsten die selben Schlüsselwerte haben und sich überschreiben würden.</xs:documentation>
+                                <xs:documentation xml:lang="en">The FileKey can be used to deliver multiple GlobalExtra files with the same key values that would otherwise override each other</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+						<xs:attribute name="Code" type="xs:string">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Das Attribute Code definiert den Hotel Code für den die Extras gelten</xs:documentation>
+								<xs:documentation xml:lang="en">The Code attribute defines the hotel code for which the extras are valid</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+
+						<xs:attribute name="HotelKey" type="xs:string">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Das Attribut HotelKey definiert den HotelKey für den die Extras gelten</xs:documentation>
+								<xs:documentation xml:lang="en">The HotelKey attribute defines the hotel key for which the extras are valid</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SellingData" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Das Element SellingData beinhaltet alle relevanten Verkaufsdaten.
+							In den GlobalExtras werden hier die übergreifenden Extras in einem Extra Element erfasst.
+							Weiterhin wird die Verkaufswährung der GlobalExtras in dem Attribut Currency transportiert. Die Verkaufswährung in dem GlobalExtra File muss  zwingend mit der Verkaufswährung im Hotel EDF File übereinstimmen.</xs:documentation>
+						<xs:documentation xml:lang="en">The SellingData element contains all relevant sales data.  This main element contains all Extra elements.
+							Further the sell currency of GlobalExtras is transported via the attribute "Currency". The sell currency in the GlobalExtra file has to be the same sell currency that is used in the hotel EDF.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ExtraApplianceGroups" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ExtraApplianceGroup" minOccurs="1" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">
+													Das Element ExtraApplianceGroup beinhaltet eine Gruppe von ApplianceCodes. Alle Extras mit diesen ApplianceCodes können aufeinander angewendet werden.
+													Dies macht dann Sinn, wenn mindestens eins der Extras einen Prozent aufschlag macht.
+													Einschränkungen:
+													- Alle referenzierten Extras müssen denselben Buchungscode haben.
+													- Wenn ein prozentuales Extra eine Extra-Appliance hat, dann sollte es nur auf andere Extras angewendet werden und NICHT auf den Hotelpreis (Dies kann durch die Verwendung einer Charge-Appliance mit Code="None" erreicht werden).
+												</xs:documentation>
+												<xs:documentation xml:lang="en">
+													This element ExtraApplianceGroup refers to a group of ApplianceCodes. All extras which refer these ApplianceCodes can be applied to each other.
+													This only make sense if at least one of these extras adds a percentage charge.
+													Limitations:
+													- All referenced extras must have the same bookingcode.
+													- If an percentage Extra has an Extra-Appliance, then it should only apply to other Extras and NOT to the hotel price (This can be achieved by using a Charge-Appliance with Code="None").
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ExtraAppliance" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">
+																Dieses Element verweist auf einen ApplianceCode. Dieser verweist auf alle Extras mit dem selben ApplianceCode.
+															</xs:documentation>
+															<xs:documentation xml:lang="en">This element refers to an ApplianceCode which refers to all extras with the same ApplianceCode.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Code" type="TypeApplianceCode" use="required" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ApplianceCode" type="TypeApplianceCode" use="required" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Extras" minOccurs="1" maxOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Extra" minOccurs="1" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">In dem Element "Extra" wird ein GlobalExtra definiert.
+													Mittels Restriktionen werden die Bedingungen angegeben, unter denen eine Ermäßigung oder ein Zuschlag gilt.
+													Das Element Extra kann mehrfach auftreten. In einer GlobalExtra Datei werden alle GlobalExtras je  Veranstaltermarke zusammengefasst.</xs:documentation>
+												<xs:documentation xml:lang="en">The element "Extra" defines the GlobalExtra.
+													Restrictions are used to define the conditions for the application of a reduction or a charge.
+													The element "Extra" can occur multiple times. There are multiple Extras consolidated in one GlobalExtra File.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Restrictions" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das Element Restrictions enthält Einschränkungen für die Ebene auf der es sich befindet. Somit lassen sich Einschränkungen in Bezug auf Zeitfenster (date), Wochentage (weekday), Aufenthaltsdauern (stay), Saisonzeiten (season), Personen (guests), Verpflegungen (board) und Flüge (flights) steuern. Unter einer Restriction bzw. Einschränkung sind Stop Sales, Mindest- und Maximalaufenthalte, feste Anreisetage, etc. zu verstehen. Diese Restriktionen können sowohl auf Hotelebene als auch auf Zimmerebene gesetzt werden.</xs:documentation>
+															<xs:documentation xml:lang="en">The Restrictions element contains restrictions for the level at which it is located. This allows assignment of restrictions with regard to time frame (date), days of the week (weekday), durations of stay (stay), season labels (season), persons (guests), board (board) and flights (flights). Restrictions are understood as stop sales, minimum and maximum stays, fixed arrival days, etc. These restrictions can be set both at the hotel level and at the room level.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Restriction" minOccurs="1" maxOccurs="1">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">Restriction Elemente innerhalb der Restrictions sind immer untereinander UND verknüpft</xs:documentation>
+																		<xs:documentation xml:lang="en">Restriction elements within the restrictions are always linked using AND.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="DateRestrictions" minOccurs="0" maxOccurs="1">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">Das Element DateRestrictions definiert eine Einschränkung bezogen auf einen Zeitraum.
+																					Dieser Zeitraum kann ein Anreise-, Aufenthalts- oder Buchungszeitraum sein.</xs:documentation>
+																					<xs:documentation xml:lang="en">The DateRestrictions element defines a restriction with respect to a period.
+																					This time range can be an arrival, stay or booking period.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="DateRestriction" minOccurs="1" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="de">In dem Unterelement DateRestriciton können weitere Definition einer Einschränkung bezogen auf einen Zeitraum festgelegt werden.
+																								Dieser Zeitraum kann ein Anreise-, Aufenthalts- oder Buchungszeitraum sein.</xs:documentation>
+																								<xs:documentation xml:lang="en">The DateRestriction sub element can be used to further define a restriction with respect to a period.
+																								This time range can be an arrival, stay or booking period.</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:attribute name="ApplyTo" type="ApplyToEnum">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Kenner ob zugehoerige Angabe Hotel-Anreise- oder Hotel-Aufenthaltsbezogen oder Flug-Anreise- oder Flug-Aufenthaltsbezogen ist.
+																											Dieser Kenner gilt in Verbindung mit dem Attribut "ApplyToMode", welches den Hotel- oder Flugbezug steuert.
+
+																											Moegliche Werte sind:
+																											Arrival	Der Zeitraum gilt anreisebezogen. Es gelten Tage als Basis. Default Wert.
+																											Stay	Der Zeitraum gilt aufenthaltsbezogen. jedoch nächteweise
+																											Within	Der gesamte Reisezeitraum (Jeder Aufenthaltstag der Reise) liegt in dem Zeitraum Start, End. Es gelten Tage als Basis.
+																											Departure	Der Zeitraum gilt abreisebezogen. Es gelten Tage als Basis.
+
+
+																											Beispiel für Arrival und ApplyToMode="Flight":
+																											1. Flug CGN – PMI 01.01.10 – 14.01.10
+																											2. Erstes Hotel PMI 01.01.10 – 07.01.10
+																											3. Zweites Hotel PMI 07.01.10 – 14.01.10
+
+																											Bei dem Anschlusshotel gibt es ein Incentive, was Fluganreise gesteuert wird. Das Incentive des zweiten Hotels gilt vom 01.01. bis 06.01.10.
+																											Auch wenn die Anreise im Hotel erst am 07.01.10 erfolgt, wird dennoch das Incentive (Beispiel 7=6) gewährt, da die Bedingung der Fluganreise erfülllt ist.
+
+																											Beispiel für Stay und ApplyToMode="Flight":
+																											1. Flug DUS – BKK 01.01 – 08.01.
+																											2. Hotelaufenthalt, weil Übernachtsflug 02.01. – 08.01.
+																											Bei dem Hotel gibt es ein Incentive 7=6, dieses würde für HotelStay nicht gezogen werden, da der Hotelaufenthalt nur 6 Tage ist. Wird ApplyTo=FlightStay gesetzt, so bezieht es sich auf die Dauer zwischen Hinflug und Rückflug. Das Incentive 7=6 wird gewährt.
+
+																											Beispiel für Within und ApplyToMode="Hotel":
+																											1. Flug MUC – TFS 15.01. – 22.01.
+																											2. Hotel TFS 15.01. – 22.01.
+																											Das Incenitive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 31.01.
+																											Bei ApplyTo=Within muss der Hotelaufenthalt genau in diesen Zeitraum fallen. Gibt es dort eine Überschneidung, so wird das Extra nicht gezogen. z.B. Incenitive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 20.01. Das Incentive wäre in diesem Falle nicht gültig.</xs:documentation>
+																										<xs:documentation xml:lang="en">Identifier of whether the respective information refers to the hotel arrival or hotel stay, or to flight arrival or flight stay.
+																											This identifier applies in conjunction with the ApplyToMode attribute, which assigns the hotel or flight reference.
+
+																											Possible values are:
+																											Arrival	The time range applies to the arrival. Days apply as the basis.
+																											Stay	The time range applies to the stay, but by night
+																											Within	The entire travel period (every stay day of the journey) lies in the time range Start, End. Days apply as the basis.
+																											Departure	The time range applies to the departure. Days apply as the basis.
+
+
+																											Example of Arrival and ApplyToMode="Flight":
+																											1. Flight CGN – PMI Jan 01, 2010 – Jan 14, 2010
+																											2. First hotel PMI Jan 01, 2010 – Jan 07, 2010
+																											3. Second hotel PMI Jan 07, 2010 – Jan 14, 2010
+
+																											An incentive, that is controlled via flight arrival, already exists for the connecting hotel. The incentive for the second hotel is valid from Jan 01 until Jan 06, 2010.
+																											Even if the arrival in the hotel is not until Jan 07, 2010, the incentive (example 7=6) is nonetheless granted, since the condition for the flight arrival is satisfied.
+
+																											Example of Stay and ApplyToMode="Flight":
+																											1. Flight DUS – BKK Jan 01 – Jan 08
+																											2. Hotel stay because of overnight flight Jan 02 – Jan 08.
+																											An incentive 7=6 already exists for the hotel; this would not be drawn for the HotelStay, since the hotel stay is only for 6 days. If ApplyTo=FlightStay is set, this refers to the duration between the outbound flight and the inbound flight. The Incentive 7=6 is granted.
+
+																											Example of Within and ApplyToMode="Hotel":
+																											1. Flight MUC – TFS Jan 15 – Jan 22.
+																											2. Hotel TFS Jan 15 – Jan 22.
+																											The incentive 7=6 has a validity duration from Jan 01 – Jan 31.
+																											For ApplyTo=Within the hotel stay must fall exactly within this time range. If there are overlaps, the extra is not applied, e.g., Incentive 7=6 has a validity duration from Jan 01 – Jan 20. In this case the incentive would not be valid.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="ApplyToMode" type="ApplyToModeEnum">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Das Attribut ApplyToMode kennzeichnet ob zugehoerige Angabe Flug- oder Hotelbezogen sind.
+																											Moegliche Werte sind:
+																											Hotel
+																											Flight
+
+																											Defaultwert ist hier Hotel</xs:documentation>
+																										<xs:documentation xml:lang="en">The ApplyToMode attribute identifies, whether corresponding information is flight or hotel related.
+																											Possible values are:
+																											Hotel
+																											Flight
+
+																											Here, the default value is Hotel.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="BookingStart" type="xs:date" use="optional">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Buchungsdatum von</xs:documentation>
+																										<xs:documentation xml:lang="en">Booking date from</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="BookingEnd" type="xs:date" use="optional">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Buchungsdatum bis</xs:documentation>
+																										<xs:documentation xml:lang="en">Booking date to</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="MinBookingOffset" type="xs:duration">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Das Attribut MinBookingOffset beschreibt die Anzahl der Mindest-Tage vor der Buchung.
+																											Beispiel:
+																											Gültig für alle Buchungen mindestens 60 Tage vor Anreise.
+
+																											Das Attribut wird für rollierende Frühbucher verwendet. Beispiel: Frühbuchervorteil für alle Buchungen bis 60 Tage vor Anreise (MinBookingOffset=“P60D“).</xs:documentation>
+																										<xs:documentation xml:lang="en">The MinBookingOffset attribute specifies the minimum number of days prior to the booking.
+																											Example:
+																											Valid for all bookings at least 60 days before arrival.
+
+																											The attribute is used for rolling early birds. Example: Early bird advantage for all bookings until 60 prior to arrival (MinBookingOffset=“P60D“).</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="MaxBookingOffset" type="xs:duration">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Das Attribut MaxBookingOffset zeigt die Anzahl der Maximalen-Tage vor Buchung.
+																											Beispiel:
+																											Gültig für alle Buchungen bis maximal 90 Tage vor Anreise.
+																											Sofern sowohl MinBookingOffset als auch
+																											MaxBookingOffset gesetzt ist, besteht
+																											die Gültigkeit innerhalb dieser Zeitspanne vor
+																											Anreise.
+																											Beispiel:
+																											MinBookingOffset=60,
+																											MaxBookingOffset=90
+																											Die Gültigkeit besteht für alle Buchungen,
+																											die zwischen 60 und 90 Tagen vor Anreise getätigt werden.</xs:documentation>
+																										<xs:documentation xml:lang="en">The MaxBookingOffset attribute specifies the maximum number of days prior to the booking.
+																											Example:
+																											Valid for all bookings up to a maximum of 90 days before arrival.
+																											If both MinBookingOffset and
+																											MaxBookingOffset are set,
+																											this is valid within this period of time before
+																											arrival.
+																											Example:
+																											MinBookingOffset=60,
+																											MaxBookingOffset=90
+																											The validity applies for all bookings
+																											made between 60 and 90 days prior to arrival.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attributeGroup ref="TimeRangeAttributes" />
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																					<xs:attribute name="Invert" type="InvertEnum" default="false" />
+																					<xs:attribute name="Operator" type="OperatorEnum" use="optional" default="OR"  />
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="StayRestrictions" minOccurs="0" maxOccurs="1">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">Das Element StayRestrictions definiert eine Einschränkung bezogen auf eine Aufenhaltsdauer.</xs:documentation>
+																					<xs:documentation xml:lang="en">The StayRestrictions element defines a restriction with respect to a stay duration.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="StayRestriction" minOccurs="1" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="de">Definition einer Einschränkung bzgl. der
+																									Aufenthaltsdauer.</xs:documentation>
+																								<xs:documentation xml:lang="en">The definition of a restriction with regard to the
+																									stay duration.</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:attribute name="Min" type="xs:duration" use="optional">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Angabe einer Mindestaufenthaltsdauer in Tagen, Wochen oder Monaten.
+																											Beispiel
+																											Min=P3D: Es gilt eine Mindestaufenthaltsdauer von 3 Tagen.</xs:documentation>
+																										<xs:documentation xml:lang="en">Indicates a minimum stay duration in days, weeks or months.
+																											Example
+																											Min=P3D: The minimum stay duration is 3 days.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="Max" type="xs:duration" use="optional">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Angabe einer  Maximalaufenthaltsdauer in Tagen, Wochen oder Monaten.
+																											Beispiel
+																											Max=P21D: Es gilt eine Maximalaufenthaltsdauer von 21 Tagen.</xs:documentation>
+																										<xs:documentation xml:lang="en">Indicates a maximum stay duration in days, weeks or months.
+																											Example
+																											Max=P21D: The maximum stay duration is 21 days.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="Sequence" type="xs:duration">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Das Attribut Sequence beschreibt eine regelmäßige Aufenthaltsdauer, mit der das Produkt gebucht werden kann. Jede Aufenthaltsdauer (bis hin zur evtl. gesetzten Maximalaufenthaltsdauer), die durch die Sequence geteilt werden kann und einen Rest von 0 ergibt, ist möglich.
+																											Beispiel:
+																											Sequence=7 - das Produkt ist wochenweise buchbar bis hin zur Maximalaufenthaltsdauer sofern diese gesetzt ist. Beispiel MaxDays=28 Sequence=7: Das Produkt ist mit einer Aufenthaltsdauer 7, 14, 21 und 28 Tage buchbar.
+																											Sequence=5 - das Produkt ist jeweils mit einer Aufenthaltsdauer von minimum 5 Tagen und allen weiteren Aufenthaltsdauern mit Faktor 5 buchbar. Beispiel MaxDays=18 Sequence=5: Das Produkt ist mit einer Aufenthaltsdauer von 5, 10 und 15 Tage buchbar.</xs:documentation>
+																										<xs:documentation xml:lang="en">The Sequence attribute describes a standard stay that the product can be booked with. Any stay duration (up to any maximum stay limit set) which can be divided by the Sequence with a remainder of 0 is possible.
+																											Example:
+																											Sequence=7 – The product can be booked by week up to the maximum stay duration, where set. Example MaxDays=28 Sequence=7: This product can be booked with a stay of 7, 14, 21 and 28 days.
+																											Sequence=5 – The product can be booked with a minimum stay of 5 days, and all further stays are bookable with the factor 5. Example MaxDays=18 Sequence=5: The product can be booked  with a stay of 5, 10 and 15 days.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="ApplyTo" type="ApplyToStayEnum">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Kenner auf was sich die zugehoerige Angabe von Min und Max  bezieht. Defaultwert ist Complete
+
+																											Moegliche Werte sind:
+																											Complete	             Die Angabe aus Min und Max beziehen sich ausschließlich auf die Dauer der Reise. diese müssen nicht komplett in dem Datumsbereich aus der DateRestriction liegen
+																											Stay	             Mindestens oder Maximal diese Anzahl der Tage müssen innerhalb des Zeitraumes der oben genannten DateRestriction liegen.
+																											Flight               Die Reisedauer wird flugbezogen berechnet. Ist bei Übernachtungsflügen zu berücksichtigen. Bei beispielsweise einem Übernachtungsflug ist die Aufenthaltsdauer um ein Tag kürzer im Hotel als für die gesamte Reise.</xs:documentation>
+																										<xs:documentation xml:lang="en">The identifier to which the corresponding Min and Max refers. The default value is Complete.
+
+																											Possible values are:
+																											Complete	             Min and Max refer exclusively to the duration of the journey. These do not need to lie completely within the date range of the DateRestriction.
+																											Stay	             This number of days must at least or at most lie within the time range of the above DateRestriction.
+																											Flight               The length of stay is counted flight-related. It is necessary to lay down if overnights are included. If you have for example one overnight flight your lenght of stay is one day shorter for the hotel than for the whole trip. </xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																					<xs:attribute name="Invert" type="InvertEnum" default="false" />
+																					<xs:attribute name="Operator" type="OperatorEnum" use="optional" default="OR" />
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="GuestRestrictions" minOccurs="0" maxOccurs="1">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">Das Element GuestRestrictions definiert eine personenbezogene Einschränkung. GuestRestrictions sind immer UND-verbunden.</xs:documentation>
+																					<xs:documentation xml:lang="en">The GuestRestrictions element defines a personal restriction. GuestRestrictions are always AND connected.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="GuestRestriction" minOccurs="1" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="de">Definition personenbezogener  Einschränkungen</xs:documentation>
+																								<xs:documentation xml:lang="en">The definition of personal restrictions.</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:attribute name="MinPerson" type="xs:unsignedShort">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Das Attribut Min zeigt die Anzahl der minimalen Personenbelegung</xs:documentation>
+																										<xs:documentation xml:lang="en">The Min attribute shows the minimum number of occupants.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="MaxPerson" type="xs:unsignedShort">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Das Attribut Max zeigt die Anzahl der maximalen Personenbelegung</xs:documentation>
+																										<xs:documentation xml:lang="en">The Max attribute shows the maximum number of occupants.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="PersonType" type="PersonTypeEnum" />
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="WeekdayRestrictions" minOccurs="0" maxOccurs="1">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">Definition einer Einschränkung pro Verkehrstag.</xs:documentation>
+																					<xs:documentation xml:lang="en">The definition of a restriction per traffic day.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="WeekdayRestriction" minOccurs="1" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="de">Definition einer Einschränkung pro Verkehrstag.</xs:documentation>
+																								<xs:documentation xml:lang="en">The definition of a restriction per traffic day.</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:attribute name="Mask" use="required">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Angabe der betreffenden Verkehrstage von Montag bis Sonntag (beginnend mit Montag) über z.B. folgendes siebenstelliges Pattern:YYNNNYY.
+																											Die Gueltigkeit wird mit Y (Yes) und N (No) bestimmt. Bedeutung des Beispiels YYNNNYY:
+																											Die Gültigkeit der Restriction bezieht sich auf die Wochentage Montag, Dienstag, Samstag und Sonntag.</xs:documentation>
+																										<xs:documentation xml:lang="en">The relevant traffic days are indicated from Monday to Sunday (beginning with Monday) e. g., by means of the following seven-letter pattern: YYNNNYY.
+																											The validity is confirmed using Y (Yes) and N (No). Meaning of the example YYNNNYY:
+																											The restriction is valid on the days of the week Monday, Tuesday, Saturday and Sunday.</xs:documentation>
+																									</xs:annotation>
+																									<xs:simpleType>
+																										<xs:restriction base="xs:string">
+																											<xs:maxLength value="7" />
+																											<xs:minLength value="7" />
+																										</xs:restriction>
+																									</xs:simpleType>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																					<xs:attribute name="Invert" type="InvertEnum" default="false" />
+																					<xs:attribute name="Operator" type="OperatorEnum" use="optional" default="OR" />
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="BoardRestrictions" minOccurs="0" maxOccurs="1">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">Definition einer verpflegungbezogenen Einschränkung. BoardRestriction sind immer OR-verknüpft.</xs:documentation>
+																					<xs:documentation xml:lang="en">The definition of a board-related restriction. BoardRestriction are always OR connected.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="BoardRestriction" minOccurs="1" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="de">Definition einer verpflegungsbezogenen Einschränkung</xs:documentation>
+																								<xs:documentation xml:lang="en">The definition of a board-related restriction.</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:attribute name="Code" type="xs:string" use="required">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Veranstalterinterner Verpflegungscode zur Einschränkung auf eine bestimmte Verpflegungsleistung.</xs:documentation>
+																										<xs:documentation xml:lang="en">The tour operator-internal board code for restriction to a specific board service.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																																						<xs:element name="HotelRestrictions" minOccurs="0" maxOccurs="1">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">Das Element HotelRestrictions steuert gebundene Anschlusshotels.
+																						Dabei kann ein Anschlusshotel zeitlich vor oder nach der Hauptleistung liegen.
+
+																						Immer wenn in einem Restriction Block eine FlightRestriction, HotelRestriction oder AddServiceRestriction gefunden wird,
+																						so beziehen sich alle darin enthaltenen Restrictions (wie Date- oder StayRestriction) auf das gebundene Produkt.</xs:documentation>
+																					<xs:documentation xml:lang="en">The HotelRestriction element controls the bound connecting hotels.
+																						A connecting hotel can be chronologically before or after the principle service.
+
+																						Whenever a FlightRestriction, HotelRestriction or AddServiceRestriction is found in a restriction block,
+																						all of the restrictions it contains (such as Date or StayRestriction) refer to the bound product.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="HotelRestriction" minOccurs="0" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="de">Das Element HotelRestriction beschreibt mögliche bzw. ausgeschlossene Anschlusshotels.</xs:documentation>
+																								<xs:documentation xml:lang="en">The HotelRestriction element describes permissible or excluded connecting hotels.</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+                                                                                                <xs:attribute name="Code" type="xs:string">
+																									<xs:annotation>
+                                                                                                        <xs:documentation xml:lang="de">Angabe des konkreten Hotelcodes, sofern die Bindung auf einem bestimmten Hotel- oder Produktcode liegt.</xs:documentation>
+                                                                                                        <xs:documentation xml:lang="en">Indicates the actual hotel code, if the binding restriction refers to a specific hotel code or product code.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+                                                                                                <xs:attribute name="HotelKey" type="xs:string">
+                                                                                                    <xs:annotation>
+                                                                                                        <xs:documentation xml:lang="de">Einschränkung auf einen bestimmten Hotelvertrag.</xs:documentation>
+                                                                                                        <xs:documentation xml:lang="en">Restriction to a specific hotel contract.</xs:documentation>
+                                                                                                    </xs:annotation>
+                                                                                                </xs:attribute>
+                                                                                                <xs:attribute name="GiataID" type="xs:int">
+                                                                                                    <xs:annotation>
+                                                                                                        <xs:documentation xml:lang="en">Restriction to a specific giata hotel-id.</xs:documentation>
+                                                                                                    </xs:annotation>
+                                                                                                </xs:attribute>
+                                                                                                <xs:attribute name="GoalID" type="xs:int">
+                                                                                                    <xs:annotation>
+                                                                                                        <xs:documentation xml:lang="en">Restriction to a specific hotel peakwork-goal-id.</xs:documentation>
+                                                                                                    </xs:annotation>
+                                                                                                </xs:attribute>
+																								<xs:attribute name="RoomCode" type="xs:string">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Einschränkung auf einen bestimmten Zimmertyp, sofern ein Anschlusshotel mit einem bestimmten Zimmer gebucht werden muss.
+																											Hier ist der veranstalterinterne Zimmercode anzugeben, der in dem Datentyp SellingData/Rooms/Room/Code angegeben ist.</xs:documentation>
+																										<xs:documentation xml:lang="en">The restriction to a specific room type, if a connecting hotel must be booked in connection with a specific room.
+																											Indicates the tour operator’s internal room code, specified in the SellingData/Rooms/Room/Code data type.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="MinCategory" type="xs:decimal">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Einschränkung auf eine Mindest-Sternanzahl. Diese wird in BasicData/Attributes/Attribute gesetzt. Diese Einschränkung ist nur sinnvoll  in den GlobalExtras.</xs:documentation>
+																										<xs:documentation xml:lang="en">Limitation to a minimum number of star rating. Only used in GlobalExtra.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																								<xs:attribute name="MaxCategory" type="xs:decimal">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Einschränkung auf eine Maximale-Sternanzahl. Diese wird in BasicData/Attributes/Attribute gesetzt. Diese Einschränkung ist nur sinnvoll  in den GlobalExtras.</xs:documentation>
+																										<xs:documentation xml:lang="en">Limitation to a maximum number of star rating. Only used in GlobalExtra.</xs:documentation>
+																									</xs:annotation>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="FlightRestrictions" minOccurs="0" maxOccurs="2">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">Definition von flugbezogenen Einschränkungen oder gebundenen Anschlussflügen.
+																						Das Element FlightRestrictions beschreibt beispielsweise, dass eine Hauptleistung lediglich mit einem bestimmten Flug,
+																						mit Flügen mit bestimmten Verkehrstagen oder Verbindungsnummern, oder nur mit bestimmten Abflughäfen gebucht werden darf.
+
+																						Immer wenn in einem Restriction Block eine FlightRestriction, HotelRestriction oder AddServiceRestriction gefunden wird,
+																						so beziehen sich alle darin enthaltenen Restrictions (wie Date- oder StayRestriction) auf das gebundene Produkt.</xs:documentation>
+																					<xs:documentation xml:lang="en">The definition of flight-related restrictions or bound connecting flights.
+																						The FlightRestrictions element describes, for example, that a principle service can only be booked in conjunction with a specific flight.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="FlightRestriction" minOccurs="0" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="de">Beschreibung von Flugleistungen, die ausschließlich zu diesem Produkt zugesteuert werden dürfen oder explizit gesperrt sind. Über dieses Element werden Flugbindungen zu einem Produkt gesteuert.</xs:documentation>
+																								<xs:documentation xml:lang="en">Description of flight services that may exclusively be assigned to this product or are explicitly blocked.
+																									This element is used to control flight restrictions referring to a product.
+
+																									All FlightRestriction elements within FlightRestrictions are connected with a logical OR.</xs:documentation>
+																							</xs:annotation>
+																							<xs:complexType>
+																								<xs:attribute name="ArrivalAirport">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="de">Einschraenkung auf einen Zielflughafen durch die Angabe des 3-Letter-Codes.</xs:documentation>
+																										<xs:documentation xml:lang="en">The restriction to an arrival airport by indicating the 3-letter code.</xs:documentation>
+																									</xs:annotation>
+																									<xs:simpleType>
+																										<xs:restriction base="xs:string">
+																											<xs:maxLength value="3" />
+																											<xs:minLength value="3" />
+																										</xs:restriction>
+																									</xs:simpleType>
+																								</xs:attribute>
+																								<xs:attribute name="DepartureAirport">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="en">The restriction to an departure airport by indicating the 3-letter code.</xs:documentation>
+																									</xs:annotation>
+																									<xs:simpleType>
+																										<xs:restriction base="xs:string">
+																											<xs:maxLength value="3" />
+																											<xs:minLength value="3" />
+																										</xs:restriction>
+																									</xs:simpleType>
+																								</xs:attribute>
+																								<xs:attribute name="Airline">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="en">Restrict the Airline/Carrier of the flight</xs:documentation>
+																									</xs:annotation>
+																									<xs:simpleType>
+																										<xs:restriction base="xs:string">
+																											<xs:maxLength value="2" />
+																											<xs:minLength value="2" />
+																										</xs:restriction>
+																									</xs:simpleType>
+																								</xs:attribute>
+																							</xs:complexType>
+																						</xs:element>
+																						<xs:element name="Sources" minOccurs="0" maxOccurs="1">
+																							<xs:complexType>
+																								<xs:sequence>
+																									<xs:element name="Source" minOccurs="1" maxOccurs="unbounded">
+																										<xs:annotation>
+																											<xs:documentation xml:lang="en">The name of the source of flight-data must be inserted here, if not all available sources should be included.
+																												The source information should only be given in the FlightRestrictions for Outbound and not in the Inbound FlightRestrictions.</xs:documentation>
+																										</xs:annotation>
+																										<xs:complexType>
+																											<xs:attribute name="ID" type="xs:string" use="required">
+																												<xs:annotation>
+																													<xs:documentation xml:lang="en">The ID attribute specifies the name of the flight-source.</xs:documentation>
+																												</xs:annotation>
+																											</xs:attribute>
+																										</xs:complexType>
+																									</xs:element>
+																								</xs:sequence>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																					<xs:attribute name="Type" default="Outbound">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="en">Specifies whether the Restrictions apply on the outbound or inbound flight.</xs:documentation>
+																						</xs:annotation>
+																						<xs:simpleType>
+																							<xs:restriction base="xs:string">
+																								<xs:enumeration value="Outbound" />
+																								<xs:enumeration value="Inbound" />
+																							</xs:restriction>
+																						</xs:simpleType>
+																					</xs:attribute>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Descriptions" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Übergabe des Langtextes mit der Beschreibung, welche in den Vertriebssystemen dargestellt werden soll.
+																Beispiel: Doppelzimmer Komfort, Meerblick</xs:documentation>
+															<xs:documentation xml:lang="en">The long description to be shown in the sales systems is specified here.
+																Example: Double room comfort class, sea view</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">Übergabe des Langtextes mit der Beschreibung, welche in den Vertriebssystemen dargestellt werden soll.
+																			Beispiel: Doppelzimmer Komfort, Meerblick
+																			Die Attribute Start und End werden zur Zeit nur auf Zimmerebene unterstützt.</xs:documentation>
+																		<xs:documentation xml:lang="en">The long description to be shown in the sales systems is specified here.
+																			Example: Double room comfort class, sea view
+																			The attributes Start and End are only supported for the element Room.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="Visible" type="xs:boolean">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">true: wird im Vertriebssystem angezeigt
+																		false: wird im Vertriebssystem nicht angezeigt
+
+																		Der Default-Wert des Attributes ist true.
+																		Sofern der Text in einem Vertriebssystem angezeigt werden soll, muss das Attribut Visible nicht geschrieben werden.</xs:documentation>
+																	<xs:documentation xml:lang="en">true: is displayed in the sales system
+																		false: is not displayed in the sales system
+
+																		The default value of the attribute is True.
+																		If the text is to be displayed in a sales system, the Visible attribute does not need to be written.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Reductions" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das Element Reductions beinhaltet Preisabschläge.</xs:documentation>
+															<xs:documentation xml:lang="en">The Reductions element contains price reductions.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Reduction" minOccurs="1" maxOccurs="1">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">Das Element Reduction beinhaltet Preisabschläge.</xs:documentation>
+																		<xs:documentation xml:lang="en">The Reduction element contains price reductions.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element ref="Appliances" minOccurs="0" maxOccurs="1" />
+																		</xs:sequence>
+																		<xs:attribute name="Amount" type="xs:decimal" use="optional">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">Hier wird der Betrag des Abschlags bzw. der Ermaessigung eingestellt.</xs:documentation>
+																				<xs:documentation xml:lang="en">The amount of the additional charge or discount is set here.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="Percent" type="xs:decimal" use="optional">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">Hier wird die Hoehe des prozentualen Abschlags bzw. der Ermaeßigung eingestellt.</xs:documentation>
+																				<xs:documentation xml:lang="en">The percentage of the additional charge or reduction is set here.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="Calculation" type="CalculationEnum" default="PN">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">Hier wird der Preisbezug pro Person oder Objekt eingestellt.
+																					Mögliche Inhalte sind:
+																					PN - Pro Person und Nacht
+																					PS - Pro Person und Aufenthalt
+																					PW - Pro Person und Woche
+																					ON - Pro Objekt und Nacht
+																					OS - Pro Objekt und Aufenthalt
+																					OW - Pro Objekt und Woche
+
+																					Defaultwert ist PN, sollte es sich nicht um ein DauernIncentive handeln.
+																					Bei DauernIncentives ergibt sich die Berechnung durch die angegebenen Attribute wie Nights und DiscountedNights.
+																				</xs:documentation>
+																				<xs:documentation xml:lang="en">The price relationship per person or object is set here.
+																					Possible inputs are:
+																					PN - per person and night
+																					PS - per person and stay
+																					PW - per person and week
+																					ON - per object and night
+																					OS - per object and stay
+																					OW - per object and week
+
+																					The default is PN, if a duration incentive is not involved.
+																					For duration incentives, the calculation results from the specified attributes such as Nights and DiscountedNights.
+																				</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Charges" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Charges ist ein übergeordnetes Element, welches ein oder mehrere Charge Blöcke beinhalten kann. In diesem werden Zuschläge für das Extra definiert.</xs:documentation>
+															<xs:documentation xml:lang="en">Charges is a parent element that can contain one or more ChargeBlocks. Charges for an extra are defined here.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Charge" minOccurs="1" maxOccurs="1">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">Das Element definiert Zuschläge für ein Extra.</xs:documentation>
+																		<xs:documentation xml:lang="en">This element defines charges for an extra.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element ref="Appliances" minOccurs="0" maxOccurs="1" />
+																		</xs:sequence>
+																		<xs:attribute name="Amount" type="xs:decimal" use="optional">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">Das Attribut Amount enthält die Höhe des Zuschlags.</xs:documentation>
+																				<xs:documentation xml:lang="en">The Amount attribute specifies the amount of the extra charge.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="AmountGross" type="xs:decimal" use="optional">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">Das Attribut AmountGross enthält die Höhe des Zuschlags (Brutto).</xs:documentation>
+																				<xs:documentation xml:lang="en">The AmountGross attribute specifies the gross amount of the extra charge.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="Percent" type="xs:decimal" use="optional">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">Hier wird die Hoehe des prozentualen Abschlags bzw. der Ermaeßigung eingestellt.</xs:documentation>
+																				<xs:documentation xml:lang="en">The percentage of the additional charge or reduction is set here.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="Calculation" type="CalculationEnum" default="PN">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">In dem Attribut Calculation wird der Preisbezug pro Person oder Objekt eingestellt.
+
+																					Mögliche Inhalte sind:
+																					PN -  Pro Person und Nacht
+																					PS -  Pro Person und Aufenthalt
+																					PW-  Pro Person und Woche
+																					ON -  Pro Objekt und Nacht
+																					OS  - Pro Objekt und Aufwenthalt
+																					OW - Pro Objekt und Woche
+
+																					Defaultwert ist PN.
+                                                                                </xs:documentation>
+																			<xs:documentation xml:lang="en">The price relationship per person or object is set in the Calculation attribute
+
+																					Possible inputs are:
+																					PN - per person and night
+																					PS - per person and stay
+																					PW - per person and week
+																					ON - per object and night
+																					OS - per object and stay
+																					OW - per object and week
+
+																					The default value is PN.
+																				</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Distribution" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Über das Element Distribution werden Vertriebskanäle und Exklusivangebote für bestimmte Agenturen gesteuert. Sofern das Element Distribution nicht gesetzt ist, gilt das Produkt, bzw. das Angebot für alle Vertriebskanäle sowie für alle Agenturen.
+
+																Wenn Einschränkung auf bestimmte Vertriebskanäle bestehen, sind diese in dem Element Channel-Name anzugeben.
+																Beispiel:
+																Online
+																Stationär
+																Eigenvertrieb
+																Intern</xs:documentation>
+															<xs:documentation xml:lang="en">The Distribution element is used to assign distribution channels and exclusive offers for specific agencies. If the Distribution element is not set, the product or the offer is valid for all distribution channels and for all agencies.
+
+																If there are restrictions to specific distribution channels, these must be indicated in the Channel-Name element.
+																Example:
+																Online
+																Stationary
+																Direct sale
+																Internal</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Channel" minOccurs="1" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">Über das Element Distribution werden Vertriebskanäle und Exklusivangebote für bestimmte Agenturen gesteuert. Sofern das Element Distribution nicht gesetzt ist, gilt das Produkt, bzw. das Angebot für alle Vertriebskanäle, sowie für alle Agenturen. Mit dem Attribut „Invert“ können Vertriebskanäle oder Exklusivangebote invertiert bzw. ausgeschlossen werden.
+
+																			Über das Element Channel-Name werden die jeweiligen Vertriebskanäle oder Agenturketten, etc. namentlich transportiert.Die Abarbeitung und Steuerung von Exklusivitäten ist durch den Veranstalter mit dem Vertriebssystem abzustimmen.
+
+																			Beispiele sind:
+																			Online
+																			Stationär
+																			Eigenvertrieb
+																			Intern</xs:documentation>
+																		<xs:documentation xml:lang="en">The Distribution element is used to assign distribution channels and exclusive offers for specific agencies. If the Distribution element is not set, the product or the offer is valid for all distribution channels and for all agencies. Distribution channels or exclusive offers can be inverted or excluded using the Invert attribute.
+
+																			The Channel-Name element passes the respective distribution channels or agency chains, etc. by name. Processing and assigning of exclusivity must be coordinated by the tour operator with the sales system.
+
+																			Examples are:
+																			Online
+																			Stationary
+																			Direct sale
+																			Internal</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:attribute name="Name" type="xs:string" />
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="Invert" type="InvertEnum" default="false" />
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="INFX" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Dieses Element ist nur relevant für die INFX-Daten-Generierung aus EDF heraus</xs:documentation>
+															<xs:documentation xml:lang="en">This element is only relevant for INFX data generation from EDF.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="INFXAttributes" minOccurs="1" maxOccurs="3">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">Parameter für Zusatzleistungen</xs:documentation>
+																		<xs:documentation xml:lang="en">Parameters for extras.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="INFXAttribute" minOccurs="1" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:attribute name="Position" type="xs:int">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="de">Steuert ab welcher Position die zusätzliche Information ind INFX geschrieben wird.</xs:documentation>
+																							<xs:documentation xml:lang="en">Controls the position from which additional information is written in INFX.</xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																					<xs:attribute name="Value" type="xs:string" use="required">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="de">Hier wird der Inhalt der zusätzlichen Information, die in das INFX geschrieben werden soll, transportiert.</xs:documentation>
+																							<xs:documentation xml:lang="en">The content of the additional information to be written in the INFX is specified here.</xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																		<xs:attribute name="Type" type="INFXEnum">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">Das Attribut "Type" steuert, um welches INFX Format es sich handelt.
+																					Dabei sind die folgenden Enumerations möglich:
+																					- 1: INFX1
+																					- 2: INFX2
+                                                                                    - 3: Custom
+																					- Custom: Kundenspezifisches Format, das nicht dem INFX1 oder INFX2 entspricht.</xs:documentation>
+																				<xs:documentation xml:lang="en">Controls which INFX type is used, INFX1 or INFX2.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="Description" type="xs:boolean">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Parameter für Zusatzleistungskenner, ob dieser ins INFX geschrieben werden soll</xs:documentation>
+																	<xs:documentation xml:lang="en">The parameter for whether an additional services identifier is to be written to the INFX.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="DRVGlobalTypes" minOccurs="0" maxOccurs="1">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="DRVGlobalType" minOccurs="0" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="GTAttribute" minOccurs="0" maxOccurs="unbounded">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">Definition der DRV GlobalTypes mit dazugehörigen SubTypes und AdditionalTypes</xs:documentation>
+																					<xs:documentation xml:lang="en">The definition of the DRV GlobalTypes with corresponding SubTypes and AdditionalTypes.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:attribute name="GT" type="xs:string" use="required">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="de">Code des GlobalTypes, Pflichtparameter
+																								z.B. GT03-WELL</xs:documentation>
+																							<xs:documentation xml:lang="en">The code of the GlobalType (required parameter)
+																								e. g. GT03-WELL</xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																					<xs:attribute name="ST" type="xs:string">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="de">Code des SubTypes
+																								z.B. ST03-MASS</xs:documentation>
+																							<xs:documentation xml:lang="en">The code of the SubType
+																								e. g. ST03-MASS</xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																					<xs:attribute name="AT" type="xs:string">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="de">Code des AdditionalTypes
+																								z.B. AT03-SYNC</xs:documentation>
+																							<xs:documentation xml:lang="en">The code of the AdditionalType
+																								e. g. AT03-SYNC</xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																					<xs:attribute name="CT" type="xs:string" />
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="Action" type="GlobalTypeActionEnum" default="Add">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Legt fest, ob die GlobalTypes hinzugefügt oder entfernt werden sollen. Wenn die GlobalTypes entfernt werden sollen, sind nachgestellte Wildcards in allen 4 Komponenten erlaubt.</xs:documentation>
+																	<xs:documentation xml:lang="en">Determines whether the GlobalTypes are added or removed. When the GlobalTypes should be removed, trailing wildcards are allowed in all 4 components.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="GlobalType" type="ExtraGlobalTypeEnum" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="de">Aktuell wird nur TR (für Transfer) unterstützt.</xs:documentation>
+														<xs:documentation xml:lang="en">Currently only TR (for transfer) is supported</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ApplianceCode" type="xs:string" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="de">Der ApplianceCode stellt den veranstalterspezifischen Code eines Extratypen, der zur abhängigen Anwendung von unterschiedlichen Extras hinzugezogen werden kann.
+
+															Der Code ist dabei frei definierbar.
+															Beispiele:
+															ZU - Zuschläge
+															NA - Nachlässe
+															SO - Sonderpreise
+															TF - Transfer
+															oder
+															SU - Supplement / EC - ExtraCharge
+															RE - Reduction
+															SO - Special Offer
+															TF - Transfer</xs:documentation>
+														<xs:documentation xml:lang="en">The ApplianceCode provides the tour operator-specific code of an extra type, the dependant application can add from various extras.
+
+															The code is user-definable.
+															Examples:
+															AC - Additional charges
+															RE - Reductions
+															SP - Special prices
+															TF - Transfer
+															or
+															SU - Supplement / EC - ExtraCharge
+															RE - Reduction
+															SO - Special Offer
+															TF - Transfer</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="SortIndex" type="xs:int" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="de">Der SortIndex ist eine Sortierreihenfolge, in der die Extras abgearbeitet werden. Je höher die Priorität der Abarbeitung, desdo kleiner der SortIndex. SortIndex steht im engen Zusammenhang mit CompatibleExtras.</xs:documentation>
+														<xs:documentation xml:lang="en">SortIndex determines the order in which extras are processed. The higher the priority of the processing, the lower the SortIndex. SortIndex is closely related to CompatibleExtras.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Type" type="TypeEnum">
+													<xs:annotation>
+														<xs:documentation xml:lang="de">Hier werden die Arten von Extras definiert. Folgende Arten sind erlaubt:
+														AT (Admission ticket) - Eintrittskarte
+														EX (Excursions) - Ausflug
+														GU (Guide) - Reiseleitung
+														HF (Handling Fee) - Bearbeitungsgebühren
+														IN (Insurance) - Versicherung
+														PF (Payment Fee) - Zahlungsgebühren
+														RC (Rental Car) - Mietwagen
+														RF (Rail and Fly) - Rail and Fly
+														SK (Skipass) - Skipass
+														TR (Transfer) - Transfer
+														XX (Miscellaneous) - Sonstiges
+														</xs:documentation>
+														<xs:documentation xml:lang="en">The type of the extra can be defined in this attribute. Following values are alowed:
+														AT Admission ticket
+														EX Excursions
+														GU Guide
+														HF Handling Fee
+														IN Insurance
+														PF Payment Fee
+														RC Rental Car
+														RF Rail and Fly
+														SK Skipass
+														TR Transfer
+														XX Miscellaneous
+														</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="BookingCode" type="xs:string">
+													<xs:annotation>
+														<xs:documentation xml:lang="de">Das Attribute BookingCode zeigt den Buchungscode bei Sonderleistungen.</xs:documentation>
+														<xs:documentation xml:lang="en">The BookingCode attribute displays the booking code for extra services.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Mandatory" type="MandatoryEnum" default="True">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The Mandatory attribute specifies whether the price of this extra is added to the offer price
+or whether it represents an optional service/surcharge that can optionally be booked on top of the regular offer.
+Using 'Optional' requires using the 'BookingCode' attribute as well.
+
+Note: Extras with Mandatory=Optional are not yet fully supported and will currently be dropped during processing.
+
+Possible values:
+* True: The extra is added to the offer price. This is the default.
+* Optional: The extra isn't added to the offer price and the customer can decide whether or not to book this optional service.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Currency" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Das Element Currency steuert die Verkaufswährung eines Produktes.
+									Im Rahmen einer Datenlieferung für den deutschen Markt ist hier die Verkaufswährung Euro zu erwarten. Die Abbildung von Währungen erfolgt über den dreistelligen ISO-Währungscode.
+									Angabe der Verkaufswährung in dem dreistelligen Währungscode nach ISO 4217. Beispiel: EUR für Euro
+
+									Wichtige Regel:
+									Die Währung der GlobalExtras muss zwingend mit der Währung des Hotel EDF übereinstimmen.
+
+									Beispiel:
+									//SellingData Currency="EUR" </xs:documentation>
+								<xs:documentation xml:lang="en">The Currency element determines the currency in which a product in sold.
+									In the case of a data delivery for the German market, the sales currency given here will usually be Euros. The currency is indicated by the 3-digit ISO currency code.
+									Specification of the sales currency according to the 3-digit currency code stated in ISO 4217. For example: EUR for Euro
+
+									Important rule:
+									The set currency in the GlobalExtra file has to be the same sell currency that ist used in the hotel EDF file.
+
+									Example:
+									//SellingData Currency="EUR" </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="SchemaVersion" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Das Attribut SchemaVersion gibt die Version an, ab welcher Schema Version das XML kompatibel ist. Dieses Attribut ist ein Pflichtattribut und sichert die Verarbeitung der Dateien mit der entsprechenden Import Version auf Seiten des Datenabnehmers.</xs:documentation>
+					<xs:documentation xml:lang="en">The SchemaVersion attribute specifies the minimum version from which the XML is compatible. This attribute is a mandatory attribute and ensures that the files are processed using the appropriate import version on the recipient's side.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="CreationDate" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">In CreationDate kann das Erstellungsdatum und die Uhrzeit für diese Datei mitgegeben werden. </xs:documentation>
+					<xs:documentation xml:lang="en">In CreationDate can be specified a date and a time for this file.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="TypeApplianceCode">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Der ApplianceCode verweist auf ein bestimmtes Extra mit dem selben ApplianceCode</xs:documentation>
+			<xs:documentation xml:lang="en">The ApplianceCode refers to a specific extra with the same appliance code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="UsageEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HotelOnly" />
+			<xs:enumeration value="FlightOnly" />
+			<xs:enumeration value="Package" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AT" />
+			<xs:enumeration value="EX" />
+			<xs:enumeration value="GU" />
+			<xs:enumeration value="HF" />
+			<xs:enumeration value="IN" />
+			<xs:enumeration value="PF" />
+			<xs:enumeration value="RC" />
+			<xs:enumeration value="RF" />
+			<xs:enumeration value="SK" />
+			<xs:enumeration value="TR" />
+			<xs:enumeration value="XX" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MandatoryEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="True" />
+			<xs:enumeration value="Optional" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExtraGlobalTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TR" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OperatorEnum">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Moegliche Werte:
+				AND
+				OR
+				Innerhalb einer Restricitions sind mehrere Restriction ODER-verknüpft. Um die ODER-Verknüpfung aufzuheben  und in eine UND-Verknüpfung umzuwandeln, kann der Operator=AND genutzt werden.
+				Bei der Verwendung des Operator=AND sind alle untergeordneten Restriction UND-verknüpft. Als Default-Wert wird immer OR angenommen.
+
+				Beispiel: Wenn man zwischen dem Start=01.04.2010 und End=14.04.2010 (DateRestriction) ODER zwischen dem  Start=15.08.2010 und End=31.08.2010 (DateRestriction) anreist,
+				dann erhält man einen Rabatt von 100 Euro.</xs:documentation>
+			<xs:documentation xml:lang="en">Possible values:
+				AND
+				OR
+				Within one restriction, multiple restrictions are linked using OR. In order to cancel the OR operator and transform it into an AND operator, Operator=AND can be used.
+				When using Operator=AND all subordinate restrictions are linked using the AND operator. OR is always the assumed default.
+
+				Example: If the arrival is between the Start=01 Apr 2010 and End=14 Apr 2010 (DateRestriction) OR between the Start=Aug 15, 2010 and End=Aug 31, 2010 (DateRestriction),
+				then a discount of 100 EUR is granted.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AND" />
+			<xs:enumeration value="OR" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InvertEnum">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Das Attribut Invert ist nur zu setzen, sofern eine Restriction invertiert werden soll.
+				Ist keine Invertierung gewünscht, muss das Attribut nicht geschrieben  werden. Daher ist der Defaultwert false.
+
+				Beispiel: Invert=true für einen Zeitraum Start=2010-01-01 End=2010-01-15.
+				Diese Regel bedeutet, dass alle Zeiten ausserhalb des Zeitraums 01.01.2010 bis 15.01.2010 gültig sind.
+				Mit dem Attribut Invert=true werden Schließzeiten, bzw. Stopsales abgebildet.
+
+				Das Invert wird auf das Ergebnis der DateRestrictions(!!) angewendet
+				Zuerst werden die unterschiedlichen DateRestriction (und alle anderen Typen) ohne Berücksichtigung des Invert überprüft
+				Im Anschluss wird dieses Ergebnis Invertiert, wenn Invert=true gesetzt sein würde.</xs:documentation>
+			<xs:documentation xml:lang="en">The Invert attribute is only set when inverting a restriction. If no inversion is desired, the attribute need not be written. Therefore, the default is False.
+				Example: Invert=true for a period Start=2010-01-01 End=2010-01-15.
+				This rule means that all times outside of the period Jan 01, 2010 until Jan 15, 2010 are valid.
+				The Invert=true attribute is used to indicate closing times or stop sales.
+
+				The Invert attribute is applied to the result of DateRestrictions(!!).
+				The various DateRestrictions (and all other types) are first checked without reference to the Invert attribute.
+				The result is subsequently inverted, if Invert=true was set.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="ApplyToEnum">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Kenner ob zugehoerige Angabe Hotel-Anreise- oder Hotel-Aufenthaltsbezogen oder Flug-Anreise- oder Flug-Aufenthaltsbezogen ist.
+				Dieser Kenner gilt in Verbindung mit dem Attribut "ApplyToMode", welches den Hotel- oder Flugbezug steuert.
+
+				Moegliche Werte sind:
+				Arrival	Der Zeitraum gilt anreisebezogen. Es gelten Tage als Basis.
+				Stay	Der Zeitraum gilt aufenthaltsbezogen. jedoch nächteweise
+				Within	Der gesamte Reisezeitraum (Jeder Aufenthaltstag der Reise) liegt in dem Zeitraum Start, End. Es gelten Tage als Basis.
+				Departure	Der Zeitraum gilt abreisebezogen. Es gelten Tage als Basis.
+
+
+				Beispiel für Arrival und ApplyToMode="Flight":
+				1. Flug CGN – PMI 01.01.10 – 14.01.10
+				2. Erstes Hotel PMI 01.01.10 – 07.01.10
+				3. Zweites Hotel PMI 07.01.10 – 14.01.10
+
+				Bei dem Anschlusshotel gibt es ein Incentive, was Fluganreise gesteuert wird. Das Incentive des zweiten Hotels gilt vom 01.01. bis 06.01.10.
+				Auch wenn die Anreise im Hotel erst am 07.01.10 erfolgt, wird dennoch das Incentive (Beispiel 7=6) gewährt, da die Bedingung der Fluganreise erfülllt ist.
+
+				Beispiel für Stay und ApplyToMode="Flight":
+				1. Flug DUS – BKK 01.01 – 08.01.
+				2. Hotelaufenthalt, weil Übernachtsflug 02.01. – 08.01.
+				Bei dem Hotel gibt es ein Incentive 7=6, dieses würde für HotelStay nicht gezogen werden, da der Hotelaufenthalt nur 6 Tage ist. Wird ApplyTo=FlightStay gesetzt, so bezieht es sich auf die Dauer zwischen Hinflug und Rückflug. Das Incentive 7=6 wird gewährt.
+
+				Beispiel für Within und ApplyToMode="Hotel":
+				1. Flug MUC – TFS 15.01. – 22.01.
+				2. Hotel TFS 15.01. – 22.01.
+				Das Incenitive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 31.01.
+				Bei ApplyTo=Within muss der Hotelaufenthalt genau in diesen Zeitraum fallen. Gibt es dort eine Überschneidung, so wird das Extra nicht gezogen. z.B. Incenitive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 20.01. Das Incentive wäre in diesem Falle nicht gültig.</xs:documentation>
+			<xs:documentation xml:lang="en">Identifier of whether the respective information refers to the hotel arrival or hotel stay, or to flight arrival or flight stay.
+				This identifier applies in conjunction with the ApplyToMode attribute, which assigns the hotel or flight reference.
+
+				Possible values are:
+				Arrival	The time range applies to the arrival. Days apply as the basis.
+				Stay	The time range applies to the stay, but by night
+				Within	The entire travel period (every stay day of the journey) lies in the time range Start, End. Days apply as the basis.
+				Departure	The time range applies to the departure. Days apply as the basis.
+
+
+				Example of Arrival and ApplyToMode="Flight":
+				1. Flight CGN – PMI Jan 01, 2010 – Jan 14, 2010
+				2. First hotel PMI Jan 01, 2010 – Jan 07, 2010
+				3. Second hotel PMI Jan 07, 2010 – Jan 14, 2010
+
+				An incentive, that is controlled via flight arrival, already exists for the connecting hotel. The incentive for the second hotel is valid from Jan 01 until Jan 06, 2010.
+				Even if the arrival in the hotel is not until Jan 07, 2010, the incentive (example 7=6) is nonetheless granted, since the condition for the flight arrival is satisfied.
+
+				Example of Stay and ApplyToMode="Flight":
+				1. Flight DUS – BKK Jan 01 – Jan 08
+				2. Hotel stay because of overnight flight Jan 02 – Jan 08.
+				An incentive 7=6 already exists for the hotel; this would not be drawn for the HotelStay, since the hotel stay is only for 6 days. If ApplyTo=FlightStay is set, this refers to the duration between the outbound flight and the inbound flight. The Incentive 7=6 is granted.
+
+				Example of Within and ApplyToMode="Hotel":
+				1. Flight MUC – TFS Jan 15 – Jan 22.
+				2. Hotel TFS Jan 15 – Jan 22.
+				The incentive 7=6 has a validity duration from Jan 01 – Jan 31.
+				For ApplyTo=Within the hotel stay must fall exactly within this time range. If there are overlaps, the extra is not applied, e.g., Incentive 7=6 has a validity duration from Jan 01 – Jan 20. In this case the incentive would not be valid.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Arrival" />
+			<xs:enumeration value="Stay" />
+			<xs:enumeration value="Within" />
+			<xs:enumeration value="Departure" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplyToModeEnum">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Kenner ob zugehoerige Angabe sich auf das Hotel oder den Flug beziehen. Steht in Zusammenhang mit ApplyTo.
+
+				Moegliche Werte:
+				Hotel
+				Flight</xs:documentation>
+			<xs:documentation xml:lang="en">Indicates whether the corresponding information refers to the hotel or the flight. This is linked to ApplyTo.
+
+				Possible values:
+				Hotel
+				Flight</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hotel" />
+			<xs:enumeration value="Flight" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplyToStayEnum">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Kenner auf was sich die zugehoerige Angabe von Min und Max  bezieht. Defaultwert ist Complete
+
+				Moegliche Werte sind:
+				Complete	             Die Angabe aus Min und Max beziehen sich ausschließlich auf die Dauer der Reise. diese müssen nicht komplett in dem Datumsbereich aus der DateRestriction liegen
+				Stay	             Mindestens oder Maximal diese Anzahl der Tage müssen innerhalb des Zeitraumes der oben genannten DateRestriction liegen.
+				Flight               Die Reisedauer wird flugbezogen berechnet. Ist bei Übernachtungsflügen zu berücksichtigen. Bei beispielsweise einem Übernachtungsflug ist die Aufenthaltsdauer um ein Tag kürzer im Hotel als für die gesamte Reise.</xs:documentation>
+			<xs:documentation xml:lang="en">The identifier to which the corresponding Min and Max refers. The default value is Complete.
+
+				Possible values are:
+				Complete	             Min and Max refer exclusively to the duration of the journey. These do not need to lie completely within the date range of the DateRestriction.
+				Stay	             This number of days must at least or at most lie within the time range of the above DateRestriction.
+				Flight               The length of stay is counted flight-related. It is necessary to lay down if overnights are included. If you have for example one overnight flight your lenght of stay is one day shorter for the hotel than for the whole trip. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Complete" />
+			<xs:enumeration value="Stay" />
+			<xs:enumeration value="Flight" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonTypeEnum">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Der PersonType beschreibt einen Personentyp, um bestimmte Preise, Incentives, oder Restriktionen an einen bestimmten Personentyp zu binden.
+
+				Die folgende Typen sind möglich:
+				A   Adult (Erwachsener)
+				C   Child  (Kind)
+				I   Infant (Kleinkind)
+    </xs:documentation>
+			<xs:documentation xml:lang="en">The PersonType describes a type of person to tie specific prices, incentives, or restrictions to a specific type of person.
+
+				The following types are possible:
+				A   Adult
+				C   Child
+				I   Infant
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A" />
+			<xs:enumeration value="C" />
+			<xs:enumeration value="I" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CalculationEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PN" />
+			<xs:enumeration value="PS" />
+			<xs:enumeration value="PW" />
+			<xs:enumeration value="ON" />
+			<xs:enumeration value="OS" />
+			<xs:enumeration value="OW" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplianceTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Person" />
+			<xs:enumeration value="Charge" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="INFXEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1" />
+			<xs:enumeration value="2" />
+			<xs:enumeration value="Custom" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GlobalTypeActionEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Add" />
+			<xs:enumeration value="Remove" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attributeGroup name="TimeRangeAttributes">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Angabe eines Mindestzeitraumes</xs:documentation>
+			<xs:documentation xml:lang="en">Specifies a minimum period.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Start" type="xs:date">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Beginn des Zeitraums in dem Format JJJJ-MM-TT.</xs:documentation>
+				<xs:documentation xml:lang="en">The start of the period in the format YYYY-MM-DD.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="End" type="xs:date">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Ende des Zeitraums in dem Format JJJJ-MM-TT.</xs:documentation>
+				<xs:documentation xml:lang="en">The end of the period in the format YYYY-MM-DD.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:element name="Appliances">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Stellt den Bezug zu anderen Extras bzw. zu Basis-,Verlängerungspreise oder Verpflegungen dar.
+				Wenn kein Appliances geschrieben wird, so bezieht sich das Extra auf alle Charges (BasePrice, ExtraDay und Board), aber nicht auf ein anderes Extra.</xs:documentation>
+			<xs:documentation xml:lang="en">Shows the reference to other extras or to base charges, extra day prices or board.
+				If Appliances is not written, the extra relates to all charges (BasePrice, ExtraDay and Board), but not to another extra.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Appliance" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Stellt den Bezug zu anderen Extras bzw. zu Basis-,Verlängerungspreise oder Verpflegungen dar.
+
+							Wenn kein Appliance geschrieben wird, so bezieht sich das Extra defaultmäßig auf Type=Charge  aber nicht auf ein anderes Extra (Type=Extra).
+
+							Beispiel:
+							Ein Frühbucher wird nur auf den Basispreis angewendet:
+							Type=Charge Code:Baseprice
+							=Hier muß das Element"Appliances" nicht geschrieben werden, da es defaultmäßig gesetzt ist.
+
+							Ein Frühbucher wird auf den kompletten Preis angewendet:
+							Type=Charge
+							Hier muß das Element "Appliances" gesetzt werden.</xs:documentation>
+						<xs:documentation xml:lang="en">Shows the reference to other extras or to base charges, extra day prices or board.
+
+							If Appliance is not written, the extra refers by default to Type=Charge, but not to another extra (Type=Extra).
+
+							Example:
+							An early bird is only applied to the base price:
+							Type=Charge Code:Baseprice
+							= The Appliances element does not have to be written here, as it is set by default.
+
+							An early bird is applied to the complete price:
+							Type=Charge
+							The Appliances element must be set here.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="Type" type="ApplianceTypeEnum" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Moegliche Werte:
+									Person
+									Charge
+
+									Person = Der Type Person wird gesetzt um in einem Extra auf eine bestimmte Personengruppe zu referenzieren. z.B. die Ermäßigung gilt nur für Kinder. Im Attribut Code wird der Personentyp gesetzt. Die möglichen und festgelegten Werte sind dem Attribut Code zu entnehmen. Wenn der Wert Person gesetzt wird, können die Attribute MinAge und MaxAge gzusätzlich genutzt werden.
+									Charge = Der Type Charge wird gesetzt wenn das Extra nur auf andere Extras angewendet werden soll.
+									</xs:documentation>
+								<xs:documentation xml:lang="en">Possible values:
+									Person
+									Charge
+
+									Person = The Person type is set to reference a specific group of persons in an extra. For example, the reduction applies only to children. The Person type is set in the Code attribute. The possible and pre-defined values are taken from the Code attribute. When the Person value is set, the MinAge and MaxAge attributes can also be used.
+									Charge = The Charge type is set when the extra should only be applied to other extras.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Code" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Das Attribut "Code" steht in festem Zusammenhang mit dem Attribute "Type". Je nach gewähltem Type, kann das Attribut "Code" unterschiedliche Werte annehmen. Die folgenden Inhalte sind möglich.
+
+									Type="Person"
+									Wenn Type gleich Person, sind die folgenden Codes möglich:
+									A: Adult
+									C: Child
+									I: Infant
+
+									Type="Charge"
+									Wenn der Type auf "Charge" steht, kann hier nur "None" angegeben werden.
+									</xs:documentation>
+								<xs:documentation xml:lang="en">The Code attribute is in a fixed relationship to the Type attribute. The Code attribute can take different values depending on the selected type. The following contents are allowed.
+
+									For Type="Person" the wollowing codes are possible:
+									A: Adult
+									C: Child
+									I: Infant
+
+									Type="Charge"
+									If the type is set to "Charge", only "None" can be specified here.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="MinCount">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Mit diesem Attribut können unterschiedliche
+									Einschränkungen für das erste Kind, zweite Kind, etc., sowie für die 3. Erwachsene Person, 4. Erwachsene Person, etc.
+									gesteuert werden.
+									Die Kinder- und Infantsteuerung: erfolgt absolut
+									Gültig für den Type = Person und Code= I und C
+									MinCount= 1 erstes Kind
+									MinCount= 2 zweites Kind
+									Die Erwachsenensteuerung: erfolgt entgegen der Logik in dem Element „BaseCharge/GuestCharges“ auch absolut.
+									In einem Extra besteht kein relativer Bezug zu einem Vollzahler aus dem Occupancy Element.
+									Gültig für den Type = Person und Code=A
+									MinCount= 1 erster Erwachsener
+									MinCount= 2 zweiter Erwachsener</xs:documentation>
+								<xs:documentation xml:lang="en">Using this attribute different
+									restrictions can be assigned for the first child, second child, etc., as well as for the third adult, fourth adult,
+									etc.
+									The control of children and infants: is absolute
+									Valid for the Type = Person and Code= I and C
+									MinCount= 1 first child
+									MinCount= 2 second child
+									The control of adults: is absolute contrary to the logic from the element „BaseCharge/GuestCharges“.
+									There is no relative connection in any Extra to a „MinChargedPersons” from the Occupancy element.
+									Valid for Type = Person and Code = A
+									MinCount = 1 first adult
+									MinCount = 2 second adult</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="0" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="MaxCount">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Mit diesem Attribut können unterschiedliche
+									Einschränkungen für das erste Kind, zweite Kind, etc., sowie für die 3. Erwachsene Person, 4. Erwachsene Person, etc.
+									gesteuert werden.
+									Die Kinder- und Infantsteuerung: erfolgt absolut
+									Gültig für den Type = Person und Code= I und C
+									MinCount= 1 erstes Kind
+									MinCount= 2 zweites Kind
+									Die Erwachsenensteuerung: erfolgt entgegen der Logik in dem Element „BaseCharge/GuestCharges“ auch absolut.
+									In einem Extra besteht kein relativer Bezug zu einem Vollzahler aus dem Occupancy Element.
+									Gültig für den Type = Person und Code=A
+									MinCount= 1 erster Erwachsener
+									MinCount= 2 zweiter Erwachsener</xs:documentation>
+								<xs:documentation xml:lang="en">Using this attribute different
+									restrictions can be assigned for the first child, second child, etc., as well as for the third adult, fourth adult,
+									etc.
+									The control of children and infants: is absolute
+									Valid for the Type = Person and Code= I and C
+									MinCount= 1 first child
+									MinCount= 2 second child
+									The control of adults: is absolute contrary to the logic from the element „BaseCharge/GuestCharges“.
+									There is no relative connection in any Extra to a „MinChargedPersons” from the Occupancy element.
+									Valid for Type = Person and Code = A
+									MinCount = 1 first adult
+									MinCount = 2 second adult</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="0" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="MinAge">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Angabe einer Mindestalters.
+									Beispiel
+									MinAge=12:
+									Gültigkeit erst ab einem Mindestalter von 12
+									Jahren.</xs:documentation>
+								<xs:documentation xml:lang="en">Specifies a minimum age.
+									Example
+									MinAge=12:
+									Only valid from a minimum age of 12
+									years.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="0" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="MaxAge">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Angabe eines Maximalalters
+									Beispiel
+									MaxAge=12:
+									Gültigkeit bis zu einem Alter von 12 Jahren.</xs:documentation>
+								<xs:documentation xml:lang="en">Specifies a maximum age.
+									Example
+									MaxAge=12:
+									Valid up to an age of 12 years.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="WeekdayAppliance" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:attribute name="WeekdayMask" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Angabe der betreffenden Aufenthaltstage von Montag bis Sonntag (beginnend mit Montag) über z.B. folgendes siebenstelliges Pattern:YYNNNYY.
+									Die Gueltigkeit wird mit Y (Yes) und N (No) bestimmt.
+
+									Bedeutung des Beispiels YYNNNYY:
+									Die Gültigkeit des Extras bezieht sich auf die Wochentage Montag, Dienstag, Samstag und Sonntag.
+
+									Anwendungsfall für die Mask in Appliance:
+									Es besteht eine Ermäßigung von -10 € pro Tag, jedoch nur für die Aufenthaltstage Montag, Dienstag, Samstag und Sonntag.
+									Bei einer Reisedauer von 7 Tagen wird die Ermäßigung genau viermal angewendet.</xs:documentation>
+								<xs:documentation xml:lang="en">The relevant stay days are indicated from Monday to Sunday (beginning with Monday), e. g. by means of the following seven-letter pattern: YYNNNYY.
+									The validity is confirmed using Y (Yes) and N (No).
+
+									Meaning of the example YYNNNYY:
+									The extra is valid on the days of the week Monday, Tuesday, Saturday and Sunday.
+
+									Use case for the dialog:
+									There is a reduction of -10 € per day, however only for the stay days Monday, Tuesday, Saturday and Sunday.
+									For a stay duration of 7 days, the reduction is applied exactly four times.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="7" />
+									<xs:minLength value="7" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
