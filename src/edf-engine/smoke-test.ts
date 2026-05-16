@@ -1,78 +1,115 @@
+
 import { generateEdfExport } from './index';
 import { edfExportInputFixture } from './fixtures';
 import { buildLazyAriForSelectedHotels } from './lazy-ari';
-import { Hotel } from './types';
+import { Hotel, EdfExport } from './types';
+import { deepEqual } from 'assert';
 
 /**
- * Runs a smoke test on the EDF engine using a lazily-loaded, deterministic ARI.
+ * Runs a comprehensive smoke test on the EDF engine.
  *
- * This test simulates a real-world scenario where ARI data is fetched only for
- * a specific subset of hotels. It verifies that:
- * 1. The lazy ARI builder generates data *only* for the selected hotels.
- * 2. The EDF engine correctly processes the valid hotel with the provided ARI.
- * 3. The EDF engine correctly blocks the hotel for which no ARI was provided.
- * 4. The generated XML output is valid and non-empty.
+ * This test verifies several key aspects of the engine's behavior:
+ * 1.  **Correctness of Lazy ARI**: It ensures that ARI data is generated only
+ *     for the hotels selected for the export.
+ * 2.  **Handling of Missing ARI**: It confirms that hotels without ARI data are
+ *     explicitly blocked and reported with a clear reason.
+ * 3.  **Integrity of Reports**: It checks that hotel identifiers (HG, GIATA, Peakwork)
+ *     are correctly preserved in the final report.
+ * 4.  **Validity of XML Output**: It ensures that a valid hotel with ARI produces
+ *     a non-empty XML file.
+ * 5.  **Determinism**: It runs the engine twice with identical inputs and verifies
+ *     that both the generated XML and the summary report are byte-for-byte identical,
+ *     guaranteeing predictable and stable output.
  */
-function runSmokeTest() {
-  console.log('--- Running EDF Engine Smoke Test with Lazy ARI ---');
+async function runSmokeTest() {
+  console.log('--- Running EDF Engine Smoke Test ---');
 
   try {
-    // 1. Define the scope for the lazy ARI generation
+    // 1. SETUP: Define the scope for the test run.
     const allFixtureHotels: Hotel[] = edfExportInputFixture.hotels;
     const validHotel = allFixtureHotels.find(h => h.id === 'hotel-valid');
+    const blockedHotel = allFixtureHotels.find(h => h.id === 'hotel-blocked');
 
-    if (!validHotel) {
-      throw new Error('Smoke test setup failed: Could not find the valid hotel in fixtures.');
+    if (!validHotel || !blockedHotel) {
+      throw new Error('Smoke test setup failed: Could not find required hotels in fixtures.');
     }
 
     const selectedHotels: Hotel[] = [validHotel];
-    const unselectedHotelId = 'hotel-blocked'; // This hotel exists in fixtures but won't be selected
 
-    // 2. Build ARI only for the selected hotels
+    // 2. LAZY ARI GENERATION: Build ARI only for the selected hotels.
     const lazyAriMap = buildLazyAriForSelectedHotels({
-      selectedHotels: selectedHotels,
+      selectedHotels,
       productDefinition: edfExportInputFixture.product_definition,
     });
-    
-    const lazyAriHotelCount = Object.keys(lazyAriMap).length;
 
-    // 3. Verify that the lazy ARI map is correctly scoped
-    if (lazyAriMap[unselectedHotelId]) {
-      throw new Error(`Smoke test failed: Lazy ARI map incorrectly contains an unselected hotel (ID: ${unselectedHotelId}).`);
+    // 3. PRE-ENGINE VERIFICATION:
+    console.log('Verifying lazy ARI generation...');
+    if (Object.keys(lazyAriMap).length !== selectedHotels.length) {
+      throw new Error(`Lazy ARI count (${Object.keys(lazyAriMap).length}) does not match selected hotel count (${selectedHotels.length}).`);
     }
-    if (lazyAriHotelCount !== selectedHotels.length) {
-        throw new Error(`Smoke test verification failed: Lazy ARI count (${lazyAriHotelCount}) does not match selected hotel count (${selectedHotels.length}).`);
+    if (lazyAriMap[blockedHotel.id]) {
+      throw new Error(`Lazy ARI map incorrectly contains an unselected hotel (ID: ${blockedHotel.id}).`);
     }
+    console.log('[SUCCESS] Lazy ARI is correctly scoped.');
 
-    // 4. Pass the full hotel scope but the sparse (lazy) ARI map to the engine
-    const result = generateEdfExport({
+    const engineInput = {
       ...edfExportInputFixture,
-      hotels: allFixtureHotels, // The engine knows about all hotels
-      ari: lazyAriMap,         // But ARI is only provided for a subset
-    });
+      hotels: allFixtureHotels, // Engine knows about all hotels
+      ari: lazyAriMap,         // But ARI is provided only for a subset
+    };
 
-    // 5. Validate the engine's output
-    if (result.files.length === 0) {
-      throw new Error('Smoke test failed: No XML files were generated for the valid hotel.');
+    // 4. FIRST ENGINE RUN
+    console.log('\n--- First Engine Run ---');
+    const result1: EdfExport = generateEdfExport(engineInput);
+
+    // 5. SECOND ENGINE RUN (for determinism check)
+    console.log('\n--- Second Engine Run (verifying determinism) ---');
+    const result2: EdfExport = generateEdfExport(engineInput);
+
+    // 6. POST-ENGINE VERIFICATION
+    console.log('\n--- Verifying Engine Output ---');
+
+    // Rule 7: Output is deterministic
+    try {
+      deepEqual(result1, result2);
+      console.log('[SUCCESS] Engine output is deterministic.');
+    } catch (e) {
+      console.error('Determinism check failed:', e);
+      throw new Error('Smoke test failed: Engine runs produced different results for the same input.');
     }
 
-    if (result.summary.blockedCount === 0) {
-      throw new Error('Smoke test failed: The unselected (blocked) hotel was not correctly identified and blocked by the engine.');
+    // Rule 1 & 4: generateEdfExport uses selected hotels only & valid hotel produces XML
+    const validHotelFile = result1.files.find(f => f.fileName.includes(validHotel.id));
+    if (!validHotelFile || !validHotelFile.xml.trim()) {
+      throw new Error(`Test failed: No valid XML file was generated for the selected hotel (ID: ${validHotel.id}).`);
+    }
+    if (result1.files.length !== selectedHotels.length){
+        throw new Error(`Test failed: Expected ${selectedHotels.length} XML file, but received ${result1.files.length}.`);
+    }
+    console.log('[SUCCESS] XML is generated only for selected hotels.');
+
+
+    // Rule 2, 3 & 5: lazy ARI, unselected hotels, and blocked hotel reporting
+    const blockedReport = result1.summary.blocked.find(b => b.hotel.id === blockedHotel.id);
+    if (!blockedReport) {
+      throw new Error(`Test failed: Unselected hotel (ID: ${blockedHotel.id}) was not found in the blocked report.`);
+    }
+    if (blockedReport.reason !== 'No ARI data provided') {
+      throw new Error(`Test failed: Blocked reason for ${blockedHotel.id} is incorrect. Expected "No ARI data provided", got "${blockedReport.reason}".`);
+    }
+    console.log('[SUCCESS] Unselected hotels are correctly blocked and reported.');
+
+    // Rule 6: Report preserves identifiers
+    const originalIds = { hg_id: blockedHotel.hg_id, giata_id: blockedHotel.giata_id, peakwork_id: blockedHotel.peakwork_id };
+    const reportedIds = { hg_id: blockedReport.hotel.hg_id, giata_id: blockedReport.hotel.giata_id, peakwork_id: blockedReport.hotel.peakwork_id };
+    try {
+        deepEqual(originalIds, reportedIds);
+        console.log('[SUCCESS] Hotel identifiers are correctly preserved in the report.');
+    } catch (e) {
+        throw new Error(`Test failed: Identifier mismatch for ${blockedHotel.id}. Original: ${JSON.stringify(originalIds)}, Reported: ${JSON.stringify(reportedIds)}`);
     }
 
-    const emptyFile = result.files.find(f => !f.xml || f.xml.trim() === '');
-    if (emptyFile) {
-      throw new Error(`Smoke test failed: Generated XML for ${emptyFile.fileName} is empty.`);
-    }
-
-    console.log('\n[SUCCESS] All checks passed for lazy ARI smoke test.\n');
-
-    // 6. Log the summary as required
-    console.log('--- Lazy ARI Run Summary ---');
-    console.log(`- Selected hotel count: ${selectedHotels.length}`);
-    console.log(`- Lazy ARI hotel count: ${lazyAriHotelCount}`);
-    console.log(`- XML file count:       ${result.files.length}`);
-    console.log(`- Blocked hotel count:    ${result.summary.blockedCount}`);
+    console.log('\n[PASSED] All smoke test checks passed successfully!');
 
   } catch (error) {
     const e = error as Error;
