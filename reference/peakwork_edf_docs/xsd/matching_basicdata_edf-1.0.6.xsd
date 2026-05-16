@@ -1,0 +1,1909 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Created with Liquid XML 2013 Designer Edition 11.0.7.4537 (http://www.liquid-technologies.com)-->
+<xs:schema xmlns="http://www.vilauma.de/edf/MatchingBasicData"
+           attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           targetNamespace="http://www.vilauma.de/edf/MatchingBasicData"
+           version="1.0.6"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="MatchingRoot">
+        <xs:annotation>
+            <xs:documentation>Die Schema Datei Matching_BasicData_EDF.xsd wird nur benötigt, wenn das Hotel EDF File über einen EDF Konverterprozess mit zusätzlichen oder geänderten BasicData Informationen angereichtert oder überschrieben werden soll.
+Beispiel für einen Anwendungsfall:
+Aus einem Veranstaltersystem werden die Preisdaten in Form eines Hotel EDF Files geschrieben. Der Hotel Content (Hotelname, Anzahl Sterne, Adresse, Geo Koordinaten, etc.) liegt in einem Content Management System.
+In diesem Fall werden alle Informationen des SellingData Elementes des Hotel EDFs aus dem Veranstaltersystem und die BasicData Informationen des Hotel EDFs aus dem Content Management System geliefert.
+Über einen EDF Konverterprozess können dann beide Teile zu einem vollständigen EDF File zusammengeführt werden.
+
+Die XSD Matching_BasicData_EDF.xsd beinhaltet nicht das Element DRVGobalTypes. Um Ein Hotel EDF mit GlobalTypes anzureichern ist die XSD Matching_DRVGlobalTypes_EDF.xsd zu verwenden.
+
+Fazit und Nutzung:
+********************
+Anreichern oder Überschreiben des gesamten Hotel EDF BasicData Blocks ohne DRV GlobalTypes. Dadurch kann die Datei auch zur Anreicherung der Hotel EDF Daten um GIATA Codes genutzt werden.
+Anders als im Hotel EDF werden alle Produkte (Hotels) in einer XML-Datei geliefert. Je Produkt wird ein BasicData Element geschrieben.
+Bei Nutzung der Peakwork Konverter werden alle BasicData Elemente aus der Produktlieferung (Hotel EDF) mit den gelieferten Element aus der Matching Lieferung überschrieben.
+
+Dateinamenskonvention ohne Saisonbereiche:
+*************************************************
+Wenn Hotel EDF Files saisonbereichsunabhängig (ohne SeasonIdentifier) geliefert werden, kann auch die Matching Datei keinen Seasonbereich enthalten.
+In diesem Falle wird das Attribut "SeasonIdentifier" in dem Element "MatchingRoot" nicht gefüllt.
+Der Dateiname der XML Lieferung lautet wie folgt:
+
+Matching_BasicData _EDF-Veranstaltercode.xml
+
+
+Dateinamenskonvention mit Saisonbereichen:
+*************************************************
+Wenn Hotel EDF Files saisonbereichsabhängig mit SeasonIdentifier) geliefert werden, enthält auch die Matching Datei diesen Seasonbereich.
+In diesem Falle wird das Attribut "SeasonIdentifier" in dem Element "MatchingRoot" gefüllt.
+Der Dateiname der XML Lieferung lautet mit Saisonbereichen wie folgt:
+
+Matching_BasicData _EDF-Veranstaltercode-Saisonbereich.xml
+Beispiel: 
+Matching_BasicData _EDF-TUI-S3.xml  // Sommer 2013
+Matching_BasicData _EDF-TUI-W3.xml // Winter 2013
+
+</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BasicData"
+                            minOccurs="0"
+                            maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Das Element BasicData beinhaltet alle relevanten Basisdaten. 
+Hierzu gehören der Hotelname, Hotelkette, Haupthotel, Giata Code, IFF Code, Hoteladresse, Geoinformationen zur Lage des Hotels, Zielflughafen, Rückflughafen, Transferinformationen, Hotelattribute und Hotelbewertungen.
+-----------------------------------------
+The BasicData element contains all relevant basic data. 
+These include hotel name, hotel chain, main hotel, Giata code, IFF code, hotel address, geoinformation on the hotel location, arrival airport, departure airport, transfer information, hotel attributes and hotel reviews.                      
+            </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Name"
+                                        type="xs:string"
+                                        minOccurs="0"
+                                        maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="DE">Das Element Name beinhaltet den veranstalterspezifischen Produkt- bzw. Hotelname. Beispiel: Taurus Park.
+-----------------------------------------
+The Name element contains the tour operator specific product or hotel name. Example: Taurus Park.                                   
+                </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="HotelChain"
+                                        minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Das Element HotelChain beschreibt die Hotelkette des Produkts. 
+Die Hotelkette wird in Form von GloabalTypes (DRV Datenstandard) übergeben und stellt neben dem Code des GlobalTypes den vollständigen Kettenlangnamen dar. Beispiele: Iberostar, RIU Hotels, Hilton
+-----------------------------------------
+The HotelChain element describes the hotel chain pertaining to the product. 
+The hotel chain is propagated in the form of GlobalTypes (DRV Data Standard) and represents not only the GlobalTypes code but also the long name of the chain in full. Examples: Iberostar, RIU Hotels, Hilton</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:attribute name="Code"
+                                                  type="xs:string">
+                                        <xs:annotation>
+                                            <xs:documentation>Das Attribute Code zeigt das veranstalterspezifische Kürzel oder Kurzbezeichnung einer Hotelkette. 
+Dieser Code ist optional und hat durch die Umstellung auf die GlobalTypes (DRV Datenstandard) nur noch einen rein informativen Charakter.
+-----------------------------------------
+The Code attribute shows the tour operator specific abbreviation or short designation of a hotel chain. 
+With the transition to the GlobalTypes (DRV Data Standard), this Code has become optional and is displayed for informational purposes only.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="Name"
+                                                  type="xs:string">
+                                        <xs:annotation>
+                                            <xs:documentation>Das Attribute Name zeigt hier den Langnamen einer Hotelkettenbezeichnung
+Beispiel: Iberostar, Hilton.
+-----------------------------------------
+The Name attribute shows the long name of a hotel chain identifier.
+Example: Iberostar, Hilton.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="References"
+                                        minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Das Element References gliedert sich in die Unterelemente MainHotel, GiataCode,IffCode und DRVCode. 
+Hier kann auf Zuordnungen referenziert werden, um ein Matching auf
+- Haupthotels
+- GIATA Codes
+- IFF Codes
+- DRVCode
+durchführen zu können.
+-----------------------------------------
+The References element is organized into the MainHotel, GiataCode, IffCode, and DRVCode sub elements. 
+Assignments can be referenced here to perform matching operations on
+- main hotels
+- GIATA codes
+- IFF codes
+- DRVCode</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="MainHotel"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element MainHotel beinhaltet den Hotelcode des Haupthotels. Sofern es sich bei dem Produkt um ein Teilkontingentshotel oder um einen Teil eines Hotelkomplexes handelt, wird hier auf das physikalische Hotel verwiesen, zu welchem das Produkt gehört. 
+Beispiel: Das Hotel PMI001H ist ein Teil des physikalischen Haupthotels PMI001. In diesem Falle wird hier auf das Haupthotel PMI001 verwiesen.
+-----------------------------------------
+The MainHotel element contains the hotel code of the main hotel. If the product is a hotel with sub-allotments or part of a hotel complex, the factual hotel the product belongs to is indicated here. 
+Example: The Hotel PMI001H is part of the factual main hotel PMI001. In this case, the main hotel PMI001 is referenced here.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="GiataCode"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element GiataCode beschreibt die Zuordnung des Produktes zu dem eindeutigen GIATA Code.
+-----------------------------------------
+The GiataCode element describes the assignment of the product to the unique GIATA code.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="IffCode"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element IffCode zeigt die Zuordnung des Produktes zu dem eindeutigen IFF-Code von TravelTainment .
+-----------------------------------------
+The IffCode element shows the assignment of the product to the unique TravelTainment IFF code.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="DRVCode"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element DRVCode beschreibt die Zuordnung des Produktes zu dem eindeutigen DRV HotelCode.
+-----------------------------------------
+The DRVCode element describes the assignment of the product to the unique DRV HotelCode.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="HotelKey"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Individuelles Kennzeichen des Hotels vom Veranstalter. Optionaler Parameter, der frei vergeben werden kann
+-----------------------------------------
+The custom hotel label is defined by the tour operator. Optional, freely assignable parameter.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Address"
+                                        minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>In dem Element Adress kann die Hoteladresse hinterlegt werden. Vertriebssysteme sind dadurch in der Lage, die Adresse des Produktes anzuzeigen.
+Alle Adressfelder sind optional.
+-----------------------------------------
+In the Address element, the hotel address can be indicated. This way, sales systems will be able to display the product address.
+All address fields are optional.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Street"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>In dem Element Street wird die Straße des Hotels hinterlegt.
+-----------------------------------------
+The Street element indicates the street address of the hotel.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="ZipCode"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>In dem Element ZipCode wird die Postleitzahl des Hotels transportiert.
+-----------------------------------------
+The ZipCode element indicates the zip code of the hotel.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="City"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element City enthält die Stadt bzw. Ort des Hotels.
+-----------------------------------------
+The City element contains the city or location of the hotel.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="Country"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element Country beinhaltet das Land des Hotels.
+-----------------------------------------
+The Country element contains the country of the hotel.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="Phone"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>In dem Elemet Phone wird die Telefonnummer des Hotels hinterlegt.
+-----------------------------------------
+The Phone element indicates the telephone number of the hotel.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="Fax"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>In dem Element Fax wird die Faxnummer des Hotels transportiert.
+-----------------------------------------
+The Fax element indicates the fax number of the hotel.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="Email"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Mit dem Element Email wird die Email-Adresse des Hotels transportiert.
+-----------------------------------------
+The Email element indicates the e-mail address of the hotel.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="Website"
+                                                    type="xs:string"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element Website enthält für die URL der Hotelwebseite.
+-----------------------------------------
+The Website element contains the URL of the hotel web site.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="GeoInfos"
+                                        minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>In dem Element GeoInfos können die Geoinformationen zur Lage des Hotels eingefügt werden. 
+Vertriebssysteme sind durch diese Angaben in der Lage, das Hotel auf einer Landkarte zu positionieren und dem Kunden entsprechend anzuzeigen.
+-----------------------------------------
+The GeoInfos element can be used to insert geoinformation on the hotel location. 
+Using this information sales systems will be able to position the hotel on a map and to provide the customer with a visual impression.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Location"
+                                                    type="LocationType"
+                                                    minOccurs="0"
+                                                    maxOccurs="unbounded">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element Location dient dazu, die  Regionszuordnung des Hotels bzw. des Produktes zu definieren.
+Mittels dieser Informationen können Vertriebssysteme dynamische Regionszuordnungen vornehmen. Beispielsweise ist so eine Suche nach allen Produkten an der "Costa del Sol" etc. möglich.
+-----------------------------------------
+The Location element is used to define the geographical allocation of the hotel or product.
+Using this information sales systems will be able to dynamically assign regions. For example, all products at the "Costa del Sol" could be searched for.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="GeoCode"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>In dem Element GeoCode kann die geografische Lage des Unterkunftproduktes in Form von Längen- und Breitengrad eingetragen werden. 
+Mittels dieser Informationen sind Vertriebssysteme in der Lage, das Unterkunftsprodukt auf einer geo-referenzierten Landkarte darzustellen.
+-----------------------------------------
+The GeoCode element can be used to enter the geographical position, i. e. longitude and latitude, of the accommodation product . 
+Using this information sales systems will be able to display the accommodation product on a geo-referenced map.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:attribute name="Latitude"
+                                                              type="xs:double">
+                                                    <xs:annotation>
+                                                        <xs:documentation>In dem Attribut Latitude können die Koordinaten geographische Breite, dezimal eingestellt werden.
+
+Beispiel:
+/GeoInfos
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos
+-----------------------------------------
+In the Latitude attribute the latitude coordinates can be set in decimal notation.
+
+Example:
+/GeoInfos
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Longitude"
+                                                              type="xs:double">
+                                                    <xs:annotation>
+                                                        <xs:documentation>In dem Attribut Longitude können die Koordinaten geographische Länge, dezimal eingestellt werden.
+
+Beispiel:
+/GeoInfos
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos
+-----------------------------------------
+In the Longitude attribute the longitude coordinates can be set in decimal notation.
+
+Example:
+/GeoInfos
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="ArrivalAirports"
+                                        minOccurs="0"
+                                        maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>Das Element ArrivalAirports beinhaltet Informationen wie den IATACode, Kenner zur Bündelung von Pauschalreisen und die Ordernummer des Hauptflughafens.
+-----------------------------------------
+The ArrivalAirports element contains information like the IATA code, identifiers for bundling package tours and the order number of the main airport.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element ref="Airport"
+                                                    minOccurs="0"
+                                                    maxOccurs="unbounded">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element Airport beinhaltet alle relevanten Flughafeninformationen.
+Das Airport Element kann mehrfach auftreten, sofern das Hotel bzw. das Produkt über mehrere Zielflughäfen erreichbar ist oder wenn die Rückreise von dem Hotel von mehreren Flughäfen angetreten werden kann.
+
+Beispiel:
+/ArrivalAirports
+   /Airport IataCode="TFS" Package="true"
+  /Airport IataCode="TFN" Package="true"
+/ArrivalAirports
+Bei diesem Beispiel kann das Hotel über die Zielflughäfen TFS und TFN angeflogen werden.
+-----------------------------------------
+The Airport element contains all relevant airport information.
+The Airport element can occur multiple times, if the hotel or product can be reached via multiple arrival airports or if the return journey from the hotel can be commenced from multiple airports.
+
+Example:
+/ArrivalAirports
+   /Airport IataCode="TFS" Package="true"
+  /Airport IataCode="TFN" Package="true"
+/ArrivalAirports
+This example shows that the hotel can be reached via the arrival airports TFS and TFN.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="DepartureAirports"
+                                        minOccurs="0"
+                                        maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>Das Element "DepartureAirports" beinhaltet Informationen wie den IATACode, Kenner zur Bündelung von Pauschalreisen und die Ordernummer des Hauptflughafens.
+-----------------------------------------
+The DepartureAirports element contains information like the IATA code, identifiers for bundling package tours and the order number of the main airport.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element ref="Airport"
+                                                    minOccurs="0"
+                                                    maxOccurs="unbounded">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element Airport beinhaltet alle relevanten Flughafeninformationen.
+Das Airport Element kann mehrfach auftreten, sofern die Rückreise aus dem Zielgebiet von mehreren Flughäfen erfolgen kann.
+
+Beispiel USA Rundreise von Ost nach West.
+/ArrivalAirports
+   /Airport IataCode="JFK" Package="true"
+/ArrivalAirports
+/DepartureAirports
+   /Airport IataCode="LAX" Package="true"
+/DepartureAirports
+Bei diesem Beispiel erfolgt die Anreise über den Zielflughafen JFK. Die Rückreise aus dem Zielgebiet startet vom Rückflughafen LAX.
+-----------------------------------------
+The Airport element contains all relevant airport information.
+The Airport element can occur multiple times, if the return journey from the destination region can commence from multiple airports.
+
+Example USA tour east to west:
+/ArrivalAirports
+   /Airport IataCode="JFK" Package="true"
+/ArrivalAirports
+/DepartureAirports
+   /Airport IataCode="LAX" Package="true"
+/DepartureAirports
+In this example, arrival is via the arrival airport JFK. The departure from the destination region starts from the departure airport LAX.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="RailwayStations"
+                                        minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Das Element RailwayStations kann optional genutzt werden und ist nur für Veranstalter mit Bahnanreisen relevant.
+Das Element RailwayStations verweist auf die Zuordnung des Hotels zu einem oder mehreren Bahnhöfen. Hier wird der Bahnhofscode transportiert über den das Hotel im Ziel erreichbar ist.
+Der Bahnhofscode kann veranstalterspezifisch genutzt werden. 
+Im Bereich der Pauschalreisen (Bahnanreise und Unterkunft) fungiert er analog zu dem Flug 3-Letter-Code. Es wird seitens der Vertriebssysteme nur Pauschalprodukt aufgebaut, bei dem der RailwayStation Code der Bahnleistung mit dem RailwayStation Code der Unterkunft übereinstimmt.
+-----------------------------------------
+RailwayStations is an optional element and is only relevant for tour operators who offer rail transport.
+The RailwayStations element references the assignment of the hotel to one or more railway stations. Here, the code of the railway station is specified, from which the destination hotel can be reached.
+The railway station code can be defined by the tour operator. 
+With package tours (rail transport and accommodation), the code functions similarly to the flight 3-letter code. The sales systems will only build a package product, if the RailwayStation code of the rail services corresponds to the RailwayStation code of the accommodation.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="RailwayStation"
+                                                    minOccurs="0"
+                                                    maxOccurs="unbounded">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element RailwayStation dient der Definition eines Bahnhofs. Sofern mehrere Bahnhöfe als Zielbahnhof für das Hotel bzw. das Produkt genutzt werden können, ist das Element RailwayStation entsprechend oft mit dem jeweiligen Bahnhof zu wiederholen.
+-----------------------------------------
+The RailwayStation element is used for defining a railway station. If more than one railway station can be used as destination station for the hotel or product, this RailwayStation element shall be repeated for each railway station as many times as required.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:attribute name="Code"
+                                                              type="xs:string">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Kürzel des Bahnhofs
+-----------------------------------------
+The abbreviation of the railway station.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Country"
+                                                              type="xs:string">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Länderkennzeichen in das der unter Code angegebene Kennzeichen gilt
+-----------------------------------------
+The country code. Here, the label specified under Code applies.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Package"
+                                                              type="xs:boolean">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Mit dem Attribut Package wird ein Kenner gesetzt, ob der spezielle Bahnhof explizit zur Bündelung von Pauschalreisen vorgesehen ist oder nicht.
+-----------------------------------------
+The Package attribute sets an identifier showing whether or not the specific railway station is explicitly intended for bundling package tours.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="TransferInfos"
+                                        minOccurs="0"
+                                        maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>Steuerung von Transferarten und Transferzeiten. Durch diese Informationen werden Vertriebssysteme in die Lage versetzt, Angebote unter der Berücksichtigung von Transferzeiten zu suchen. Beispielsweise sucht der Kunde Angebote in einer bestimmten Destination, bei denen die Transferzeit unter einer Stunde liegt. Ebenso wird die Moeglichkeit geschaffen in Vertriebssystemen nach einem bestimmten Transfertyp zu suchen. Beispielsweise sucht der Kunde Angebote mit einem Privattransfer o.ä.
+-----------------------------------------
+Controlling transfer types and transfer times. This information enables sales systems to search for offers in consideration of transfer times. For example, when the customer is looking for destinations, in which the transfer time is less than one hour. This also enables searches for a specific transfer type within the sales systems. For example, the customer is looking for offers with a private transfer or similar.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="TransferInfo"
+                                                    minOccurs="0"
+                                                    maxOccurs="unbounded">
+                                            <xs:annotation>
+                                                <xs:documentation>Je Produkt bzw. Hotel können unterschiedliche Transfers übergeben werden. 
+Beispielsweise ist eine Transferzeit oder Transferart abhängig von dem Zielflughafen. Sofern ein Produkt mit mehreren Zielflughäfen angeboten wird, bestehen unterschiedliche Distanzen oder Transferzeiten vom Zielflughafen zum Hotel.
+Daher kann das Element TransferInfo mehrfach auftreten. Je Transferart oder Flughafen wird ein TransferInfo Element geschrieben.
+
+Beispiel:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type=" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFN" GlobalType="TI" Type=" MinDuration="PT60M" MaxDuration="P90M" Distance="45"
+/TransferInfos
+Dieses Beispiel zeigt: 
+Bei einer Anreise über TFS erfolgt der Transfer als "Bustransfer". Die Transferzeit beträgt zwischen 20 und 60 Minuten. Die Entfernung beträgt 20 km.
+Bei einer Anreise über TFN erfolgt der Transfer als "Taxitransfer". Die Transferzeit beträgt zwischen 60 und 90 Minuten. Die Entfernung beträgt 45 km.
+-----------------------------------------
+Different transfers can be passed depending on the product or hotel. 
+For example, a transfer time or transfer type depends on the arrival airport. If a product with multiple arrival airports is offered, the distances or transfer types from the arrival airport to the hotel vary.
+The TransferInfo element can hence occur more than once. Depending on the transfer type or airport, a TransferInfo element is written.
+
+Example:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type=" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFN" GlobalType="TI" Type=" MinDuration="PT60M" MaxDuration="P90M" Distance="45"
+/TransferInfos
+This example shows: 
+The transfer for an outbound via TFS is a "bus transfer". The transfer time is between 20 and 60 minutes. The distance is 20 km.
+The transfer for an outbound via TFN is a "taxi transfer". The transfer time is between 60 and 90 minutes. The distance is 45 km.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:attribute name="IataCode"
+                                                              type="xs:string"
+                                                              use="optional">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Das Attribut IataCode ist optional. Es wird dann genutzt, wenn unterschiedliche Transferinformationen in Abhängigkeit von unterschiedlichen Zielflughäfen (ArrivalAirports) gelten.
+In diesem Falle wird der 3-Letter-Code des Flughafens eingetragen für den die TransferInfo gilt.
+
+Beipsiel:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type=" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFN" GlobalType="TI" Type=" MinDuration="PT60M" MaxDuration="P90M" Distance="45"
+/TransferInfos
+
+Dieses Beispiel zeigt: 
+Bei einer Anreise über TFS erfolgt der Transfer als "Bustransfer". Die Transferzeit beträgt zwischen 20 und 60 Minuten. Die Entfernung beträgt 20 km.
+Bei einer Anreise über TFN erfolgt der Transfer als "Taxitransfer". Die Transferzeit beträgt zwischen 60 und 90 Minuten. Die Entfernung beträgt 45 km.
+-----------------------------------------
+The IataCode attribute is optional. It is used when different transfer information applies depending on different ArrivalAirports.
+In this case, the 3-letter code of the airport for which the TransferInfo applies is entered.
+
+Example:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type=" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFN" GlobalType="TI" Type=" MinDuration="PT60M" MaxDuration="P90M" Distance="45"
+/TransferInfos
+
+This example shows: 
+The transfer for an arrival via TFS is a "bus transfer". The transfer time is between 20 and 60 minutes. The distance is 20 km.
+The transfer for an arrival via TFN is a "taxi transfer". The transfer time is between 60 and 90 minutes. The distance is 45 km.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute xmlns:q3="http://www.vilauma.de/edf/Hotel"
+                                                              name="Type"
+                                                              type="TransferTypeEnum">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Der Transfertyp gibt an, ob es sich bei dem Transfer um einen Hin- oder Rücktransfer handelt. Sofern die Transferinformationen gleichermaßen für den Hin- und Rücktransfer gelten, ist das Attribut "Type" nicht zu setzen.
+
+Mögliche Werte sind:
+- Arrival        Es handelt sich um einen Hintransfer; meist vom Zielflughafen zum Hotel
+- Departure  Es handelt sich um einen Rücktransfer; meist vom Hotel zum Abflughafen im Zielgebiet
+Default/das Attribut ist nicht gesetzt:        Die Informationen gelten sowohl für den Hin- als auch Rücktransfer
+
+Beipsiel:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type="Arrival" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFS" GlobalType="PT" Type="Departure" MinDuration="PT15M" MaxDuration="P20M" Distance="20"
+/TransferInfos
+
+Dieses Beispiel zeigt: 
+Bei einer Anreise über TFS erfolgt der Hintransfer (vom Flughafen zum Hotel) als "Bustransfer". Die Transferzeit beträgt zwischen 20 und 60 Minuten. Die Entfernung beträgt 20 km.
+Bei einer Rückreise ab TFS erfolgt der Rücktransfer (vom Hotel zum Flughafen) als "Privattransfer". Die Transferzeit beträgt zwischen 15 und 20 Minuten. Die Entfernung beträgt 20 km.
+-----------------------------------------
+The transfer type specifies whether this is an outbound or an inbound transfer. If the transfer information is the same for outbound and inbound transfers, the Type attribute is not set.
+
+Possible values are:
+- Arrival        This is an outbound transfer, usually from the arrival airport to the hotel
+- Departure  This is an inbound transfer, usually from the hotel to the departure airport in the destination region
+The attribute is not set by default:        The information applies for both the outbound and inbound transfer.
+
+Example:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type="Arrival" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFS" GlobalType="PT" Type="Departure" MinDuration="PT15M" MaxDuration="P20M" Distance="20"
+/TransferInfos
+
+This example shows: 
+The outbound transfer (from the airport to the hotel) for an outbound via TFS is a "bus transfer". The transfer time is between 20 and 60 minutes. The distance is 20 km.
+The inbound transfer (from the hotel to the airport) for an inbound via TFS is a "private transfer". The transfer time is between 15 and 20 minutes. The distance is 20 km.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="MinDuration"
+                                                              type="xs:duration">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Das Attribut MinDuration dient der Angabe der minimalen Transferzeit unter der Berücksichtigung des XML-Standards. 
+PTnH kennzeichnet die Anzahl der Stunden PTnM kennzeichnet die Anzahl der Minuten Beispiel: PT3H bedeutet drei Stunden.
+PT60M bedeutet sechzig Minuten.
+
+Sofern es keine minimale und maximale Zeitangabe gibt, sondern eine Transferzeit von genau 40 Minuten ausgedrückt werden soll, sind beide Attribute "MinDuration" und "MaxDuration" mit dem Wert "PT40M" anzugeben.
+
+Beipsiel:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type="Arrival" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFS" GlobalType="PT" Type="Departure" MinDuration="PT20M" MaxDuration="P20M" Distance="20"
+/TransferInfos
+
+Dieses Beispiel zeigt: 
+Bei einer Anreise über TFS erfolgt der Hintransfer (vom Flughafen zum Hotel) als "Bustransfer". Die Transferzeit beträgt zwischen 20 und 60 Minuten. Die Entfernung beträgt 20 km.
+Bei einer Rückreise ab TFS erfolgt der Rücktransfer (vom Hotel zum Flughafen) als "Privattransfer". Die Transferzeit beträgt 20 Minuten. Die Entfernung beträgt 20 km.
+-----------------------------------------
+The MinDuration attribute specifies the minimum transfer time in consideration of the XML standard. 
+PTnH identifies the number of hours. PTnM identifies the number of minutes. Example: PT3H means three hours.
+PT60M means 60 minutes.
+
+If there is no minimum and maximum time specified, but a transfer time of exactly 40 minutes, the MinDuration and MaxDuration attributes are both to be specified using the value "PT40M".
+
+Example:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type="Arrival" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFS" GlobalType="PT" Type="Departure" MinDuration="PT20M" MaxDuration="P20M" Distance="20"
+/TransferInfos
+
+This example shows: 
+The outbound transfer (from the airport to the hotel) for an outbound via TFS is a "bus transfer". The transfer time is between 20 and 60 minutes. The distance is 20 km.
+The inbound transfer (from the hotel to the airport) for an inbound via TFS is a "private transfer". The transfer time is 20 minutes. The distance is 20 km.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="MaxDuration"
+                                                              type="xs:duration">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Das Attribut MaxDuration dient der Angabe der maximalen Transferzeit unter der Berücksichtigung des XML-Standards. 
+PTnH kennzeichnet die Anzahl der Stunden PTnM kennzeichnet die Anzahl der Minuten Beispiel: PT3H bedeutet drei Stunden.
+PT60M bedeutet sechzig Minuten.
+
+Sofern es keine minimale und maximale Zeitangabe gibt, sondern eine Transferzeit von genau 40 Minuten ausgedrückt werden soll, sind beide Attribute "MinDuration" und "MaxDuration" mit dem Wert "PT40M" anzugeben.
+
+Beipsiel:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type="Arrival" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFS" GlobalType="PT" Type="Departure" MinDuration="PT20M" MaxDuration="P20M" Distance="20"
+/TransferInfos
+
+Dieses Beispiel zeigt: 
+Bei einer Anreise über TFS erfolgt der Hintransfer (vom Flughafen zum Hotel) als "Bustransfer". Die Transferzeit beträgt zwischen 20 und 60 Minuten. Die Entfernung beträgt 20 km.
+Bei einer Rückreise ab TFS erfolgt der Rücktransfer (vom Hotel zum Flughafen) als "Privattransfer". Die Transferzeit beträgt 20 Minuten. Die Entfernung beträgt 20 km.
+-----------------------------------------
+The MaxDuration attribute specifies the maximum transfer time in consideration of the XML standard. 
+PTnH identifies the number of hours. PTnM identifies the number of minutes. Example: PT3H means three hours.
+PT60M means 60 minutes.
+
+If there is no minimum and maximum time specified, but a transfer time of exactly 40 minutes, the MinDuration and MaxDuration attributes are both to be specified using the value "PT40M".
+
+Example:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type="Arrival" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+  /TransferInfo IataCode="TFS" GlobalType="PT" Type="Departure" MinDuration="PT20M" MaxDuration="P20M" Distance="20"
+/TransferInfos
+
+This example shows: 
+The outbound transfer (from the airport to the hotel) for an outbound via TFS is a "bus transfer". The transfer time is between 20 and 60 minutes. The distance is 20 km.
+The inbound transfer (from the hotel to the airport) for an inbound via TFS is a "private transfer". The transfer time is 20 minutes. The distance is 20 km.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Distance"
+                                                              type="xs:int">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Entfernung vom Flughafen zum Hotel. 
+Die Angabe erfolgt stets in der Einheit Kilometer. Daher ist die Einheit nicht anzugeben. Die Angabe des Wertes 20 in dem Attribut "Distance" bedeutet eine Entfernung von 20 Kilometer.
+
+Beipsiel:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type="Arrival" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+/TransferInfos
+
+Dieses Beispiel zeigt: 
+Bei einer Anreise über TFS erfolgt der Hintransfer (vom Flughafen zum Hotel) als "Bustransfer". Die Transferzeit beträgt zwischen 20 und 60 Minuten. Die Entfernung beträgt 20 km.
+-----------------------------------------
+The distance from the airport to the hotel. 
+This attribute is always specified in kilometers. The unit thus does not need to be specified. Specifying the value 20 in the Distance attribute indicates a distance of 20 kilometers.
+
+Example:
+/TransferInfos
+  /TransferInfo IataCode="TFS" GlobalType="BS" Type="Arrival" MinDuration="PT20M" MaxDuration="P60M" Distance="20"
+/TransferInfos
+
+This example shows: 
+The outbound transfer (from the airport to the hotel) for an outbound via TFS is a "bus transfer". The transfer time is between 20 and 60 minutes. The distance is 20 km.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Code"
+                                                              type="xs:string">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Das Attribut Code ist optional. Der Code wird dann verwendet, wenn in den SellingData/Transfers Preise für unterschiedliche und optionale Transfers übermittelt werden.
+In diesem Falle kann der Code hier in den BasicData dazu verwendet werden, auf einen bestimmten Transfer in den SellingData zu referenzieren, so dass die detaillierten Transferinformationen einem bestimmten Transfer in den SellingData zugeordnet werden können.
+
+Der Code ist ein frei wählbares Kürzel. Bei der Verwendung muss es jedoch unter SellingData/Transfer ein Transfer Element mit dem ApplianceCode geben, der hier unter "Code" verwendet wurde.
+
+Beispiel:
+Es bestehen zwei unterschiedliche Transfermöglichkeiten. Beide Transfermöglichkeiten sind optional als Sonderleistung hinzubuchbar. Die Suchbaren Basisinformationen des Transfers werden in den BasicData unter "TransferInfo" transportiert. Die Preise für den Transfer werden in den SellingData/Transfer gesteuert. Um die Zuordnung von Information zu Preis zu gewährleisten, wird das Attribut "Code" genutzt.
+1. Es gibt einen Butransfer mit einem Preis von 25 € pro Person
+2. Es gibt einen Privattransfer mit einem Preis von 60 € pro Person
+
+In dem Bereich SellingData bestehen zwei Extras:
+
+1. Extra: Bustransfer
+/Extras
+  /Extra GlobalType="BS" Type="Transfer" ApplianceCode="BSPMI01HR" Mandatory=”false”
+     /Descriptions
+        /Description&amp;gt; Bustransfer Flughafen – Hotel - Flughafen
+    /Descriptions
+   /Charges
+     /Charge Amount="25.00" Calculation=”PS”
+  /Charges
+ /Extra
+
+2. Extra: Privatransfer
+/Extras
+  /Extra GlobalType="PT" Type="Transfer" ApplianceCode="PTPMI01HR" Mandatory=”false”
+     /Descriptions
+        /Description Bustransfer Flughafen – Hotel - Flughafen
+    /Descriptions
+   /Charges
+     /Charge Amount="60.00" Calculation=”PS”
+  /Charges
+ /Extra
+
+In den BasicData/Transferinfos sind die folgenden beiden TransferInfo Elemente gesetzt:
+/TransferInfos
+  /TransferInfo IataCode="PMI" GlobalType="BS"  MinDuration="PT20M" MaxDuration="P60M" Distance="20" Code="BSPMI01HR"
+  /TransferInfo IataCode="PMI" GlobalType="PT"  MinDuration="PT60M" MaxDuration="P90M" Distance="45" Code="PTPMI01HR"
+/TransferInfos
+
+Dieses Beispiel zeigt: 
+Bei einer Anreise über PMI erfolgt der Transfer als "Bustransfer". Die Transferzeit beträgt zwischen 20 und 60 Minuten. Die Entfernung beträgt 20 km. Die Kosten betragen 20 € (erkennbar an der Referenz Code="BSPMI01HR").
+Bei einer Anreise über TFN erfolgt der Transfer als "Taxitransfer". Die Transferzeit beträgt zwischen 60 und 90 Minuten. Die Entfernung beträgt 45 km. Die Kosten betragen 60 € (erkennbar an dem Referenz Code="PTPMI01HR").
+-----------------------------------------
+The Code attribute is optional. The code is used when prices for different and optional transfers are returned in SellingData/Transfers.
+In this case the code can be used here in BasicData to refer to a specific transfer in SellingData, so that the detailed transfer information can be assigned to a specific transfer in SellingData.
+
+The code is any arbitrary abbreviation. When used, however, SellingData/Transfer must contain a Transfer element with the ApplianceCode that was used here under Code.
+
+Example:
+There are two different transfer options. Both transfer options can be additionally booked as optional additional services. The searchable basic data of the transfer is contained under TransferInfo in BasicData. The prices for the transfer are controlled in SellingData/Transfer. The Code attribute is used to ensure an assignment of information to price.
+1. There is a bus transfer at a price of € 25 per person.
+2. There is a private transfer at a price of € 60 per person.
+
+Two extras exist in the SellingData section:
+
+1st Extra: Bus transfer
+/Extras
+  /Extra GlobalType="BS" Type="Transfer" ApplianceCode="BSPMI01HR" Mandatory=”false”
+     /Descriptions
+        /Description&amp;gt; bus transfer airport - hotel - airport
+    /Descriptions
+   /Charges
+     /Charge Amount="25.00" Calculation=”PS”
+  /Charges
+ /Extra
+
+2nd Extra: Private transfer
+/Extras
+  /Extra GlobalType="PT" Type="Transfer" ApplianceCode="PTPMI01HR" Mandatory=”false”
+     /Descriptions
+        /Description&amp;gt; bus transfer airport - hotel - airport
+    /Descriptions
+   /Charges
+     /Charge Amount="60.00" Calculation=”PS”
+  /Charges
+ /Extra
+
+The following two TransferInfo elements are set in BasicData/TransferInfos:
+/TransferInfos
+  /TransferInfo IataCode="PMI" GlobalType="BS"  MinDuration="PT20M" MaxDuration="P60M" Distance="20" Code="BSPMI01HR"
+  /TransferInfo IataCode="PMI" GlobalType="PT"  MinDuration="PT60M" MaxDuration="P90M" Distance="45" Code="PTPMI01HR"
+/TransferInfos
+
+This example shows: 
+The transfer for an outbound via PMI is a "bus transfer". The transfer time is between 20 and 60 minutes. The distance is 20 km. The costs total € 20 (apparent from the reference code ="BSPMI01HR").
+The transfer for an outbound via TFN is a "taxi transfer". The transfer time is between 60 and 90 minutes. The distance is 45 km. The costs total € 60 (apparent from the reference code ="PTPMI01HR").</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Attributes"
+                                        minOccurs="0"
+                                        maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>Das Element Attribute kann alle Hotelattribute zur Beschreibung eines Hotels sowie eines Zimmers beinhalten.
+-----------------------------------------
+The Attribute element can contain all hotel attributes to describe a hotel and a room.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Attribute"
+                                                    minOccurs="0"
+                                                    maxOccurs="unbounded">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element Attribute kann alle Hotelattribute zur Beschreibung eines Hotels sowie eines Zimmers beinhalten.
+-----------------------------------------
+The Attribute element can contain all hotel attributes to describe a hotel and a room.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:attribute name="Name"
+                                                              type="xs:string">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Name des Attributs.
+
+Beispiele
+Name=Kategorie,
+Value=4 (4 Sterne)
+
+Name=Direkte Strandlage,
+Value=true
+
+Name=Kinderbetreuung, 
+Value=false
+
+Name =Minibar,
+Value=true
+
+Name=Klimaanlage, 
+Value=true
+-----------------------------------------
+The name of the attribute.
+
+Examples
+Name=Category,
+Value=4 (4 stars)
+
+Name=Direct Beach Position,
+Value=true
+
+Name=Child Care, 
+Value=false
+
+Name =Mini Bar,
+Value=true
+
+Name=AC, 
+Value=true</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Value"
+                                                              type="xs:string">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Wert des Attributs.
+
+Beispiele
+Name=Kategorie,
+Value=4 (4 Sterne)
+
+Name=Direkte Strandlage,
+Value=true
+
+Name=Kinderbetreuung, 
+Value=false
+
+Name =Minibar,
+Value=true
+-----------------------------------------
+The value of the attribute.
+
+Examples
+Name=Category,
+Value=4 (4 stars)
+
+Name=Direct Beach Position,
+Value=true
+
+Name=Child Care, 
+Value=false
+
+Name =Mini Bar,
+Value=true</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Language">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Sprachkenner nach ISO-Norm 639-1 für Sprachen - alpha 2 Code
+Hier wird ein 2stelliger ISO Code angegeben.
+Defaultwert ist "DE"
+-----------------------------------------
+Language identifier according to ISO 639-1 for languages - alpha 2 code
+A 2-letter ISO code is indicated here.
+The default value is "DE"</xs:documentation>
+                                                    </xs:annotation>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:maxLength value="2" />
+                                                            <xs:minLength value="2" />
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                                <xs:attributeGroup ref="TimeRangeAttributes" />
+                                                <xs:attribute name="ApplyTo">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Kenner ob zugehoerige Angabe Hotel-Anreise- oder Hotel-Aufenthaltsbezogen oder Flug-Anreise- oder Flug-Aufenthaltsbezogen ist.
+Dieser Kenner gilt in Verbindung mit dem Attribut "ApplyToMode", welches den Hotel- oder Flugbezug steuert.
+
+Moegliche Werte sind:
+Arrival	Der Zeitraum gilt anreisebezogen. Es gelten Tage als Basis. 
+Stay	Der Zeitraum gilt aufenthaltsbezogen. jedoch nächteweise
+Within	Der gesamte Reisezeitraum (Jeder Aufenthaltstag der Reise) liegt in dem Zeitraum Start, End. Es gelten Tage als Basis.
+Departure	Der Zeitraum gilt abreisebezogen. Es gelten Tage als Basis.
+StayDays Der Zeitraum gilt aufenthaltsbezogen. Es gelten Tage als Basis. 
+
+
+Beispiel für StayDays:
+Es bestehen zwei Frühbucherermäßigungen, die aufenthaltsbezogen gelten, jedoch die Basis „Tage“ haben.
+Frühbucher 1: vom 01.05.10 bis 12.06.10, 	10%
+Frühbucher 2: vom 13.06.10, bis 15.08.10, 	5%
+
+Bei einer Berechnung einer 8 Tages Reise vom 11.06.10 bis 19.06.10 wird 2 mal der Frühbucher von 10% angewendet. Der Frühbucher von 5% wird 6 mal für alle folgenden Tage berechnet.
+
+                         
+Beispiel für Arrival und ApplyToMode="Flight":
+1. Flug CGN – PMI 01.01.10 – 14.01.10
+2. Erstes Hotel PMI 01.01.10 – 07.01.10
+3. Zweites Hotel PMI 07.01.10 – 14.01.10
+
+Bei dem Anschlusshotel gibt es ein Incentive, was Fluganreise gesteuert wird. Das Incentive des zweiten Hotels gilt vom 01.01. bis 06.01.10.
+Auch wenn die Anreise im Hotel erst am 07.01.10 erfolgt, wird dennoch das Incentive (Beispiel 7=6) gewährt, da die Bedingung der Fluganreise erfülllt ist.
+
+Beispiel für Stay und ApplyToMode="Flight":
+1. Flug DUS – BKK 01.01 – 08.01.
+2. Hotelaufenthalt, weil Übernachtsflug 02.01. – 08.01.
+Bei dem Hotel gibt es ein Incentive 7=6, dieses würde für HotelStay nicht gezogen werden, da der Hotelaufenthalt nur 6 Tage ist. Wird ApplyTo=FlightStay gesetzt, so bezieht es sich auf die Dauer zwischen Hinflug und Rückflug. Das Incentive 7=6 wird gewährt.
+
+Beispiel für Within und ApplyToMode="Hotel":
+1. Flug MUC – TFS 15.01. – 22.01.
+2. Hotel TFS 15.01. – 22.01.
+Das Incenitive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 31.01. 
+Bei ApplyTo=Within muss der Hotelaufenthalt genau in diesen Zeitraum fallen. Gibt es dort eine Überschneidung, so wird das Extra nicht gezogen. z.B. Incenitive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 20.01. Das Incentive wäre in diesem Falle nicht gültig.
+-----------------------------------------
+Identifier of whether the respective information refers to the hotel arrival or hotel stay, or to flight arrival or flight stay.
+This identifier applies in conjunction with the ApplyToMode attribute, which assigns the hotel or flight reference.
+
+Possible values are:
+Arrival	The time range applies to the arrival. Days apply as the basis. 
+Stay	The time range applies to the stay, but by night
+Within	The entire travel period (every stay day of the journey) lies in the time range Start, End. Days apply as the basis.
+Departure	The time range applies to the departure. Days apply as the basis.
+StayDays The time range applies to the stay. Days apply as the basis. 
+
+
+Example of StayDays:
+There are two early bird discounts that apply to the stay, but are based on "days".
+Early bird 1: from May 01, 2010 until Jun 12, 2010, 	10%
+Early bird 2: from Jun 13, 2010 until Aug 15, 2010, 	5%
+
+When calculating an 8 day trip from Jun 11, 2010 until Jun 19, 2010, the 10% early bird is applied twice. The 5% early bird is calculated six times for all of the ensuing days.
+
+                         
+Example of Arrival and ApplyToMode="Flight":
+1. Flight CGN – PMI Jan 01, 2010 – Jan 14, 2010
+2. First hotel PMI Jan 01, 2010 – Jan 07, 2010
+3. Second hotel PMI Jan 07, 2010 – Jan 14, 2010
+
+An incentive, that is controlled via flight arrival, already exists for the connecting hotel. The incentive for the second hotel is valid from Jan 01 until Jan 06, 2010.
+Even if the arrival in the hotel is not until Jan 07, 2010, the incentive (example 7=6) is nonetheless granted, since the condition for the flight arrival is satisfied.
+
+Example of Stay and ApplyToMode="Flight":
+1. Flight DUS – BKK Jan 01 – Jan 08
+2. Hotel stay because of overnight flight Jan 02 – Jan 08.
+An incentive 7=6 already exists for the hotel; this would not be drawn for the HotelStay, since the hotel stay is only for 6 days. If ApplyTo=FlightStay is set, this refers to the duration between the outbound flight and the inbound flight. The Incentive 7=6 is granted.
+
+Example of Within and ApplyToMode="Hotel":
+1. Flight MUC – TFS Jan 15 – Jan 22.
+2. Hotel TFS Jan 15 – Jan 22.
+The incentive 7=6 has a validity duration from Jan 01 – Jan 31. 
+For ApplyTo=Within the hotel stay must fall exactly within this time range. If there are overlaps, the extra is not applied, e.g., Incentive 7=6 has a validity duration from Jan 01 – Jan 20. In this case the incentive would not be valid.</xs:documentation>
+                                                    </xs:annotation>
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="ApplyToEnum">
+                                                            <xs:enumeration value="Arrival" />
+                                                            <xs:enumeration value="Departure" />
+                                                            <xs:enumeration value="Stay" />
+                                                            <xs:enumeration value="StayDays" />
+                                                            <xs:enumeration value="Within" />
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Reviews"
+                                        minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Reviews ist das übergeordnete Element, welches ein Review Element beinhaltet. Es dient dem Transport von Hotelbewertungen.
+In diesem kann ein Hotelbewertungsdurchschnitt, die Anzahl der Bewertungen zu diesem Produkt, sowie die Empfehlungsrate abgelegt werden.
+Diese Informationen sind sinnvoll, damit ein Vertriebssystem eine Suche oder Anzeige von Produkten in Abhängigkeit von Hotelbewertungen durchführen kann.
+
+Beispiel:
+Suche nach allen 4* Hotels auf PMI, die eine Weiterempfehlungsquote größer 95 % haben.
+-----------------------------------------
+Reviews is the parent element that contains a Review element. It is used for propagating hotel reviews
+and can hold an average hotel rating, the number of reviews for this product as well as the recommendation rate.
+This information is useful and enables a sales system to find or display products based on hotel reviews.
+
+Example:
+Find all 4* hotels on PMI with a recommendation rate greater than 95 %.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Review"
+                                                    minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element Review beinhaltet alle wichtigen Informatonen zu einem Hotelbewertungsdurchschnitt.
+-----------------------------------------
+The Review element contains all important information that apply to an average hotel rating.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:attribute name="Count"
+                                                              type="xs:integer">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Das Attribute Count beinhaltet die Gesamtanzahl der Hotelbewertungen.
+
+Beispiel:
+/Reviews
+  /Review Count="653" Recommendation="95" AverageRating="4.5"
+/Reviews
+Dieses Beispiel zeigt: Es liegen 653 Hotelbewertungen für dieses Hotel vor. Die Weiterempfehlungsquote beträgt 95% und die durchschnittliche Bewertung liegt bei 4,5 Punkten.
+-----------------------------------------
+The Count attribute contains the total number of hotel reviews.
+
+Example:
+/Reviews
+  /Review Count="653" Recommendation="95" AverageRating="4.5"
+/Reviews
+This example shows: There are 653 hotel reviews for this hotel. The recommendation rate is 95% and the average rating is 4.5 points.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Recommendation"
+                                                              type="xs:integer">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Das Attribute Recommendation beinhaltet die Weiterempfehlungsquote des Hotels bzw. des Produkts.
+Die Empfehlungsquote meint stehts die Quote in Prozent.
+
+Beispiel:
+/Reviews
+  /Review Count="653" Recommendation="95" AverageRating="4.5"
+/Reviews
+Dieses Beispiel zeigt: Es liegen 653 Hotelbewertungen für dieses Hotel vor. Die Weiterempfehlungsquote beträgt 95% und die durchschnittliche Bewertung liegt bei 4,5 Punkten.
+-----------------------------------------
+The Recommendation attribute contains the recommendation rate of the hotel or product.
+The recommendation rate is always expressed as a percentage.
+
+Example:
+/Reviews
+  /Review Count="653" Recommendation="95" AverageRating="4.5"
+/Reviews
+This example shows: There are 653 hotel reviews for this hotel. The recommendation rate is 95% and the average rating is 4.5 points.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="AverageRating"
+                                                              type="xs:decimal">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Das Attribut AverageRating beinhaltet eine Durchschnittsbewertung.
+
+Beispiel:
+/Reviews
+  /Review Count="653" Recommendation="95" AverageRating="4.5"
+/Reviews
+Dieses Beispiel zeigt: Es liegen 653 Hotelbewertungen für dieses Hotel vor. Die Weiterempfehlungsquote beträgt 95% und die durchschnittliche Bewertung liegt bei 4,5 Punkten.
+-----------------------------------------
+The AverageRating attribute contains an average rating.
+
+Example:
+/Reviews
+  /Review Count="653" Recommendation="95" AverageRating="4.5"
+/Reviews
+This example shows: There are 653 hotel reviews for this hotel. The recommendation rate is 95% and the average rating is 4.5 points.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Brochures"
+                                        minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>Das Element Brochures dient dem Transport von Kataloginformationen. Hier können Katalog, Katalogseite und Preisteilseite als Information übergeben werden.
+Ein Produkt kann in mehreren Katalogen vorkommen. Daher kann das Element Brochure mehrfach auftreten.
+Die Katalginformationen können somit in einem Vertriebssystem zur Anzeige gebracht werden.
+-----------------------------------------
+The Brochures element is used to specify brochure information. Here, the brochure name, brochure page and price list page can be passed in as information.
+One product can occur in multiple brochures. The Brochure element can hence occur more than once.
+In this way, the brochure information can be displayed in a sales system.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Brochure"
+                                                    minOccurs="0"
+                                                    maxOccurs="unbounded">
+                                            <xs:annotation>
+                                                <xs:documentation>Das Element Brochure kann mehrfach auftreten. Sofern ein Hotel bzw. ein Produkt in mehreren Katalogen vorkommt, wird das Element Brochure entsprechend oft geschrieben. Mit seinen Attributen Code, Name, Page und PriceListPage beschreibt es den Katalogcode, den Katalognamen, die Katalogseite und die Preisteilseite. Das Element Brochure kann optional genutzt werden. Es setzt Vertriebssysteme in die Lage die entsprechenden Kataloginformationen für den Expedienten oder den Endkunden anzuzeigen.
+
+Beispiel:
+/Brochures
+  /Brochure Code="SP" Name="Spanien Sommer 2012" Page="112" PriceListPage="58"
+  /Brochure Code="FAM" Name="Familienreisen Sommer 2012" Page="56 PriceListPage="74"
+/Brochures
+   
+Dieses Beispiel zeit:
+Das Produkte befindet sich in dem Katalog "Spanien Sommer 2012, auf Seite 112. Im Preisteil findet es sich auf Seite 58 und
+in dem Katalog "Familienreisen Sommer 2012" auf Seite 56 mit Preisteilseite 74.
+-----------------------------------------
+The Brochure element can occur more than once. If a hotel or product appears in more than one brochure, the Brochure element is repeated the corresponding number of times. Using the corresponding Code, Name, Page and PriceListPage attributes, this element describes the brochure code and name, the brochure page as well as the price list page. The use of the Brochure element is optional. It enables sales systems to display the appropriate brochure information to the travel agent or customer.
+
+Example:
+/Brochures
+  /Brochure Code="SP" Name="Spain Summer 2012" Page="112" PriceListPage="58"
+  /Brochure Code="FAM" Name="Family Summer 2012" Page="56 PriceListPage="74"
+/Brochures
+   
+This example shows:
+The product can be found in the brochure "Spain Summer 2012", on page 112. In the price list it is located on page 58 and
+in the brochure "Family Summer 2012" on page 56 an on price list page 74.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:attribute name="Code"
+                                                              type="xs:string">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Das Attribut Code ist optional und dient der reinen Information. In der Regel ist ein Katalogcode nur veranstalterintern relevant.
+Hier kann der veranstalterinterner Code zur Identifizierung des Katalogs transportiert werden.
+-----------------------------------------
+The Code attribute is optional and is displayed for informational purposes only. Generally, a brochure code is only for internal use by the tour operator.
+The tour operator internal code for identifying the brochure can be specified here.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Name"
+                                                              type="xs:string">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Mit dem Element Name wird der Kataloglangname transportiert, in dem das Hotel bzw. das Produkt zu finden ist. Dieser Name kann in einem Vertriebssystem angezeigt werden. Daher sollte der Katalogname kundenfreundlich beschrieben sein.
+-----------------------------------------
+The Name element is used to specify the brochure long name, where the hotel or product can be found. As this name can be displayed in a sales system, the brochure should be assigned a customer-friendly name.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Page"
+                                                              type="xs:string">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Mit dem Attribut Page wird die Katalogseite, auf der das Produkt zu finden ist, transportiert.
+-----------------------------------------
+The Page attribute is used to indicate the page number of the brochure where the product can be found.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="PriceListPage"
+                                                              type="xs:unsignedShort">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Das Attribut PriceListPage dient dem Transport der Preisteilseite, auf der das Produkt zu finden ist.
+-----------------------------------------
+The PriceListPage attribute is used to indicate the price list page where the product can be found.</xs:documentation>
+                                                    </xs:annotation>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Distribution"
+                                        minOccurs="0"
+                                        maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>Über das Element Distribution werden
+								Vertriebskanäle und Exklusivangebote für bestimmte Agenturen
+								gesteuert. Sofern das Element Distribution nicht gesetzt ist, gilt
+								das Produkt, bzw. das Angebot für alle Vertriebskanäle sowie für
+								alle Agenturen.
+		
+								Wenn Einschränkung auf bestimmte Vertriebskanäle
+								bestehen, sind diese in
+								dem Element Channel-Name anzugeben.
+								Beispiel:
+								Online
+								Stationär
+								Eigenvertrieb
+								Intern
+								-----------------------------------------
+								The Distribution element is
+								used to assign distribution channels and
+								exclusive offers for
+								specific agencies. If the Distribution element
+								is not set, the
+								product or the offer is valid for all distribution
+								channels and for
+								all agencies.
+	
+								If there are restrictions to specific distribution
+								channels, these
+								must be indicated in the Channel-Name element.
+								Example:
+								Online
+								Stationary
+								Direct sale
+								Internal
+								</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Channel"
+                                                    minOccurs="0"
+                                                    maxOccurs="unbounded">
+                                            <xs:annotation>
+                                                <xs:documentation>Über das Element Distribution werden
+							Vertriebskanäle und Exklusivangebote für bestimmte Agenturen
+							gesteuert. Sofern das Element Distribution nicht gesetzt ist,
+							gilt das Produkt, bzw. das Angebot für alle Vertriebskanäle,
+							sowie für alle Agenturen. Mit dem Attribut „Invert“ können
+							Vertriebskanäle oder Exklusivangebote invertiert bzw.
+							ausgeschlossen werden.
+
+							Über das Element Channel-Name werden die
+							jeweiligen Vertriebskanäle
+							oder Agenturketten, etc. namentlich
+							transportiert.Die Abarbeitung
+							und Steuerung von Exklusivitäten ist
+							durch den Veranstalter mit
+							dem Vertriebssystem abzustimmen.
+
+							Beispiele sind:
+							Online
+							Stationär
+							Eigenvertrieb
+							Intern
+							-----------------------------------------
+							The Distribution element
+							is used to assign distribution channels and
+							exclusive offers for
+							specific agencies. If the Distribution
+							element is not set, the
+							product or the offer is valid for all
+							distribution channels and
+							for all agencies. Distribution channels
+							or exclusive offers can be
+							inverted or excluded using the Invert
+							attribute.
+
+							The Channel-Name
+							element passes the respective distribution channels
+							or agency
+							chains, etc. by name. Processing and assigning of
+							exclusivity must
+							be coordinated by the tour operator with the
+							sales system.
+
+							Examples are:
+							Online
+							Stationary
+							Direct sale
+							Internal
+						</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="xs:string">
+                                                        <xs:attribute name="Name"
+                                                                      type="xs:string" />
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Code"
+                                      use="required">
+                            <xs:annotation>
+                                <xs:documentation>Das Attribut Code  beinhaltet den Hotelcode bzw. den Produktcode mit dem das Hotel bzw. Produkt gebucht wird.
+Der Hotelcode bzw. Produktcode ist daher ein eindeutiger Bezeichner für das Hotel bzw. das Unterkunftsprodukt. 
+
+Das EDF versorgt Vertriebssysteme mit allen buchungsrelevanten Informationen, so dass ein Vertriebssystem Buchungsaktionen ausführen kann.
+Der Hotel- bzw. Produktcode wird in Verbindung mit dem Attribut TOMARequestCode gesehen. In diesem wird der Anforderungscode für die Leistung gesteuert.
+Beispielsweise bildet der TOMARequestCode="H" und der Code="PMI001" die Grundlage für das Befüllen beispielsweise einer TOMA Leistungszeile: Anforderung "H", Hotelcode "PMI001".
+
+Beispiel:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" " TOMARequestCode="H"
+ /Name Hotel Taurus Park
+-----------------------------------------
+The Code attribute contains the hotel code or the product code the hotel or product is booked with.
+The hotel code or product code is therefore a unique identifier for the hotel or the accommodation product. 
+
+The EDF updates sales systems with all information relevant to booking so that a sales system can execute bookings.
+The hotel or product code is seen in conjunction with the TOMARequestCode attribute. This attribute controls the request code for the service.
+For example, TOMARequestCode="H" and Code="PMI001" form the basis for populating a TOMA service line: Request "H", hotel code "PMI001".
+
+Example:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" " TOMARequestCode="H"
+ /Name Hotel Taurus Park</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string" />
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="TravelType">
+                            <xs:annotation>
+                                <xs:documentation>Das Attribut TravelType enthält die Reiseart.
+Das Attribut ist optional und wird nur geschrieben, wenn eine Reiseart für die Buchung des Produktes benötigt wird.
+Die Attribute Reiseart und Programmart werden daher nur gefüllt, wenn ein Produkt mit einer bestimmten Reiseart/Programmart oder mit mehreren Reisearten/Programmarten angeboten wird. Aufgrund der TOMA-Restriktion kann eine Reiseart max. 4 alpha-numerische Zeichen haben. Wenn mehrere Reisearten für ein Produkt bestehen und damit auch unterschiedliche Verkaufskonditionen je Reiseart gelten, wird das Hotel EDF File entsprechend oft geschrieben. 
+
+Beispiel die Lieferung von 2 EDF Files aufgrund 2 unterschiedlichen Reisearten:
+EDF-S0-NAH---XYZ-PMI001.xml
+EDF-S0-FAMI---XYZ-PMI001.xml
+Das Hotel PMI001 des Veranstalters XYZ wird im Sommer 2010 mit der Reiseart "NAH" und mit der Reiseart "FAMI" angeboten.
+
+Beispiel für die Darstellung des Attributes TravelType:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" TravelType="NAH" TOMARequestCode="H"
+ /Name Hotel Taurus Park
+-----------------------------------------
+The TravelType attribute contains the travel type.
+The attribute is optional and will only be written, if a travel type is required for booking the product.
+Thus, the travel type and program type attributes are only filled, if a product offering comprises a specific travel type/program type or multiple travel types/program types. Due to the TOMA restriction, a travel type may not exceed the maximum of 4 alphanumeric characters. If multiple travel types exist for a product and hence different sales terms apply per travel type, the system will generate as many hotel EDF files as necessary. 
+
+Example: Generating 2 EDF files resulting from 2 different travel types:
+EDF-S0-NAH---XYZ-PMI001.xml
+EDF-S0-FAMI---XYZ-PMI001.xml
+In the summer season of 2010, the hotel PMI001 of the XYZ tour operator is bookable with the travel type "NAH" and with the travel type "FAMI".
+
+Example presentation of the TravelType attribute:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" TravelType="NAH" TOMARequestCode="H"
+ /Name Hotel Taurus Park</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="4" />
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="ProgramType">
+                            <xs:annotation>
+                                <xs:documentation>Attribut ProgrammType (Programmart)
+Das Attribut ist optional und wird nur geschrieben, wenn eine Programmart für die Buchung des Produktes benötigt wird. Bei deutschen Veranstaltern ist dieses Vorgehen bei TUI bekannt.
+Das Attribut Programmart wird nur gefüllt, wenn ein Produkt mit einer oder mehreren Programmarten transportiert werden soll.
+Da Verkaufskonditionen wie Preise, Zimmer, Incentives, etc. in Abhängigkeit von verschiedenen Programmarten gelten können, werden diese unterschiedlichen Konditionen in Abhängigkeit dieser Programmart in eigenen Hotel EDF files geschrieben.
+
+Beispiel die Lieferung von 2 EDF Files aufgrund 2 unterschiedlichen Programmarten und einer Reiseart:
+EDF-S0-NAH-F00--PMI001.xml
+EDF-S0-NAH-F34--PMI001.xml
+Das Hotel PMI001 des Veranstalters XYZ wird im Sommer 2010 mit der Reiseart "NAH" und Programmart "F00" angeboten. Zusätzlich kann das Produkt mit Programmart "F34" gebucht werden.
+-----------------------------------------
+ProgrammType attribute
+The attribute is optional and will only be written, if a program type is required for booking the product. For German tour operators like TUI this approach is common practice.
+The ProgramType attribute is only filled, if a product is to be passed in with one or more program types.
+As varying sales terms such as prices, rooms, incentives, etc. may apply depending on the program type, these terms are written into separate hotel EDF files.
+
+Example: Generating 2 EDF files resulting from 2 different program types and 1 travel type:
+EDF-S0-NAH-F00--PMI001.xml
+EDF-S0-NAH-F34--PMI001.xml
+In the summer season of 2010, the hotel PMI001 of the XYZ tour operator is bookable with the travel type "NAH" and program type "F00". Additionally, the product can be booked with the program type "F34".</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string" />
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="TourOperatorCode"
+                                      type="xs:string"
+                                      use="required">
+                            <xs:annotation>
+                                <xs:documentation>Das Attribut TourOperatorCode transportiert den Veranstaltercode. Da der Veranstaltercode für eine technische Buchung benötigt wird, ist dieses Attribut ein Pflichtattribut.
+Hier wird daher der Veranstaltercode übergeben, der für eine Buchung benötigt wird.
+
+Beispiel:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" " TOMARequestCode="H"
+ /Name Hotel Taurus Park
+In diesem Beispiel wird das Produkt mit dem Veranstaltercode "XYZ" dem Hotelcode "PMI001" und dem Anforderungscode "H" gebucht.
+-----------------------------------------
+The TourOperatorCode attribute is used to specify the tour operator code. Since the tour operator code is needed for a technical booking, this attribute is mandatory.
+Hence, the tour operator code required for a booking is supplied here.
+
+Example:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" " TOMARequestCode="H"
+ /Name Hotel Taurus Park
+In this example, a booking for the product with the tour operator code "XYZ", hotel code "PMI001" and request code "H" is performed.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="TourOperatorName"
+                                      type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Das Attribut TourOperatorName enthält den Veranstalterlangnamen bzw. den Langnamen der Veranstaltermarke. Dieses Attribut ist optional und dient dem EDF Abnehmer für eine schnellere Datenzuordnung im Falle einer manuellen Prüfung des EDF files.
+
+Beispiel:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" TourOperatorName="XYZ Reisen" TOMARequestCode="H"
+ /Name Hotel Taurus Park
+-----------------------------------------
+The TourOperatorName attribute contains the long name of the tour operator or tour operator brand, respectively. This attribute is optional and helps the EDF consumer to accelerate the data allocation, if a manual check of the EDF file is performed.
+
+Example:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" TourOperatorName="XYZ Travels" TOMARequestCode="H"
+ /Name Hotel Taurus Park</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="Usage"
+                                      type="UsageEnum"
+                                      use="required">
+                            <xs:annotation>
+                                <xs:documentation>Das Attribut Usage beinhaltet die Verkaufsart des Produktes. Dieses Attribut ist ein Pflichtattribut, da die Usage für die Verarbeitung der Produkte in den Vertriebssystemen relevant ist.
+
+Folgende Verkaufsarten sind möglich:
+HotelOnly: Produkt wird als Nur Hotel angeboten.
+Package: Produkt wird als Pauschalprodukt angeboten.
+ConnectingHotel: Produkt wird als Anschlusshotel (ConnectingHotel) angeboten.
+Dynamic: Produkt wird als dynamic packaging angeboten
+
+Sofern ein Hotel mit unterschiedlichen Verkaufsarten angeboten wird, wird je Verkaufsart ein eigenes EDF File geschrieben.
+Beispiel: Das Hotel "PMI001" wird als NurHotel und als Pauschal Hotel angeboten. 
+Ergebnis: Es bestehen zwei Hotel EDF files: 1 File mit der Usage="HotelOnly", 1 File mit der Usage="Package". Diese Differenzierung ist sinnvoll, da oft unterschiediche Preise und Produktaufbauregeln für die unterschiedlichen Produktarten gelten.
+-----------------------------------------
+The Usage attribute contains the sales type of the product. This attribute is mandatory, since the usage is essential for processing the product in the sales systems.
+
+The following sales types are possible:
+HotelOnly: The product is offered as hotel only.
+Package: The product is offered as a package product.
+ConnectingHotel: The product is offered as a connecting hotel.
+Dynamic: The product is offered as a dynamic package.
+
+If a hotel is offered with different sales types, a separate EDF file is written per sales type.
+Example: The hotel "PMI001" is offered as hotel only and as package hotel. 
+Result: There are two hotel EDF files: 1 File with Usage="HotelOnly", 1 File with Usage="Package". This differentiation is useful because different prices and product configuration rules often apply to the diverse product types.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="ExternalBookable"
+                                      type="xs:boolean"
+                                      use="optional">
+                            <xs:annotation>
+                                <xs:documentation>Das Attribut ExternalBookable zeigt die Buchbarkeit ueber die Vertriebs- und Reservierungssysteme.
+Der Defaultwert ist "true". Sofern das Produkt in Vertriebssystemen angezeigt und gebucht werden kann, muss das Attribut nicht gesetzt werden.
+
+Mögliche Inhalte:
+ExternalBookable="tue" (Defaultwert) :Das Produkt wird in Vertriebssystemen angezeigt und ist buchbar
+ExternalBookable="false": Das Produkt wird in Vertriebssystemen nicht angezeigt. Es nicht extern buchbar.
+
+Mit dem Attribut lassen sich beispielsweise Produkten aus Vorabkatalogen transportieren, die jedoch zum Zeitpunkt der Lieferung noch nicht buchbar sind. Somit ein Vertriebssystem die Möglichkeit, das Produkt vorab zu prüfen und testweise aufzubauen.
+-----------------------------------------
+The ExternalBookable attribute indicates the bookability across sales and reservation systems.
+The default value is True. If the product can be displayed and booked in sales systems, the attribute need not be set.
+
+Possible inputs:
+ExternalBookable="true" (default value): The product is displayed in sales systems and can be booked.
+ExternalBookable="false": The product is not displayed in sales systems and can not be booked externally.
+
+For example, this attribute is helpful in passing in products from advance brochures, which are not yet bookable at the time of delivery. This enables a sales system to check the product in advance and run a test configuration.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="IncomingAgency">
+                            <xs:annotation>
+                                <xs:documentation>Dieses Attribut IncomingAgency  wird benötigt, um in dem Bereich der Bindungen ausschließlich Unterkunftsprodukte einer bestimmten Incoming Agentur zu erlauben/zu sperren. Um lediglich Produkte einer bestimmten Incoming Agentur zu binden, kann in dem Element "BasicData" die Incoming Agentur angegeben werden.
+
+Es besteht keine Vorgabe zur inhaltlichen Belegung dieses Attributs. An dieser Stelle kann ein Code oder Kürzel oder der Name der Incoming Agentur transportiert werden. Sofern jedoch Bindungen mit Incoming Agenturen bestehen, so muss der Inhalt des Attributes auf der Ebene" BasicData" mit dem Inhalt des Attributes "IncomingAgency" in dem Datenbereich SellingData/Restrictions/Restriction/HotelRestrictions/HotelRestriction übereinstimmen.
+-----------------------------------------
+The IncomingAgency attribute is needed in the binding restrictions to exclusively permit/block accommodation products of a specific incoming agency. To simply bind products of a specific incoming agency, the incoming agency can be specified in the BasicData element.
+
+There is no requirement for the content of this attribute. A code or abbreviation or the name of the incoming agency can be specified here. However, if bindings with incoming agencies exist, the content of the attribute on the BasicData level must match the content of the IncomingAgency attribute in the data range SellingData/Restrictions/Restriction/HotelRestrictions/HotelRestriction.</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string" />
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="TOMARequestCode"
+                                      type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Das Attribut TOMARequestCode beinhaltet den Anforderungscode mit dem das Produkt über TOMA gebucht wird.
+Der Defaultwert ist "H" für Hotel. Sofern das Produkt mit einem anderen Anforderungscode gebucht wird, muss der entsprechende Anforderungsode hier übergeben werden.
+
+Beispiele für Anforderungscodes sind:
+H - Hotel
+R - Rundreisen
+F - Ferienwohnung/Ferienhaus
+etc.
+
+Das EDF versorgt Vertriebssysteme mit allen buchungsrelevanten Informationen, so dass ein Vertriebssystem Buchungsaktionen ausführen kann.
+Der Hotel- bzw. Produktcode wird in Verbindung mit dem Attribut TOMARequestCode gesehen. In diesem wird der Anforderungscode für die Leistung gesteuert.
+Beispielsweise bildet der TOMARequestCode="H" und der Code="PMI001" die Grundlage für das Befüllen beispielsweise einer TOMA Leistungszeile: Anforderung "H", Hotelcode "PMI001".
+
+Beispiel:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" " TOMARequestCode="H"
+ /Name Hotel Taurus Park
+-----------------------------------------
+The TOMARequestCode attribute contains the request code for booking the product via TOMA.
+The default value is "H" for hotel. If the product is booked with another request code, the appropriate request code must be supplied here.
+
+Examples of request codes:
+H - hotel
+R - roundtrips
+F - vacation flat/vacation home
+etc.
+
+The EDF supplies sales systems with all information relevant to booking so that a sales system can execute bookings.
+The hotel or product code is seen in conjunction with the TOMARequestCode attribute. This attribute controls the request code for the service.
+For example, TOMARequestCode="H" and Code="PMI001" form the basis for populating a TOMA service line: Request "H", hotel code "PMI001".
+
+Example:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" " TOMARequestCode="H"
+ /Name Hotel Taurus Park</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="Source"
+                                      type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Das Attribut Source bezeichnet die Herkunft des Hotels bzw. des Produktes, sofern der Veranstalter die Leistung von externen Quellen bezieht (Incoming Agentur, Bettendatenbank, etc.). Das Attribut kann optional genutzt werden.
+Da einige Veranstalter unter anderem für die dynamische Paketierung ihre Produkte aus unterschiedlichen Quellen beziehen, kann hier die Angabe der Quelle hinterlegt werden.
+Im Rahmen einer dynamischen Paketetierung ist das Attribut relevant, um einem Vertriebssystem zwecks einer Einbuchung der Hotelleistung die Information über die Quelle mitzugeben.
+
+Beispiel:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" " TOMARequestCode="H" Source="Hotelbeds"
+ /Name Hotel Taurus Park
+-----------------------------------------
+The Source attribute designates the hotel and product origin, if the tour operator procures services from external sources (incoming agency, hotel beds database, etc.). The use of the attribute is optional.
+Since some tour operators procure their products from different sources, for example, for dynamic packaging, the source may be indicated here.
+The attribute is relevant for dynamic packaging in order to update a sales system with information indicating the source when booking a hotel service.
+
+Example:
+/BasicData Code="PMI001" GlobalType="HO" ExternalBookable="true" Usage="Package" TourOperatorCode="XYZ" " TOMARequestCode="H" Source="Hotelbeds"
+ /Name Hotel Taurus Park</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="FileKey"
+                                      type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Optionaler Parameter, hier kann ein eindeutiger Name für das Produkt vergeben werden, um dieses zu identifizieren.
+-----------------------------------------
+Optional parameter. A unique name can be assigned to the product in order to identify it.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="LatestFlightArrival"
+                                      type="xs:time">
+                            <xs:annotation>
+                                <xs:documentation>Die hier gelieferte Uhrzeit gibt an ab welcher Zeit bei Flügen mit Tagessprung der Hotelaufenthalt noch gezogen wird oder nicht.
+Beispielhaft am Wert 10:00 Uhr: Alle Angebote mit Flügen die am Vortag abfliegen und am nächsten Tag bis 10 Uhr landen muss die Hotelnacht noch gebucht werden. Nach 10 Uhr nicht mehr.
+-----------------------------------------
+The value supplied here designates the point in time from which the hotel stay will still be drawn for flights extending into the next day.
+Example based on 10:00AM: All offers including flights departing on the previous day and arriving on the next day before 10:00AM require that the overnight be booked. After 10:00AM, no overnight is needed.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="AllotmentReferenceCode"
+                                      type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Das Element AllotmentReferenceCode beinhaltet den Hotelcode des Haupthotels. Sofern es sich bei dem Produkt um ein Teilkontingentshotel oder um einen Teil eines Hotelkomplexes handelt, wird hier auf das physikalische Hotel verwiesen, zu welchem das Produkt gehört. 
+Beispiel: Das Hotel PMI001H ist ein Teil des physikalischen Haupthotels PMI001. In diesem Falle wird hier auf das Haupthotel PMI001 verwiesen.
+-----------------------------------------
+The AllotmentReferenceCode element contains the hotel code of the main hotel. If the product is a hotel with sub-allotments or part of a hotel complex, the factual hotel the product belongs to is indicated here. 
+Example: The Hotel PMI001H is part of the factual main hotel PMI001. In this case, the main hotel PMI001 is referenced here.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="SchemaVersion"
+                          type="xs:string"
+                          use="required">
+                <xs:annotation>
+                    <xs:documentation>Das Attribut SchemaVersion gibt die Version an, ab welcher Schema Version das XML kompatibel ist. Dieses Attribut ist ein Pflichtattribut und sichert die Verarbeitung der Dateien mit der entsprechenden Import Version auf Seiten des Datenabnehmers.
+
+Beispiel:
+/HotelRoot xmlns="http://www.vilauma.de/edf/Hotel" SchemaVersion="1.012"
+-----------------------------------------
+The SchemaVersion attribute specifies the minimum version from which the XML is compatible. This attribute is a mandatory attribute and ensures that the files are processed using the appropriate import version on the recipient's side.
+
+Example:
+/HotelRoot xmlns="http://www.vilauma.de/edf/Hotel" SchemaVersion="1.012"</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="SeasonIdentifier"
+                          type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Das Attribut SeasonIdentifier wird nur verwendet, wenn die Hotel EDF Lieferung saisonbereichsabhängig aufgebaut ist.
+
+Beispiel: 
+Es gibt eine Hotel XML-Datei für Sommer 2013 (SeasonIdentifier="S3") und eine separate Hotel XML-Datei für Winter 2013 (SeasonIdentifier="W3").
+In diesem Falle wird auch die Matching Datei saisonbereichsabhängig aufgebaut. Dabei muss der SeasonIdentifier im Hotel EDF mit dem SeasonIdentifier in dem Matching EDF übereinstimmen.
+
+In diesem Beispiel lauten die Matching Dateien:
+Matching_BasicData _EDF-TUI-S3.xml  // Sommer 2013 mit SeasonIdentifier="S3"
+Matching_BasicData _EDF-TUI-W3.xml // Winter 2013 mit SeasonIdentifier="W3"
+
+
+</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+	        <xs:attribute name="CreationDate" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">In CreationDate kann das Erstellungsdatum und die Uhrzeit für dieses Hotel mitgegeben werden.</xs:documentation>
+					<xs:documentation xml:lang="en">In CreationDate can be specified a date and a time for this hotel xml file.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>        
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Airport">
+        <xs:annotation>
+            <xs:documentation>Das Element Airport beinhaltet alle relevanten Flughafeninformationen.
+-----------------------------------------
+The Airport element contains all relevant airport information.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="IataCode"
+                          type="xs:string"
+                          use="required">
+                <xs:annotation>
+                    <xs:documentation>Das Attribut zeigt den eindeutigen Flughafen-IATA Code.
+
+Beispiel:
+/ArrivalAirports
+   /Airport IataCode="TFS" Package="true"
+  /Airport IataCode="TFN" Package="true"
+/ArrivalAirports
+Bei diesem Beispiel kann das Hotel über die Zielflughäfen TFS und TFN angeflogen werden.
+-----------------------------------------
+This attribute displays the unique IATA airport code.
+
+Example:
+/ArrivalAirports
+   /Airport IataCode="TFS" Package="true"
+  /Airport IataCode="TFN" Package="true"
+/ArrivalAirports
+This example shows, that the hotel can be reached via the arrival airports TFS and TFN.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Package"
+                          type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Mit dem Attribut Package wird ein Kenner gesetzt, ob der spezielle Flughafen explizit zur Bündelung von Pauschalreisen vorgesehen ist oder nicht.
+
+Beispiel:
+/ArrivalAirports
+   /Airport IataCode="TFS" Package="true"
+  /Airport IataCode="TFN" Package="true"
+/ArrivalAirports
+Bei diesem Beispiel kann das Hotel über die Zielflughäfen TFS und TFN angeflogen werden.
+-----------------------------------------
+The Package attribute sets an identifier showing whether or not the specific airport is explicitly intended for bundling package tours.
+
+Example:
+/ArrivalAirports
+   /Airport IataCode="TFS" Package="true"
+  /Airport IataCode="TFN" Package="true"
+/ArrivalAirports
+This example shows, that the hotel can be reached via the arrival airports TFS and TFN.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Order">
+                <xs:annotation>
+                    <xs:documentation>Das Attribute Order kennzeichnet den Hauptflughafen bzw. Gewichtung der Flughäfen. Die kleinste Ordernummer hat die höchste Gewichtung.
+Ordernummer 1 steht daher für den Hauptflughafen.
+
+Beispiel:
+/ArrivalAirports
+   /Airport IataCode="TFS" Package="true" Order="1"
+  /Airport IataCode="TFN" Package="true" Order="2"
+/ArrivalAirports
+Bei diesem Beispiel kann das Hotel über die Zielflughäfen TFS und TFN angeflogen werden. Dabei hat jedoch der Zielflughafen TFS die höhere Priorität.
+-----------------------------------------
+The Order attribute indicates the main airport or the weighting of airports. The lowest order number has the highest weight.
+Thus, order number 1 stands for the main airport.
+
+Example:
+/ArrivalAirports
+   /Airport IataCode="TFS" Package="true" Order="1"
+  /Airport IataCode="TFN" Package="true" Order="2"
+/ArrivalAirports
+This example shows that the hotel can be reached via the arrival airports TFS and TFN. The arrival airport TFS, however, has the higher priority here.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="1" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="TimeRangeAttributes">
+        <xs:annotation>
+            <xs:documentation>Angabe eines Mindestzeitraumes
+-----------------------------------------
+Specifies a minimum period.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="Start"
+                      type="xs:date">
+            <xs:annotation>
+                <xs:documentation>Beginn des Zeitraums in dem Format JJJJ-MM-TT.
+-----------------------------------------
+The start of the period in the format YYYY-MM-DD.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="End"
+                      type="xs:date">
+            <xs:annotation>
+                <xs:documentation>Ende des Zeitraums in dem Format JJJJ-MM-TT.
+-----------------------------------------
+The end of the period in the format YYYY-MM-DD.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:simpleType name="ApplyToEnum">
+        <xs:annotation>
+            <xs:documentation>Kenner ob zugehoerige Angabe Hotel-Anreise- oder Hotel-Aufenthaltsbezogen oder Flug-Anreise- oder Flug-Aufenthaltsbezogen ist.
+Dieser Kenner gilt in Verbindung mit dem Attribut "ApplyToMode", welches den Hotel- oder Flugbezug steuert.
+
+Moegliche Werte sind:
+Arrival	Der Zeitraum gilt anreisebezogen. Es gelten Tage als Basis. 
+Stay	Der Zeitraum gilt aufenthaltsbezogen. jedoch nächteweise
+Within	Der gesamte Reisezeitraum (Jeder Aufenthaltstag der Reise) liegt in dem Zeitraum Start, End. Es gelten Tage als Basis.
+Departure	Der Zeitraum gilt abreisebezogen. Es gelten Tage als Basis.
+StayDays Der Zeitraum gilt aufenthaltsbezogen. Es gelten Tage als Basis. 
+
+
+Beispiel für StayDays:
+Es bestehen zwei Frühbucherermäßigungen, die aufenthaltsbezogen gelten, jedoch die Basis „Tage“ haben.
+Frühbucher 1: vom 01.05.10 bis 12.06.10, 	10%
+Frühbucher 2: vom 13.06.10, bis 15.08.10, 	5%
+
+Bei einer Berechnung einer 8 Tages Reise vom 11.06.10 bis 19.06.10 wird 2 mal der Frühbucher von 10% angewendet. Der Frühbucher von 5% wird 6 mal für alle folgenden Tage berechnet.
+
+                         
+Beispiel für Arrival und ApplyToMode="Flight":
+1. Flug CGN – PMI 01.01.10 – 14.01.10
+2. Erstes Hotel PMI 01.01.10 – 07.01.10
+3. Zweites Hotel PMI 07.01.10 – 14.01.10
+
+Bei dem Anschlusshotel gibt es ein Incentive, was Fluganreise gesteuert wird. Das Incentive des zweiten Hotels gilt vom 01.01. bis 06.01.10.
+Auch wenn die Anreise im Hotel erst am 07.01.10 erfolgt, wird dennoch das Incentive (Beispiel 7=6) gewährt, da die Bedingung der Fluganreise erfülllt ist.
+
+Beispiel für Stay und ApplyToMode="Flight":
+1. Flug DUS – BKK 01.01 – 08.01.
+2. Hotelaufenthalt, weil Übernachtsflug 02.01. – 08.01.
+Bei dem Hotel gibt es ein Incentive 7=6, dieses würde für HotelStay nicht gezogen werden, da der Hotelaufenthalt nur 6 Tage ist. Wird ApplyTo=FlightStay gesetzt, so bezieht es sich auf die Dauer zwischen Hinflug und Rückflug. Das Incentive 7=6 wird gewährt.
+
+Beispiel für Within und ApplyToMode="Hotel":
+1. Flug MUC – TFS 15.01. – 22.01.
+2. Hotel TFS 15.01. – 22.01.
+Das Incenitive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 31.01. 
+Bei ApplyTo=Within muss der Hotelaufenthalt genau in diesen Zeitraum fallen. Gibt es dort eine Überschneidung, so wird das Extra nicht gezogen. z.B. Incenitive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 20.01. Das Incentive wäre in diesem Falle nicht gültig.
+-----------------------------------------
+Identifier of whether the respective information refers to the hotel arrival or hotel stay, or to flight arrival or flight stay.
+This identifier applies in conjunction with the ApplyToMode attribute, which assigns the hotel or flight reference.
+
+Possible values are:
+Arrival	The time range applies to the arrival. Days apply as the basis. 
+Stay	The time range applies to the stay, but by night
+Within	The entire travel period (every stay day of the journey) lies in the time range Start, End. Days apply as the basis.
+Departure	The time range applies to the departure. Days apply as the basis.
+StayDays The time range applies to the stay. Days apply as the basis. 
+
+
+Example of StayDays:
+There are two early bird discounts that apply to the stay, but are based on "days".
+Early bird 1: from May 01, 2010 until Jun 12, 2010, 	10%
+Early bird 2: from Jun 13, 2010 until Aug 15, 2010, 	5%
+
+When calculating an 8 day trip from Jun 11, 2010 until Jun 19, 2010, the 10% early bird is applied twice. The 5% early bird is calculated six times for all of the ensuing days.
+
+                         
+Example of Arrival and ApplyToMode="Flight":
+1. Flight CGN – PMI Jan 01, 2010 – Jan 14, 2010
+2. First hotel PMI Jan 01, 2010 – Jan 07, 2010
+3. Second hotel PMI Jan 07, 2010 – Jan 14, 2010
+
+An incentive, that is controlled via flight arrival, already exists for the connecting hotel. The incentive for the second hotel is valid from Jan 01 until Jan 06, 2010.
+Even if the arrival in the hotel is not until Jan 07, 2010, the incentive (example 7=6) is nonetheless granted, since the condition for the flight arrival is satisfied.
+
+Example of Stay and ApplyToMode="Flight":
+1. Flight DUS – BKK Jan 01 – Jan 08
+2. Hotel stay because of overnight flight Jan 02 – Jan 08.
+An incentive 7=6 already exists for the hotel; this would not be drawn for the HotelStay, since the hotel stay is only for 6 days. If ApplyTo=FlightStay is set, this refers to the duration between the outbound flight and the inbound flight. The Incentive 7=6 is granted.
+
+Example of Within and ApplyToMode="Hotel":
+1. Flight MUC – TFS Jan 15 – Jan 22.
+2. Hotel TFS Jan 15 – Jan 22.
+The incentive 7=6 has a validity duration from Jan 01 – Jan 31. 
+For ApplyTo=Within the hotel stay must fall exactly within this time range. If there are overlaps, the extra is not applied, e.g., Incentive 7=6 has a validity duration from Jan 01 – Jan 20. In this case the incentive would not be valid.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Arrival" />
+            <xs:enumeration value="Stay" />
+            <xs:enumeration value="Within" />
+            <xs:enumeration value="Departure" />
+            <xs:enumeration value="StayDays" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LocationTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Country" />
+            <xs:enumeration value="Region" />
+            <xs:enumeration value="Island" />
+            <xs:enumeration value="City" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TransferTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Included" />
+            <xs:enumeration value="Excluded" />
+            <xs:enumeration value="NA" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UsageEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="HotelOnly" />
+            <xs:enumeration value="Package" />
+            <xs:enumeration value="ConnectingHotel" />
+            <xs:enumeration value="Dynamic" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="LocationType">
+        <xs:annotation>
+            <xs:documentation>Typ der Regionbeschreibung. 
+Folgende Inhalte sind moeglich:
+Country - Zuordnung des Hotels zu einem Land
+Region - Zuordnung des Hotels zu einer Region
+Island - Zuordnung des Hotels zu einer Insel
+City - Zuordnung des Hotels zu einer Stadt
+-----------------------------------------
+The type of region description. 
+The following inputs are possible:
+Country - assignment of the hotel to a country
+Region - assignment of the hotel to a region
+Island - assignment of the hotel to an island
+City - assignment of the hotel to a city</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="Type"
+                      type="LocationTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Typ der Regionbeschreibung. 
+Folgende Inhalte sind moeglich:
+Country - Zuordnung des Hotels zu einem Land
+Region - Zuordnung des Hotels zu einer Region
+Island - Zuordnung des Hotels zu einer Insel
+City - Zuordnung des Hotels zu einer Stadt
+
+Beispiel:
+/GeoInfos
+  /Location Code="E" Name="Spanien" Type="Country" /
+  /Location Code="BALE" Name="Balearen" Type="Region" /
+  /Location Code="PMI" Name="Mallorca" Type="Island" /
+  /Location Code="" Name="PLAYA DE PALMA" Type="City" /
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos
+-----------------------------------------
+The type of region description. 
+The following inputs are possible:
+Country - assignment of the hotel to a country
+Region - assignment of the hotel to a region
+Island - assignment of the hotel to an island
+City - assignment of the hotel to a city
+
+Example:
+/GeoInfos
+  /Location Code="E" Name="Spain" Type="Country" /
+  /Location Code="BALE" Name="Balearic Islands" Type="Region" /
+  /Location Code="PMI" Name="Mallorca" Type="Island" /
+  /Location Code="" Name="PLAYA DE PALMA" Type="City" /
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Name"
+                      type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Benennung der Regionsbeschreibung in Abhaengigkeit des Regionstypen. 
+Beispiel Country - Spanien 
+Region - Balearen
+Island - Mallorca
+City - Palma de Mallorca
+
+Beispiel:
+/GeoInfos
+  /Location Code="E" Name="Spanien" Type="Country" /
+  /Location Code="BALE" Name="Balearen" Type="Region" /
+  /Location Code="PMI" Name="Mallorca" Type="Island" /
+  /Location Code="" Name="PLAYA DE PALMA" Type="City" /
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos
+-----------------------------------------
+Specifies the region description on the basis of region types: 
+Example Country - Spain
+Region - Balearic Islands
+Island - Mallorca
+City - Palma de Mallorca
+
+Example:
+/GeoInfos
+  /Location Code="E" Name="Spain" Type="Country" /
+  /Location Code="BALE" Name="Balearic Islands" Type="Region" /
+  /Location Code="PMI" Name="Mallorca" Type="Island" /
+  /Location Code="" Name="PLAYA DE PALMA" Type="City" /
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Code"
+                      type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Abkürzung der Regionsbeschreibung, beispielsweise PMI oder E.
+Dieser Code ist der veranstalterinterne Code. Mit der Umstellung auf den DRV GlobalTypes Standard wird dieser Code nicht mehr notwendig sein.
+
+Beispiel:
+/GeoInfos
+  /Location Code="E" Name="Spanien" Type="Country" /
+  /Location Code="BALE" Name="Balearen" Type="Region" /
+  /Location Code="PMI" Name="Mallorca" Type="Island" /
+  /Location Code="" Name="PLAYA DE PALMA" Type="City" /
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos
+-----------------------------------------
+The abbreviation of a region description, e. g. PMI or E.
+This code is the tour operator-internal code. With transition to the DRV GlobalTypes standard, this code is no longer necessary.
+
+Example:
+/GeoInfos
+  /Location Code="E" Name="Spain" Type="Country" /
+  /Location Code="BALE" Name="Balearic Islands" Type="Region" /
+  /Location Code="PMI" Name="Mallorca" Type="Island" /
+  /Location Code="" Name="PLAYA DE PALMA" Type="City" /
+  /GeoCode Latitude="39.5242" Longitude="2.7415" /
+/GeoInfos</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+</xs:schema>

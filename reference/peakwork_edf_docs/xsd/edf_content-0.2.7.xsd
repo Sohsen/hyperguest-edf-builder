@@ -1,0 +1,1176 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Created with Liquid XML 2015 Designer Edition 13.1.1.5927 (http://www.liquid-technologies.com) -->
+<xs:schema xmlns="http://www.peakwork.de/edf/content"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" elementFormDefault="qualified"
+	targetNamespace="http://www.peakwork.de/edf/content" version="${pom.version}"
+	jaxb:version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="ContentRoot">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BasicData" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>
+							The BasicData element contains all relevant basic data, e.g. Propertyname, address, GeoInformation, etc.
+							This information is essential for the GOAL matching. It is also visible in the Goalkeeper and ContentPlayer
+							and is returned in some ContentPlayer API responses.
+
+							For details on when the BasicData is included in the response, see the respective documentation.
+							API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+							API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Name" type="xs:string" minOccurs="1"
+								maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>Official name for the object as given by the owner.
+									This value is used for the Goal matching and is displayed as the product name in the Goalkeeper and Content Player.
+									It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+									For details on when the Name is included in the response, see the respective documentation.
+									API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+									API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="HotelChain" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										This field is not supported. It will be deleted in a future version of this xsd.
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="Name" type="xs:string" use="optional">
+										<xs:annotation>
+											<xs:documentation>
+												This field is not supported. It will be deleted in a future version of this xsd.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="References" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										Has to contain one or many unique identifiers in form of an ID. For this ID, a Type is specified in the
+										respective attribute, e.g. GIATA or GOAL.
+										Example:
+										<![CDATA[
+											<References><ID Type="GOAL">123</ID></References>
+										]]>
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ID" minOccurs="1" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>
+													The ID element contains the ID. of the defined Type. In case of GIATA this is the GIATA ID that is used by the
+													Goalkeeper and Content Player.
+													Example:
+													<![CDATA[
+														<References><ID Type="GIATA">123</ID></References>
+ 													]]>
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="Type" type="IdTypeEnum"
+															use="required">
+															<xs:annotation>
+																<xs:documentation>
+																	The Type attribute specifies the used ID system, e.g. GIATA or GOAL.
+																	Example:
+				 													<![CDATA[
+																		<References><ID Type="GOAL">123</ID></References>
+				 													]]>
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Address" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										In the Address element, the product's address can be indicated.
+										This value is used for the Goal matching and is displayed in the Goalkeeper and Content Player.
+										It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+										For details on when the Address is included in the response, see the respective documentation.
+										API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+										API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Street" type="xs:string"
+											minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													Full name as written on a letter.
+													This element should also contain the house number, which should be put here and not within the respective element.
+													This value is used for the Goal matching and is displayed in the Goalkeeper and Content Player.
+													It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+													For details on when the Street is included in the response, see the respective documentation.
+													API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+													API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="HouseNumber" type="xs:string"
+											minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													This field is not supported. And will be deleted in a future version of this xsd.
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ZipCode" type="xs:string"
+											minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													The ZipCode element indicates the zip code of the product.
+													This value is used for the GOAL matching and is displayed in the Goalkeeper and Content Player.
+													It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+													For details on when the ZipCode is included in the response, see the respective documentation.
+													API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+													API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="City" type="xs:string" minOccurs="0"
+											maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													The City element contains the city or location of the product.
+													This value is used for the GOAL matching and is displayed in the Goalkeeper and Content Player.
+													It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+													For details on when the City is included in the response, see the respective documentation.
+													API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+													API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Country" type="xs:string"
+											minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													The Country element specifies the country part of the Address element.
+													The value is a two-letter country code according to ISO 3166-1 alpha-2
+													Example: "US" for the United States of America, "GB" for the United Kingdom.
+													This value is used for the GOAL matching and is displayed in the Goalkeeper and Content Player.
+													It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+													A product without a country code or wrong country code cannot be matched to a Goal ID.
+
+													For details on when the Country is included in the API response, see the respective documentation.
+													API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+													API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Phone" type="xs:string"
+											minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													The Phone element contains the telephone number of the product.
+													This value is used for the GOAL matching and is displayed in the Goalkeeper and Content Player.
+													It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+													For details on when the Phone number is included in the API response, see the respective documentation.
+													API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+													API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Fax" type="xs:string" minOccurs="0"
+											maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													The Fax element indicates the fax number of the product.
+													This value is displayed in the Goalkeeper and Content Player.
+													It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+													For details on when the Fax number is included in the API response, see the respective documentation.
+													API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+													API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Email" type="xs:string"
+											minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													The Email element contains the e-mail address of the product.
+													This value is used for the GOAL matching and is displayed in the Goalkeeper and Content Player.
+													It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+													For details on when the Email is included in the API response, see the respective documentation.
+													API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+													API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Website" type="xs:string"
+											minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													The Website element contains the URL of the product's website.
+													This value is used for the GOAL matching and is displayed in the Goalkeeper and Content Player.
+													It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+													For details on when the Website is included in the API response, see the respective documentation.
+													API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+													API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GeoInfos" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										The GeoInfos element is used to specify the product location.
+										This value is used for the GOAL matching and is displayed in the Goalkeeper and Content Player.
+										It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+										A hotel without a valid latitude and longitude cannot be matched to a GOAL ID.
+
+										For details on when the GeoInfos are included in the API response, see the respective documentation.
+										API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+										API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="GeoCode" minOccurs="1" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation>
+													The GeoCode element defines the geographical position of the product via longitude and latitude.
+													This value is used for the GOAL matching and is displayed in the Goalkeeper and Content Player.
+													It is also returned in some ContentPlayer API responses and may thus be visible in an IBE.
+
+													For details on when the GeoCode is included in the API response, see the respective documentation.
+													API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+													API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+
+													A hotel without a valid latitude and longitude cannot be matched to a GOAL ID.
+
+													Example:
+													<![CDATA[
+															<GeoInfos>
+																<GeoCode
+																	Latitude="39.5242"
+																	Longitude="2.7415"
+																/>
+															</GeoInfos>
+ 													]]>
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="Latitude" type="xs:double" use="required">
+													<xs:annotation>
+														<xs:documentation>
+															In the Latitude attribute the latitude coordinate can be set in decimal notation using a dot as a separator.
+															For an example, see the `GeoCode` element.
+														</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Longitude" type="xs:double" use="required">
+													<xs:annotation>
+														<xs:documentation>
+															In the Longitude attribute the longitude coordinate can be set in decimal notation using a dot as a separator.
+															For an example, see the `GeoCode` element.
+														</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Airports" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										The Airports element specifies the possible arrival airports of the product.
+										The airports are displayed in the Goalkeeper and Content Player and returned in
+										some ContentPlayer API responses and may thus be visible in an IBE.
+										
+										Note that the airports specified here are independent of the airport used for packaging.
+
+										For details on when the Airports are included in the API response, see the respective documentation.
+										API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+										API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Airport" minOccurs="1" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>
+													The Airport element species one of the possible arrival airports.
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="IataCode" type="xs:string"
+													use="required">
+													<xs:annotation>
+														<xs:documentation>
+															The IataCode attribute should be a unique IATA airport code, e.g. `DUS`.
+															The value is displayed in the Goalkeeper and Content Player and returned in
+															some ContentPlayer API responses and may thus be visible in an IBE.
+
+															For details on when the IataCode is included in the API response, see the respective documentation.
+															API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+															API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+														</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Code" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>
+									Unique identifier that identifies the product among all products of the same supplier.
+									Together with the TourOperatorCode it can be used to retrieve specific information on this
+									hotel via the ContentPlayer API.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="TourOperatorCode" type="xs:string"
+							use="required">
+							<xs:annotation>
+								<xs:documentation>
+									Global Peakwork supplier name.
+									The TourOperatorCode attribute allows max. eight alphanumeric characters (if letters are used, capital case is required).
+									Please note that the TourOperatorCode must be identical to the global supplier code set in Peakwork's
+									Identity and Configuration Management (ICM).
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Source" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									The Source attribute designates the hotel and product origin, if the tour operator procures services from external sources
+									(incoming agency, hotel beds database, etc.).
+									The use of the attribute is optional and is not used by Peakwork. It may help the supplier to mark the source
+									of their own content EDFs.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="MultiPartObject" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>
+									This attribute is not supported. It will be deleted in a future version. The default value is `false`.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ObjectSegmentationMetatype" type="xs:int">
+							<xs:annotation>
+								<xs:documentation>
+									This attribute is used in the internal, manual GOAL matching process at Peakwork.
+									Possible values are:
+									- 1 to mark the product as an Inn
+									- 2 to mark the product as a Pension
+									- 3 to mark the product as a Care facility
+									- 4 to mark the product as Commercial Private Quarters
+									- 5 to mark the product as a Mountain Lodge
+									- 6 to mark the product as an Appartment
+									- 7 to mark the product as an Accommodation for workers
+									- 8 to mark the product as Other
+									- 9 to mark the product as a Dormitory
+									- 10 to mark the product as a Guesthouse
+									- 11 to mark the product as a Camping facility
+									- 12 to mark the product as a Clinic/Hospital
+									- 13 to mark the product as a Resort
+									- 14 to mark the product as a Hotel
+									- 15 to mark the product as Group Homes
+									- 16 to mark the product as a Round Trip
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ObjectSegmentationSubtype" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									This attribute is used in the internal, manual GOAL matching process at Peakwork.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DescriptiveData" minOccurs="1"
+					maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>
+							The DescriptiveData element contains all descriptive data describing the overall product, not individual rooms.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="GlobalTypes" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										List the DRV GlobalTypes associated with the product here.
+
+										This list should only contain GlobalTypes that either apply to the product overall,
+										i.e. GT01 (Accommodation), GT02 (Accommodation Type), GT03 (Accommodation Attributes) and similar.
+									
+										Room GlobalTypes should be attached to their specific Service entries. Room GlobalTypes listed
+										in this section will be applied to all listed rooms.
+
+										The Globaltypes are used in the Goalkeeper and Content Player and forwarded to the Portfolio (only in Boxes).
+										These Globaltypes can be returned in a ContentPlayer API response and may thus be visible in an IBE.
+
+										For details on when the GlobalTypes are included in the API response, see the respective documentation.
+										API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="Descriptions" minOccurs="0"
+								maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										The Descriptions element contains all texts describing the overall product, not individual rooms.
+										Descriptions for a specific hotel room should be given in the Services element.
+										These texts can be returned in a ContentPlayer API response and may thus be visible in an IBE.
+
+										For details on when the overall product descriptions are included in the API response, see the respective documentation.
+										API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+										API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Services" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										The Services element contains all Service elements that each describe a specific room of the product.
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Service" minOccurs="1" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>
+													Each Service element contains descriptive data for a specific room, e.g. DRV GlobalTypes, descriptions, images and features.
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+											  <xs:sequence>
+													<xs:element ref="GlobalTypes" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation>
+															List the DRV GlobalTypes associated with this specific room.
+
+															This list should only contain GlobalTypes that apply to this particular room, i.e. GT04 (Room Types), GT05 (Room Attributes) and similar.
+														
+															Room GlobalTypes that apply to all listed rooms can be included in the ContentRoot/DescriptiveData/GlobalTypes
+															list.
+
+															The Globaltypes are used in the Goalkeeper and Content Player and forwarded to the Portfolio (only in Boxes).
+															These Globaltypes can be returned in a ContentPlayer API response and may thus be visible in an IBE.
+
+															For details on when the GlobalTypes are included in the API response, see the respective documentation.
+															API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+
+															The Globaltypes are used in the Goalkeeper and Content Player and forwarded to the Portfolio (only in Boxes).
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>                            
+													<xs:element ref="Descriptions" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation>
+																The Descriptions element contains all descriptions for a specific room.
+																These texts can be returned in a ContentPlayer API response and may thus be visible in an IBE.
+
+																For details on when the room descriptions are included in the API response, see the respective documentation.
+																API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+																API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element ref="MultiMediaLinks" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation>
+																The MultiMediaLinks element can be used to attach multimedia information to a specific room.
+																If a multimedia element is neither linked to a room nor the overall product,
+																it is never returned in a ContentPlayer API response or shown in the ContentPlayer.
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element ref="FeatureLinks" minOccurs="0" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation>
+																The FeatureLinks element can be used to attach feature elements to a specific room.
+															</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Code" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>
+															The Code attribute gives the room code.
+															It can be used to retrieve information on a specific room via the ContentPlayer API.
+															The room codes are visible in the ContentPlayer and can be included in the ContentPlayer API response.
+															Note that the used room codes should be consistent over all EDFs that are describing the same room,
+															e.g. the room code in the content EDF and the meta EDF should be identical for identical rooms.
+
+															For details on when the room Code is included in the API response, see the respective documentation.
+															API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+															API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+														</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Type" fixed="Room">
+													<xs:annotation>
+														<xs:documentation>
+															This attribute signals that the service in question is a room.
+															It cannot be set to any value other than "Room".
+														</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="MultiMediaLinks" minOccurs="0"
+								maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										The MultiMediaLinks element can be used to attach multimedia information to the overall product.
+										If a multimedia element is neither linked to a room nor the overall product,
+										it is never returned in a ContentPlayer API response or shown in the ContentPlayer.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="FeatureLinks" minOccurs="0"
+								maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										The FeatureLinks element can be used to attach feature elements to the overall product.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="Reviews" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										The Reviews element is used to set the hotel category in terms of a star rating.
+										It is shown in the Goalkeeper and the ContentPlayer.
+										It is not returned in a ContentPlayer API response.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MultiMedia" type="MultiMediaType"
+					minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>
+							The MultiMedia element contains images of the product and its rooms.
+							Note that each MultiMedia element needs to be specifically linked to the main product and/or room(s)
+							via a MultiMediaLink. Unlinked images are neither shown in the ContentPlayer nor returned via the
+							ContentPlayer API.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Features" type="FeaturesType"
+					minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>
+							The Features element contains all product attributes, e.g. Pool, Bar, Beach, etc.
+							Note that each Feature needs to be specifically linked to the main product and/or room(s).
+							Only Features linked to the main product are used in the Feature matching in the ContentPlayer.
+							If known, it's preferable to use the Globaltypes directly.
+							Features are shown in the ContentPlayer and can be returned via the ContentPlayer API
+							(as features or as Globaltypes via the Feature matching).
+							Globaltypes that are created from the feature matching are also forwarded to the Portfolio in a Box.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="SchemaVersion" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>
+						The SchemaVersion attribute specifies the minimum version of the content EDF xsd that is needed to parse the content EDF.
+						This attribute is a mandatory attribute and ensures that the files are processed using the appropriate
+						import version on the recipient's side.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="CreationDate" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>
+						The CreationDate attribute specifies the creation date and time of the content EDF file.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Descriptions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Description" type="DescriptionType"
+					minOccurs="1" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>
+							Each Description element contains one description for the product or a specific room.
+							The texts in a Description element can be returned in a ContentPlayer API response and may thus be visible in an IBE.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FeatureLinks">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="FeatureLink" type="Link" minOccurs="1"
+					maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>
+							Each FeatureLink element links exactly one Feature from the same content EDF.
+							A Feature is identified via its ID.
+							Only Features linked to the main product are used in the Feature matching in the ContentPlayer.
+							Features that are only linked to a room are not used.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GlobalTypes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GlobalType" minOccurs="1" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="GTAttribute" minOccurs="0"
+								maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>
+										The definition of a DRV GlobalType with corresponding SubTypes and AdditionalTypes is given here.
+										The given Globaltypes are used in the Goalkeeper and Content Player and are forwarded to the Portfolio (only in Boxes).
+										These Globaltypes can be returned in a ContentPlayer API response and may thus be visible in an IBE.
+
+										For details on when the GlobalTypes are included in the API response, see the respective documentation.
+										API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+										API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence />
+									<xs:attribute name="GT" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>
+												The main code of the GlobalType, e.g. GT03-WELL.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ST" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>
+												The code of the SubType of the GlobalType, e.g. ST03-MASS.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="AT" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>
+												The code of the AdditionalType of the GlobalType, e.g. AT03-SYNC.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="CT" type="xs:string" >
+										<xs:annotation>
+										<xs:documentation>
+											This attribute is not supported. It will be deleted in a future version.
+										</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Tags">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Tag" minOccurs="1" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>
+							Image Tags can be added here.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="Source" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>
+											The source of the image tag.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MultiMediaAttributes">
+		<xs:annotation>
+			<xs:documentation>
+				Additional information about an image can be added here.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Tags" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>
+							A Grouping element that groups multiple tags belonging to the same image.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Resolution" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>
+							The resolution of an image can be given here, the unit is pixels.
+							The resolution is not shown in the Goalkeeper or ContentPlayer frontend, but returned in
+							Content Player API responses in the corresponding Image element.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="Height" type="xs:string" />
+						<xs:attribute name="Width" type="xs:string" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MultiMediaLinks">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MultiMediaLink" type="Link" minOccurs="1"
+					maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>
+							The MultiMediaLink element can be used to attach multimedia information to a specific room or the overall product.
+							If a multimedia element is neither linked to a room nor the overall product,
+							it is never returned in a ContentPlayer API response or shown in the ContentPlayer.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Paragraphs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Paragraph" type="ParagraphType"
+					minOccurs="1" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>
+							The Paragraph element contains the actual description, consisting of Text and Title.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Reviews">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Review" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>
+							The Review element can be used to add a star rating / hotel category to the product.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Value" type="xs:string" minOccurs="1"
+								maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										The Value element contains the numeric value of the star rating / hotel category, e.g. 3.0.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Type" fixed="Category">
+							<xs:annotation>
+								<xs:documentation>
+									The Type attribute has to be set to "Category" to indicate that that the review is a hotel rating.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DescriptionType">
+		<xs:sequence>
+			<xs:element ref="Paragraphs" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The Paragraphs element contains one or more Paragraph elements to structure descriptions.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Language" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					The Language attribute specifies the language of the description.
+					The value is a two-letter code according to ISO 639-1.
+					Example: "en" for English, "de" for German.
+					The language of a text is shown in the ContentPlayer and is used to
+					filter the descriptions contained in a ContentPlayer API response.
+
+					For details on how to filter the ContentPlayer API response, see the respective documentation.
+					API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+					API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+				</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[a-z]{2}" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Country">
+			<xs:annotation>
+				<xs:documentation>
+					The Country attribute specifies the regional variant of the language that is specified in the Language attribute.
+					The value is a two-letter country code according to ISO 3166-1.
+					Example: "US" for the United States of America, "GB" for the United Kingdom.
+					Example: Language="en" Country="GB" specifies British English, whereas Language="en" Country="US" specifies US English.
+					The language country combination of a text is shown in the ContentPlayer and is used to
+					filter the descriptions contained in a ContentPlayer API response.
+					For example, texts can be requested for Language="en", returning all English texts regardless of the country
+					for a given product.
+					Additionally, the ContentPlayer API allows to request texts for specific language and country combinations,
+					e.g. Language="en" Country="GB", returning only texts written in British English.
+
+					For details on how to filter the ContentPlayer API response, see the respective documentation.
+					API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+					API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+				</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[A-Z]{2}" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Info" type="InfoEnum">
+			<xs:annotation>
+				<xs:documentation>
+					This attribute is not supported and will be removed in the future.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="FeaturesType">
+		<xs:sequence>
+			<xs:element name="Feature" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" minOccurs="1" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									The Name contains the attribute name, e.g. pool, wifi, air-conditioning.
+									The Name and value combination is used for the Feature Matching in the ContentPlayer.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="Language" fixed="en" use="required">
+											<xs:annotation>
+												<xs:documentation>
+													The Language attribute describes the language of the description.
+													A Feature is only used if the language is set as "en" or not set in the content EDF.
+													If the language is not set, the default is "en".
+													If a language other than "en" is specified, the feature is ignored in both
+													ContentPlayer and Goalkeeper and is therefore also never forwarded to other Peakwork components.
+												</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Value" type="xs:string" minOccurs="0"
+							maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									The Value of the Feature to explain the Feature name further.
+									The Name and value combination of a Feature is used for the Feature Matching in the ContentPlayer.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="ID" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>
+								The ID attribute contains the unique ID of the Feature.
+								This ID is used to link the Feature to the overall product or a room via a FeatureLink.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Charged" default="false" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>
+								The Charged attribute can be used to define whether a feature is free of charge or not.
+								Allowed values:
+									* true - additional costs have to be paid.
+									* false - the service is free of charge.
+								This value is used in the Feature Matching in the Content Player.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Link">
+		<xs:attribute name="Type" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The Type attribute describes the nature of the Link.
+					It has to be set to "Image" for MultiMediaLinks and unset for FeatureLinks.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ID" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The ID attribute contains the ID of an Image or Feature that exists in the same content EDF.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="MultiMediaType">
+		<xs:sequence>
+			<xs:element name="Images" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The Images element contains all image data of a product or its rooms.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Image" minOccurs="1" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									The Image element groups all information on a specific image.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Name" type="xs:string" minOccurs="0"
+										maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												An optional name of the image. It is shown in the Content Player and Goalkeeper as an image description.
+												It is also returned in some ContentPlayer API responses and might thus be visible in an IBE.
+
+												For details on when the image's Name is contained in the Content Player API v2 response, see:
+												API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="URL" type="xs:string" minOccurs="1"	maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												The URL element contains the URL for the specific image.
+												This url is used in the ContentPlayer and Goalkeeper to show the image, i.e.
+												it is downloaded from this URL.
+												The url is also contained in some ContentPlayer API responses.
+												If the url is broken, the content behind it is not an image
+												or the image is no longer available, the url is returned in the
+												ContentPlayer API response nonetheless. This might lead to broken
+												images in an IBE.
+
+												For details on when image URLs are returned in the ContentPlayer API response, see the respective documentation.
+												API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+												API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element ref="MultiMediaAttributes" minOccurs="0"
+										maxOccurs="1" />
+								</xs:sequence>
+								<xs:attribute name="ID" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>
+											The ID attribute contains the unique ID of the image. It is used in MultiMediaLinks.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Category" type="ImageCategoryEnum">
+									<xs:annotation>
+										<xs:documentation>
+											Images can be categorized with categories such as views or leisure time facilities
+											via the Category attribute.
+
+											The category is shown in the Goalkeeper and ContentPlayer.
+											It can also be returned in a ContentPlayer API response and thus might be visible in an IBE.
+
+											Additionally, the category can be used to sort the images returned in a ContentPlayer API response.
+											This sorting also determines the order in which the images are shown in the Goalkeeper and ContentPlayer.
+											If a teaser image is set, the teaser image is shown as the first image in the Goalkeeper and ContentPlayer
+											regardless of its category.
+											The teaser image is not the first image returned in the ContentPlayer API v2.
+
+											For details on when the Category is returned in a ContentPlayer's API response, see the respective documentation.
+											API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+											API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Teaser" default="false" type="xs:boolean">
+									<xs:annotation>
+										<xs:documentation>
+											The Teaser attribute specifies whether the image is the main image of the product, i.e. the teaser image.
+											Only one image should be set as the teaser image. Technically, multiple Image elements can have Teaser="true" but
+											in this case the Content Player returns only the first image.
+
+											The Teaser image is marked as such in the ContentPlayer and Goalkeeper.
+											Additionally, the teaser image is marked as the teaser image in a ContentPlayer API response.
+
+											If no teaser image is set, the SortIndex is ignored. Instead, the first image of the product is returned
+											as the teaser image in a ContentPlayer API response. It is not marked as the teaser image in the
+											Goalkeeper and ContentPlayer frontend.
+
+											For details on how the teaser image is marked in a ContentPlayer API response, see the respective documentation.
+											API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+											API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="SortIndex" type="xs:int">
+									<xs:annotation>
+										<xs:documentation>
+											The SortIndex attribute is ignored in Goalkeeper and ContentPlayer,
+											both for the order in which the images are shown in the Goalkeeper and ContentPlayer
+											as well as for the order in which the images are returned in ContentPlayer API responses.
+
+											However, the SortIndex is part of the ContentPlayer API V2 response and might
+											thus be used in an IBE to determine the image order.
+
+											The SortIndex given in a ContentPlayer API V1 response is independent of the
+											SortIndex used in the content EDF.
+
+											For details on how the SortIndex is contained in a ContentPlayer's API response, see the respective documentation.
+											API V1: https://documentation.peakwork.com/docs/#content_player/apiv1_hotel_content.html#hotel-content-request
+											API V2: https://documentation.peakwork.com/docs/#content_player/apiv2_content_search.html
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParagraphType">
+		<xs:sequence>
+			<xs:element name="Title" type="xs:string" minOccurs="0"
+				maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The Title element contains the description title.
+						
+						If the Paragraph has the attribute Category="Room", the Title element should contain the room name.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Text" type="xs:string" minOccurs="0"
+				maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						The Text element contains the actual description, i.e. the text.
+						
+						If the Paragraph has the attribute Category="Room", the Text element should contain the room description.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Category" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The Category attribute specifies the type of content that is defined in the Paragraph element, e.g. Hotel, Room, Location, Amenities.
+
+					For each product a description with the category Hotel must exist. Otherwise, it cannot be processed correctly in
+					the Goalkeeper and ContentPlayer.
+
+					Moreover, each combination of Category, Language and Country must be unique. If they are not unique, they might overwrite
+					each other both in the Goalkeeper and ContentPlayer frontend as well as the ContentPlayer API response.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="IdTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="GIATA" />
+			<xs:enumeration value="GOAL" />
+			<xs:enumeration value="HRS" />
+			<xs:enumeration value="BOOK" />
+			<xs:enumeration value="DRV" />
+			<xs:enumeration value="NATIONAL_IDENTIFICATION_CODE">
+				<xs:annotation>
+					<xs:documentation>
+					An accommodation's nationally assigned identification code. e.g. CIN in Italy.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InfoEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Translated" />
+			<xs:enumeration value="Original" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImageCategoryEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BAR" />
+			<xs:enumeration value="BEACH" />
+			<xs:enumeration value="CONFERENCE" />
+			<xs:enumeration value="HOTEL" />
+			<xs:enumeration value="LOBBY" />
+			<xs:enumeration value="POOL" />
+			<xs:enumeration value="RESTAURANT" />
+			<xs:enumeration value="ROOM" />
+			<xs:enumeration value="SPORT" />
+			<xs:enumeration value="ACTIVITY" />
+			<xs:enumeration value="HOTEL_INTERIOR" />
+			<xs:enumeration value="HOTEL_EXTERIOR" />
+			<xs:enumeration value="WELLNESS" />
+			<xs:enumeration value="MISCELLANEOUS" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

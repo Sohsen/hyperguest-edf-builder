@@ -1,0 +1,745 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns="http://www.vilauma.de/edf/SalesControl" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.vilauma.de/edf/SalesControl" version="2.3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="SalesControlRoot">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Restrictions" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Das Restrictions-Element ist eine Liste von Restriction-Elementen.</xs:documentation>
+						<xs:documentation xml:lang="en">The Restrictions element is a list of Restriction elements.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Restriction" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="de"><![CDATA[Das Restriction-Element definiert eine Einschränkung.
+
+Restriction-Elemente sind untereinander mit einem logischen UND verknüpft. Möchte man diese mit ODER verknüpfen, so muss man ein neues Restriction-Element erstellen.
+
+Beispiel:
+<Restriction>
+    <SourceRestrictions>
+        <SourceRestriction Code="PW"/>
+    </SourceRestrictions>
+    <TransportRestrictions>
+        <TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+    </TransportRestrictions>
+</Restriction>
+Dies verwirft alle Hinflüge ab DUS aus der Quelle PW. Beide Bedingungen (SourceRestriction und FlightRestriction) müssen erfüllt sein.
+
+Beispiel:
+<Restriction>
+    <SourceRestrictions>
+        <SourceRestriction Code="PW"/>
+    </SourceRestrictions>
+</Restriction>
+<Restriction>
+    <TransportRestrictions>
+        <TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+    </TransportRestrictions>
+</Restriction>
+Dies verwirft alle Flüge, die Hinflüge ab DUS sind oder aus der Quelle PW stammen. Eine von beiden Bedingungen (SourceRestriction oder FlightRestriction) muss erfüllt sein.]]></xs:documentation>
+									<xs:documentation xml:lang="en"><![CDATA[The Restriction element defines a restriction.
+
+Restriction elements are joined by a logical AND operator. Should you wish to join them with the OR operator, you will have to write a new Restriction element.
+
+Example:
+<Restriction>
+    <SourceRestrictions>
+        <SourceRestriction Code="PW"/>
+    </SourceRestrictions>
+    <TransportRestrictions>
+        <TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+    </TransportRestrictions>
+</Restriction>
+This discards all outbound flights that depart from DUS that are from the source PW. Both conditions (SourceRestriction and FlightRestriction) must be met.
+
+Example:
+<Restriction>
+    <SourceRestrictions>
+        <SourceRestriction Code="PW"/>
+    </SourceRestrictions>
+</Restriction>
+<Restriction>
+    <TransportRestrictions>
+        <TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+    </TransportRestrictions>
+</Restriction>
+This discards all flights that are outbound flights from DUS or flights from the source PW. One of both conditions (SourceRestriction or FlightRestriction) must be met.]]></xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="HotelRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Restrict on hotel-attributes. The Pxb2Tool is the only program that supports this element.
+												The HotelRestriction elements are always joined by a logical OR.
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="HotelRestriction" minOccurs="1" maxOccurs="unbounded" type="HotelRestriction" />
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="DateRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das DateRestrictions-Element ist eine Liste von DateRestriction-Elementen.
+												Die DateRestriction-Elemente sind immer mit einem logischen ODER verknüpft
+												</xs:documentation>
+												<xs:documentation xml:lang="en">The DateRestrictions element is a list of DateRestriction elements.
+												The DateRestriction elements are always joined by a logical OR.
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="DateRestriction" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das DateRestriction-Element definiert eine Einschränkung bezogen auf einen Zeitraum. Dieser Zeitraum kann einen Ab- und Anreise- oder Buchungszeitraum sein.
+Soll ein Ab- und Anreisezeitraum eingeschränkt werden, werden alle Angebote entfernt, bei denen das Abreisedatum des Hin- oder Rückfluges innerhalb des eingeschränkten Zeitbereichs liegt.
+Die Attribute eines DateRestriction-Elements sind untereinander mit einem logischen UND verknüpft.</xs:documentation>
+															<xs:documentation xml:lang="en">The DateRestriction element specifies a restriction with respect to a date range. This date range can be an departure and arrival or booking period.
+If a departure and arrival period should be restricted, all offers are removed, where the departure date of the outbound or inbound is included in the restricted time period.
+The attributes of a DateRestriction element are always joined by a logical AND.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Start" type="xs:date">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Start-Attribut legt den Beginn des Zeitraums fest. Format: JJJJ-MM-TT.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Start attribute specifies the start of the date range. Format: YYYY-MM-DD.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="End" type="xs:date">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das End-Attribut legt das Ende des Zeitraums fest. Format: JJJJ-MM-TT.</xs:documentation>
+																	<xs:documentation xml:lang="en">The End attribute specifies the end of the date range. Format: YYYY-MM-DD.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="MinBookingOffset" type="xs:duration">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das MinBookingOffset-Attribut legt die minimale Anzahl von Tagen zwischen Buchung und Anreise fest.
+
+Beispiel:
+MinBookingOffset="P60D"
+Gültig für alle Buchungen mindestens 60 Tage vor Anreise.</xs:documentation>
+																	<xs:documentation xml:lang="en">The MinBookingOffset attribute specifies the minimum number of days between booking and arrival.
+
+Example:
+MinBookingOffset="P60D"
+Valid for all bookings at least 60 days before arrival.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="MaxBookingOffset" type="xs:duration">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das MaxBookingOffset-Attribut legt die maximale Anzahl von Tage zwischen Buchung und Anreise fest.
+
+Beispiel:
+MaxBookingOffset="P90D"
+Gültig für alle Buchungen bis maximal 90 Tage vor Anreise.
+
+Sofern sowohl MinBookingOffset als auch MaxBookingOffset gesetzt sind, besteht die Gültigkeit innerhalb dieser Zeitspanne vor Anreise.
+Beispiel:
+MinBookingOffset="P60D" MaxBookingOffset="P90D"
+Gültig für alle Buchungen, die zwischen 60 und 90 Tagen vor Anreise getätigt werden.</xs:documentation>
+																	<xs:documentation xml:lang="en">The MaxBookingOffset attribute specifies the maximum number of days between booking and arrival.
+
+Example:
+MaxBookingOffset="P90D"
+Valid for all bookings up to a maximum of 90 days before arrival.
+
+If both MinBookingOffset and MaxBookingOffset are set, it is valid within this period of time before arrival.
+Example:
+MinBookingOffset="P60D" MaxBookingOffset="P90D"
+Valid for all bookings made between 60 and 90 days prior to arrival.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="ApplyTo" type="DateRestrictionApplyToEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">The ApplyTo attribute specifies how the time range from the attributes Start and End have to be evaluated.
+A DateRestriction matches an offer if the departure date of an outbound- OR inbound flight applies to the given daterange. 
+
+The evaluation can be changed by the following value:
+ * Arrival: The time range applies to the arrival. Only the outbound departure date or hotel arrival date (HotelOnly) must be between Start and End.
+																	</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>															
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Invert" type="xs:boolean" default="false">
+													<xs:annotation>
+														<xs:documentation xml:lang="de"><![CDATA[Das Invert-Attribut legt fest, ob die Bedingung, die im DateRestrictions-Element definiert ist, invertiert (umgekehrt) werden soll.
+
+Beispiel:
+<DateRestrictions>
+    <DateRestriction Start="2017-09-01" End="2017-09-30"/>
+</DateRestrictions>
+Dies legt fest, dass Flüge im September 2017 verworfen werden.
+
+Beispiel:
+<DateRestrictions Invert="true">
+    <DateRestriction Start="2017-09-01" End="2017-09-30"/>
+</DateRestrictions>
+Dies legt fest, dass Flüge außerhalb von September 2017 verworfen werden.]]></xs:documentation>
+														<xs:documentation xml:lang="en"><![CDATA[The Invert attribute specifies whether the condition defined in the DateRestrictions element is inverted.
+
+
+Example:
+<DateRestrictions>
+    <DateRestriction Start="2017-09-01" End="2017-09-30"/>
+</DateRestrictions>
+This specifies that flights in September of 2017 are discarded.
+
+Example:
+<DateRestrictions Invert="true">
+    <DateRestriction Start="2017-09-01" End="2017-09-30"/>
+</DateRestrictions>
+This specifies that flights that are not in September of 2017 are discarded.]]></xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="StayRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das StayRestrictions-Element ist eine Liste von StayRestriction-Elementen.
+												Die StayRestriction-Elemente sind immer mit einem logischen ODER verknüpft
+												</xs:documentation>
+												<xs:documentation xml:lang="en">The StayRestrictions element is a list of StayRestriction elements.
+												StayRestriction elements are always joined by a logical OR.
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="StayRestriction" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das StayRestriction-Element definiert eine Einschränkung bezogen auf eine Aufenthaltsdauer.
+
+Die Attribute eines StayRestriction-Elements sind untereinander mit einem logischen UND verknüpft.</xs:documentation>
+															<xs:documentation xml:lang="en">The StayRestriction element defines a restriction with respect to the duration of a stay.
+
+The attributes of a StayRestriction element are always joined by a logical AND.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Min" type="xs:duration" use="optional">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Min-Attribut legt die minimale Aufenthaltsdauer in Tagen fest.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Min attribute specifies the minimum stay duration in days.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Max" type="xs:duration" use="optional">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Max-Attribut legt die maximale Aufenthaltsdauer in Tagen fest.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Max attribute specifies the maximum stay duration in days.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Mode" type="StayModeEnum" default="Hotel">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Mode-Attribut legt fest, auf was sich die Dauerneinschränkung bezieht.
+
+Mögliche Werte:
+* Hotel: Hotelaufenthaltsdauer
+* Flight: Flugaufenthaltsdauer
+* GroundTime: Die Dauerneinschränkung bezieht sich auf die Zeit zwischen Ankunft des Hinflugs und Abflug des Rückflugs. Das PXB2Tool ist das einzige Program, das diesen Wert unterstützt.
+																	</xs:documentation>
+																	<xs:documentation xml:lang="en">The Mode attribute specifies what the stay restriction refers to.
+
+Possible values:
+* Hotel: hotel stay duration
+* Flight: flight stay duration
+* GroundTime: The stay restriction refers to the time between the outbound arrival time and the inbound departure time. The PXB2Tool is the only program that supports this value.
+																	</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Invert" type="xs:boolean" default="false">
+													<xs:annotation>
+														<xs:documentation xml:lang="de"><![CDATA[Das Invert-Attribut legt fest, ob die Bedingung, die im StayRestrictions-Element definiert ist, invertiert (umgekehrt) werden soll.
+
+Beispiel:
+<StayRestrictions>
+    <StayRestriction Min="P7D" Max="P9D"/>
+</StayRestrictions>
+Dies legt fest, dass Flüge verworfen werden, wenn sie eine Hotelaufenthaltsdauer von 7 bis 9 Tagen haben.
+
+Beispiel:
+<StayRestrictions Invert="true">
+    <StayRestriction Min="P7D" Max="P9D"/>
+</StayRestrictions>
+Dies legt fest, dass Flüge verworfen werden, wenn sie keine Hotelaufenthaltsdauer von 7 bis 9 Tagen haben.]]></xs:documentation>
+														<xs:documentation xml:lang="en"><![CDATA[The Invert attribute specifies whether the condition defined in the StayRestrictions element is inverted.
+
+Example:
+<StayRestrictions>
+    <StayRestriction Min="P7D" Max="P9D"/>
+</StayRestrictions>
+This specifies that flights are discarded if they have a hotel stay duration of 7 to 9 days.
+
+Example:
+<StayRestrictions Invert="true">
+    <StayRestriction Min="P7D" Max="P9D"/>
+</StayRestrictions>
+This specifies that flights are discarded if they don't have a hotel stay duration of 7 to 9 days.]]></xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="SourceRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das SourceRestrictions-Element ist eine Liste von SourceRestriction-Elementen.
+
+SourceRestriction-Elemente sind immer mit einem logischen ODER verknüpft.</xs:documentation>
+												<xs:documentation xml:lang="en">The SourceRestrictions element is a list of SourceRestriction elements.
+
+SourceRestriction elements are always joined by a logical OR.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="SourceRestriction" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das SourceRestriction-Element definiert eine Einschränkung bezogen auf die Quelle des Fluges.
+
+Die Attribute eines SourceRestriction-Elements sind untereinander mit einem logischen UND verknüpft.</xs:documentation>
+															<xs:documentation xml:lang="en">The SourceRestriction element defines a restriction with respect to the source of the flight.
+
+The attributes of a SourceRestriction element are always joined by a logical AND.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Code" type="xs:string">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Code-Attribut legt den Namen der Flugquelle des SourceRestriction-Elementes fest.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Code attribute specifies the name of the flight source of the SourceRestriction element.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Invert" type="xs:boolean" default="false">
+													<xs:annotation>
+														<xs:documentation xml:lang="de"><![CDATA[Das Invert-Attribut legt fest, ob die Bedingung, die im SourceRestrictions-Element definiert ist, invertiert (umgekehrt) werden soll.
+Beispiel:
+<SourceRestrictions>
+    <SourceRestriction Code="PW"/>
+</SourceRestrictions>
+Dies legt fest, dass Flüge aus der Quelle "PW" verworfen werden.
+
+Beispiel:
+<SourceRestrictions Invert="true">
+    <SourceRestriction Code="PW"/>
+</SourceRestrictions>
+Dies legt fest, dass Flüge, die nicht aus der Quelle "PW" kommen, verworfen werden.]]></xs:documentation>
+														<xs:documentation xml:lang="en"><![CDATA[The Invert attribute specifies whether the condition defined in the SourceRestrictions element is inverted.
+
+Example:
+<SourceRestrictions>
+    <SourceRestriction Code="PW"/>
+</SourceRestrictions>
+This specifies that flights from the source "PW" are discarded.
+
+Example:
+<SourceRestrictions Invert="true">
+    <SourceRestriction Code="PW"/>
+</SourceRestrictions>
+This specifies that flights that don't come from the source "PW" are discarded.]]></xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="FlightRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de"><![CDATA[Das FlightRestrictions-Element ist eine Liste von FlightRestriction-Elementen.
+
+FlightRestriction-Elemente sind immer mit einem logischen ODER verknüpft.
+Das <FlightRestrictions> Element ist veraltet und sollte durch <TransportRestrictions> ersetzt werden.]]></xs:documentation>
+												<xs:documentation xml:lang="en"><![CDATA[The FlightRestrictions element is a list of FlightRestriction elements.
+
+FlightRestriction elements are always joined by a logical OR.
+Usage of the <FlightRestrictions> element is deprecated and should be replaced by <TransportRestrictions>]]></xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="FlightRestriction" minOccurs="0" maxOccurs="unbounded" type="TransportRestriction" />
+												</xs:sequence>
+												<xs:attribute name="Invert" type="xs:boolean" default="false">
+													<xs:annotation>
+														<xs:documentation xml:lang="de"><![CDATA[Das Invert-Attribut legt fest, ob die Bedingung, die im FlightRestrictions-Element definiert ist, invertiert (umgekehrt) werden soll.
+Beispiel:
+<TransportRestrictions>
+    <TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+    <TransportRestriction Type="Outbound" DepartureAirport="CGN"/>
+    <TransportRestriction Type="Outbound" DepartureAirport="AAH"/>
+</TransportRestrictions>
+Dies verwirft alle Hinflüge ab DUS, CGN und AAH.
+
+Beispiel:
+<TransportRestrictions Invert="true">
+    <TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+    <TransportRestriction Type="Outbound" DepartureAirport="CGN"/>
+    <TransportRestriction Type="Outbound" DepartureAirport="AAH"/>
+</TransportRestrictions>
+Dies verwirft alle Hinflüge, die nicht ab DUS, CGN oder AAH gehen.]]></xs:documentation>
+														<xs:documentation xml:lang="en"><![CDATA[The Invert attribute specifies whether the condition defined in the FlightRestrictions element is inverted.
+
+Example:
+<TransportRestrictions>
+    <TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+    <TransportRestriction Type="Outbound" DepartureAirport="CGN"/>
+    <TransportRestriction Type="Outbound" DepartureAirport="AAH"/>
+</TransportRestrictions>
+This discards all outbound flights that depart from DUS, CGN or AAH.
+
+Example:
+<TransportRestrictions Invert="true">
+    <TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+    <TransportRestriction Type="Outbound" DepartureAirport="CGN"/>
+    <TransportRestriction Type="Outbound" DepartureAirport="AAH"/>
+</TransportRestrictions>
+This discards all outbound flights that do not depart from DUS, CGN or AAH.]]></xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="TransportRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:complexType>
+												<xs:annotation>
+													<xs:documentation xml:lang="en"><![CDATA[Contains a list of TransportRestriction elements.
+
+TransportRestriction elements are always joined by a logical OR.]]></xs:documentation>
+												</xs:annotation>
+												<xs:sequence>
+													<xs:element name="TransportRestriction" minOccurs="1" maxOccurs="unbounded" type="TransportRestriction" />
+												</xs:sequence>
+												<xs:attribute name="Invert" type="xs:boolean" default="false">
+													<xs:annotation>
+														<xs:documentation xml:lang="en"><![CDATA[The Invert attribute specifies whether the set of conditions defined in the TransportRestrictions element is inverted.]]></xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="PriceRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das PriceRestrictions-Element ist eine Liste von PriceRestriction-Elementen.
+												Die PriceRestriction-Elemente sind immer mit einem logischen ODER verknüpft
+												</xs:documentation>
+												<xs:documentation xml:lang="en">The PriceRestrictions element is a list of PriceRestriction elements.
+												PriceRestriction elements are always joined by a logical OR.
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="PriceRestriction" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das PriceRestriction-Element definiert eine Einschränkung bezogen auf den Preis.
+
+Die Attribute eines PriceRestriction-Elements sind untereinander mit einem logischen UND verknüpft.</xs:documentation>
+															<xs:documentation xml:lang="en">The PriceRestriction element defines a restriction with respect to the price.
+
+The attributes of a PriceRestriction element are always joined by a logical AND.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="MinPrice" type="xs:integer">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das MinPrice-Attribut legt den minimalen Preis fest. Flüge mit dem gleichen Preis oder einem höheren werden verworfen.</xs:documentation>
+																	<xs:documentation xml:lang="en">The MinPrice attribute specifies the minimum price. Flights with the same price or a higher one are discarded.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Type" type="TypePriceEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Type-Attribut legt den Typ des Fluges fest, für den das PriceRestriction-Element gilt.
+
+Mögliche Werte:
+* Inbound: Inbound-Flüge werden verworfen.
+* Outbound: Outbound und InOutbound Flüge werden verworfen.
+* Scheduled: Flüge, bei denen die Verfügbarkeit auf der Flugverbindung liegt, werden verworfen.
+Bei unbekanntem oder undefiniertem Typ werden Oneway-Flüge mit dem Preis von MinPrice gefiltert und Scheduled-Flüge mit dem doppelten Preis, d.h. zweimal der Wert von MinPrice.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Type attribute specifies the type of the flight for which the PriceRestriction element is valid.
+
+Possible values:
+* Inbound: Inbound flights are discarded.
+* Outbound: Outbound flights are discarded.
+* Scheduled: Flights for which the availability depends on the connection are discarded.
+If an unknown type or no type is set, one-way flights will be filtered based on MinPrice and scheduled flights based on double MinPrice.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="SortIndex" type="xs:integer">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das SortIndex-Attribut legt die Sortierreihenfolge der Abarbeitung fest. Es wird bei 0 begonnen und dann aufsteigend abgearbeitet.</xs:documentation>
+											<xs:documentation xml:lang="en">The SortIndex attribute specifies the order in which the restrictions are processed. Processing starts at 0 and ascends from there.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="Name" type="xs:string">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das Name-Attribut legt den Namen der Restriction fest.</xs:documentation>
+											<xs:documentation xml:lang="en">The Name attribute specifies the name of the restriction.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="FileKey" type="xs:string">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">FileKey is a unique identifier for this file. If another SalesControl is sent, an older file with the same FileKey will be overwritten</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="HotelRestriction">
+		<xs:attribute name="Code" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Restrict on the selling HotelCode.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="GiataID" type="xs:int">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Restrict on the GiataId of a Product.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="GoalID" type="xs:int">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Restrict on the GoalID of a product.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="LocalSupplier" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Restrict on the local supplier code that is used for the incoming data-feed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TransportRestriction">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Das TransportRestriction-Element definiert eine Einschränkung, die sich auf einen Flug bezieht.
+
+Die Attribute eines TransportRestriction-Elements sind untereinander mit einem logischen UND verknüpft.</xs:documentation>
+			<xs:documentation xml:lang="en">The TransportRestriction element defines a restriction that is related to a flight.
+
+The attributes of a TransportRestriction element are always joined by a logical AND.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Type" type="TypeEnum">
+			<xs:annotation>
+				<xs:documentation xml:lang="de"><![CDATA[Das Type-Attribut legt fest, ob das TransportRestriction-Element für den Hinflug oder den Rückflug gilt.
+
+Mögliche Werte:
+* Inbound: Rückflug
+* Outbound: Hinflug
+
+Beispiel:
+<TransportRestrictions>
+<TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+</TransportRestrictions>
+Dies verwirft alle Hinflüge ab DUS.]]></xs:documentation>
+				<xs:documentation xml:lang="en"><![CDATA[The Type attribute specifies, whether the TransportRestriction element applies to an outbound or an inbound flight.
+Possible values:
+* Inbound
+* Outbound
+
+Example:
+<TransportRestrictions>
+<TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+</TransportRestrictions>
+This discards all outbound flights departing from DUS.]]></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DepartureAirport">
+			<xs:annotation>
+				<xs:documentation xml:lang="de"><![CDATA[Das DepartureAirport-Attribut legt fest, für welchen Startflughafen das TransportRestriction-Element gültig ist.
+
+Der Wert ist ein 3-buchstabiger IATA-Code.
+
+Beispiel:
+<TransportRestrictions>
+<TransportRestriction DepartureAirport="DUS"/>
+</TransportRestrictions>
+Dies verwirft alle Flüge (Hinflüge und Rückflüge) ab DUS.
+
+Beispiel:
+<TransportRestrictions>
+<TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+</TransportRestrictions>
+Dies verwirft alle Hinflüge ab DUS.]]></xs:documentation>
+				<xs:documentation xml:lang="en"><![CDATA[The DepartureAirport attribute specifies for which departure airport the TransportRestriction element is valid.
+
+The value is a three-letter IATA code.
+
+Example:
+<TransportRestrictions>
+<TransportRestriction DepartureAirport="DUS"/>
+</TransportRestrictions>
+This discards all flights (outbound and inbound) departing from DUS.
+
+Example:
+<TransportRestrictions>
+<TransportRestriction Type="Outbound" DepartureAirport="DUS"/>
+</TransportRestrictions>
+This discards all outbound flights departing from DUS.]]></xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[A-Z]{3}" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ArrivalAirport">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das ArrivalAirport-Attribut legt fest, für welchen Zielflughafen das TransportRestriction-Element gültig ist.
+
+Der Wert ist ein 3-buchstabiger IATA-Code.</xs:documentation>
+				<xs:documentation xml:lang="en">The ArrivalAirport attribute specifies for which arrival airport the TransportRestriction-Element is valid.
+
+The value is a three-letter IATA code.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[A-Z]{3}" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="MinSegments" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation xml:lang="de"><![CDATA[Das MinSegments-Attribut legt die Anzahl der Flugsegmente fest, ab welcher das TransportRestriction-Element gilt.
+
+Beispiel:
+<TransportRestrictions>
+<TransportRestriction MinSegments="2"/>
+</TransportRestrictions>
+Dies verwirft alle Flüge mit zwei oder mehr Segmenten.
+
+Mögliche Werte: "1", "2", "3".
+
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.]]></xs:documentation>
+				<xs:documentation xml:lang="en"><![CDATA[The MinSegments attribute specifies the minimum number of flight segments of the FlightRestriction element.
+
+Example:
+<TransportRestrictions>
+<TransportRestriction MinSegments="2"/>
+</TransportRestrictions>
+This discards all flights with two or more segments.
+
+Possible values: "1", "2", "3".
+
+This attribute is supported in the PXB merge process from the Player version 2.10.0]]></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FlightNumber" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das FlightNumber-Attribut legt die externe Flugnummer des Segments fest. Beispiel: AB9564
+				
+				Der gültige Wert ist ein String von maximal 7 Zeichen Länge.
+				
+				</xs:documentation>
+				<xs:documentation xml:lang="en">The FlightNumber attribute specifies the external flight number of the segment. Example: AB9564
+				
+				A string up to a max. of 7 characters is valid.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="BookingClass" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das BookingClass-Attribut legt fest, für welche Buchungsklasse das TransportRestriction-Element gültig ist.
+				Der gültige Wert ist ein String von maximal 4 Zeichen Länge.
+				
+				</xs:documentation>
+				<xs:documentation xml:lang="en">The BookingClass attribute specifies for which booking class the TransportRestriction element is valid.
+				
+				A string up to a max. of 4 characters is valid.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DepartureTimeMin" type="xs:time">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das DepartureTimeMin-Attribut legt die früheste Abflugzeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</xs:documentation>
+				<xs:documentation xml:lang="en">The DepartureTimeMin attribute specifies the earliest possible departure time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DepartureTimeMax" type="xs:time">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das DepartureTimeMax-Attribut legt die späteste Abflugzeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</xs:documentation>
+				<xs:documentation xml:lang="en">The DepartureTimeMax attribute specifies the latest possible departure time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ArrivalTimeMin" type="xs:time">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das ArrivalTimeMin-Attribut legt die früheste Ankunftszeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</xs:documentation>
+				<xs:documentation xml:lang="en">The ArrivalTimeMin attribute specifies the earliest possible arrival time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ArrivalTimeMax" type="xs:time">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das ArrivalTimeMax-Attribut legt die späteste Ankunftszeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</xs:documentation>
+				<xs:documentation xml:lang="en">The ArrivalTimeMax attribute specifies the latest possible arrival time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Airline" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das Airline-Attribut legt das Airlinekürzel dieses TransportRestriction-Elementes fest.
+				
+				Der gültige Wert ist ein String von maximal 4 Zeichen Länge.
+				</xs:documentation>
+				<xs:documentation xml:lang="en">The Airline attribute specifies the airline abbreviation of this TransportRestriction element.
+				
+				A string up to a max. of 4 characters is valid.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="MinConnectingTimeDuration" type="xs:unsignedShort">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das MinConnectingTimeDuration-Attribut legt die minimale Transferdauer in Minuten zwischen zwei Flugsegmenten fest, ab der die Restriktion gilt. Bei mehreren Flugsegmenten wird die maximale Transferdauer aller Segmente ausgewertet.
+Das Attribut wird ausschließlich im PXB-Merge-Prozess ab der Player-Version 2.37.0 unterstützt.</xs:documentation>
+				<xs:documentation xml:lang="en"><![CDATA[The MinConnectingTimeDuration attribute specifies the minimum connecting time in minutes between two flight segments which results in validity of the restriction. In case of multiple segments, the maximum connecting time of all segments is evaluated.
+
+Example:
+<TransportRestrictions>
+<TransportRestriction MinConnectingTimeDuration="60"/>
+</TransportRestrictions>
+This discards all flights with connecting times between two segments greater or equal than 60 minutes. 
+Example flight with 3 segments: (seg1: departure=12:30, arrival=14:15; seg2: departure=15:10, arrival=18:50; seg3: departure=19:50, arrival=22:35); this flight would be discarded with the restriction above, because the maximum connecting time of all segments is 60 minutes (seg1->seg2: 55 min., seg2->seg3: 60 min.). 
+
+					This attribute is only supported in the PXB merge process from the Player version 2.37.0]]></xs:documentation>
+
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	
+	<xs:simpleType name="StayModeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hotel" />
+			<xs:enumeration value="Flight" />
+			<xs:enumeration value="GroundTime" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Inbound" />
+			<xs:enumeration value="Outbound" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypePriceEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Inbound" />
+			<xs:enumeration value="Outbound" />
+			<xs:enumeration value="Scheduled" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DateRestrictionApplyToEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Arrival" />
+		</xs:restriction>
+	</xs:simpleType>	
+</xs:schema>

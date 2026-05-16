@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://www.peakwork.com/edf/AccommodationTaxes" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.peakwork.com/edf/AccommodationTaxes" version="2.2.0">
+  <xs:element name="AccommodationTaxesRoot">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Accommodation taxes are taxes and fees that are applied to an accommodation.
+        The accommodation tax EDF specifies rule-based tax information.
+        The XML format is derived from the Hotel global extra EDF structure and generally uses the same logic.
+        Accommodation tax files are delivered per supplier, hotel or contract.
+
+        Examples for accommodation taxes and fees:
+        • general sales tax/value added tax (GST/VAT)
+        • city tax
+        • lodging tax
+        • transfer fee
+        • resort fee
+        • destination marketing fee
+        • tourism fee
+
+        The structure of a global accommodation tax file is roughly as follows:
+
+        AccommodationTaxesRoot
+        //AccommodationIdentifier
+        //Currency
+        //Taxes &gt;&gt; Tax (1 .. n)
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="AccommodationIdentifier" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="Source" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">The Source attribute specifies the hotel origin, usually a code
+                  identifying the supplier. A provider can be, for example, a bedbank or a tour operator.
+                  This corresponds to the 'Source' attribute in Hotel-EDF. See Hotel EDF documentation for further
+                  explanation.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Code" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">The code of the accommodation; e.g., the hotel code.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Key" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">The ContractID (HotelKey).</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="GiataID" type="xs:int">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Restriction to a specific giata hotel-id.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="GoalID" type="xs:int">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Restriction to a specific hotel peakwork-goal-id.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Currency" type="xs:string" maxOccurs="1" minOccurs="1">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">The currency of the accommodation taxes and fees.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Taxes" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">The Taxes element is a list of Tax elements.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Tax" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">It is also possible to send an "empty" Taxes element only, in order to delete the taxes.
+                    The alternative to an empty element is sending a ZIP with erase.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="DateRestrictions" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">The DateRestrictions element is a list of DateRestriction
+                          elements.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="DateRestriction" minOccurs="1" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation xml:lang="en">The DateRestriction element defines a restriction with
+                                respect to the arrival.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="Start" type="xs:date" use="optional">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">The Start attribute specifies the start of the period.
+                                    Format: YYYY-MM-DD.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="End" type="xs:date" use="optional">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">The End attribute specifies the end of the period.
+                                    Format: YYYY-MM-DD.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="StayRestrictions" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">The StayRestrictions element is a list of StayRestriction
+                          elements.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="StayRestriction" minOccurs="1" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation xml:lang="en">The StayRestriction element defines a restriction with
+                                respect to a stay duration.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="Min" type="xs:duration" use="optional">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">The Min attribute specifies the minimum stay duration
+                                    in days.
+
+                                    Example:
+                                    Min="P3D": The minimum stay duration is 3 days.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="Max" type="xs:duration" use="optional">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">The Max attribute specifies the maximum stay duration
+                                    in days.
+
+                                    Example:
+                                    Max="P21D": The maximum stay duration is 21 days.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="Sequence" type="xs:duration">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en"><![CDATA[The Sequence attribute describes a standard stay that the product can be booked with.
+
+Any stay duration (up to any maximum stay limit set) which can be divided by the Sequence with a remainder of 0 is possible.
+
+The value of the Sequence attribute must be less than 63.
+
+Example:
+Sequence="P7D"
+The product can be booked by week up to the maximum stay duration, where set.
+
+Example:
+Max="P28D" Sequence="P7D"
+This product can be booked with a stay of 7, 14, 21 and 28 days.
+
+Example:
+Min="P5D" Sequence="P5D"
+The product can be booked with a minimum stay of 5 days, and all further stays are bookable with the factor 5.
+
+Example:
+Max="P18D" Sequence="P5D"
+The product can be booked  with a stay of 5, 10 and 15 days.
+
+Example:
+<Restriction>
+<DateRestrictions>
+<DateRestriction Start="2019-08-12" End="2019-10-31" />
+</DateRestrictions>
+<StayRestrictions Condition="false">
+<StayRestriction Sequence="P7D" ApplyTo="Complete" />
+</StayRestrictions>
+</Restriction>
+If the arrival is between "Start" and "End" of the DateRestriction element, one can book only complete weeks. Otherwise one can book all days and durations.]]></xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="Mode" type="StayModeEnum">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">The Mode attribute specifies whether the stay
+                                    restriction refers to the hotel stay duration or the flight stay duration.
+                                    Possible values:
+                                    * Hotel
+                                    * Flight
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="ApplyTo" type="ApplyToStayEnum">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">The ApplyTo attribute specifies which kind of stay is
+                                    applied.
+                                    For the time being, only the value "Complete" is supported; the value "Stay" is
+                                    maybe needed at a later stage.
+                                    Possible values:
+                                    * Complete: Refers to the duration of the journey.
+                                    * Stay: This number of days must at least or at most be within the time range of the
+                                    above DateRestriction.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="GuestRestrictions" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">The GuestRestrictions element is a list of GuestRestriction
+                          elements.
+                          The GuestRestriction elements of a GuestRestrictions element are always joined with a logical
+                          AND.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="GuestRestriction" minOccurs="1" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation xml:lang="en"><![CDATA[The GuestRestriction element defines the condition for the travellers that must be met in order for the tax to take affect.
+                                Example: <GuestRestriction MinPerson="1" MaxPerson="2" PersonType="A">
+                                At least one and max. two adults must travel in order for the tax to be applied.]]></xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="MinPerson" type="xs:unsignedShort">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">The MinPerson attribute specifies the minimum number
+                                    of persons that must travel in order for the tax to be applied.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="MaxPerson" type="xs:unsignedShort">
+                                <xs:annotation>
+                                  <xs:documentation>The MaxPerson attribute specifies the maximum number of persons
+                                    that may travel in order for the tax to be applied.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="PersonType" type="PersonTypeEnum">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">In addition to MinPerson/MaxPerson attributes, the GuestRestriction element may be defined more precisely by restricting the type of person.
+                                    Possible values:
+                                    * A: Adult
+                                    * C: Child
+                                    * I: Infant
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BoardRestrictions" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">The BoardRestrictions element is a list of BoardRestriction
+                          elements.
+                          If the BoardRestrictions element has more than one BoardRestriction element, these are linked
+                          with a logical OR.
+                          For the time being, the element "BoardRestrictions" is not supported.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="BoardRestriction" minOccurs="1" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation xml:lang="en">The BoardRestriction element defines a board-related
+                                restriction.
+                                For the time being, the element "BoardRestriction" is not supported.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="Code" type="xs:string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">The Code attribute specifies the tour operator
+                                    internal board code.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="RoomRestrictions" minOccurs="0" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">The RoomRestrictions element is a list of RoomRestriction
+                          elements.
+                          For the time being, the element "RoomRestrictions" is not supported.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="RoomRestriction" minOccurs="1" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation xml:lang="en">The RoomRestriction element defines a room-related
+                                restriction.
+                                For the time being, the element "RoomRestriction" is not supported.
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="Code" type="xs:string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">The Code attribute specifies the tour operator
+                                    internal room code.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Charge" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">The Charge element defines a charge for a tax or a fee.
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="Appliances" minOccurs="0" maxOccurs="1"/>
+                        </xs:sequence>
+                        <xs:attribute name="Amount" type="xs:decimal" use="optional">
+                          <xs:annotation>
+                            <xs:documentation xml:lang="en">The Amount attribute specifies the amount of the charge as
+                              an absolute value.
+                              The value of the Amount attribute should be positive.
+                              A Charge element has either an Amount attribute or a Percent attribute but not both
+                              together.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="Percent" type="xs:decimal" use="optional">
+                          <xs:annotation>
+                            <xs:documentation xml:lang="en">The Percent attribute specifies the amount of the charge as
+                              a percentage.
+                              A Charge element has either an Amount attribute or a Percent attribute but not both
+                              together.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="Calculation" type="CalculationEnum" default="PN">
+                          <xs:annotation>
+                            <xs:documentation xml:lang="en">The Calculation attribute specifies what price the tax or fee is
+                              related to.
+                              Possible values:
+                              * PN: per person and night (default)
+                              * PS: per person and stay
+                              * PW: per person and week
+                              * ON: per object and night
+                              * OS: per object and stay
+                              * OW: per object and week
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="BookingCode" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">The BookingCode attribute should only be used if it is absolutely needed in the booking process; otherwise this shouldn't be used as this increases the pxb size.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="ApplianceCode" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">
+                        Possible values:
+                        * Level0
+                        * Level1
+                        * Level2
+                        * Level3
+
+                        When no ApplianceCode attribute is set, the logic of tax appliances won't be applied.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="CalculationType" type="TaxFeeIncludedType" default="included">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">
+                        Possible value: included, excluded
+                        "included" taxes are expected to be already included in the hotel price delivered to the Player. They are emitted in the Player response as a lumpsum. They are *not* added onto the Player price.
+
+
+                        "excluded" taxes are not included in the offer price and need to be paid directly by the traveller at the accommodation.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="SchemaVersion" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The SchemaVersion attribute specifies which schema version the EDF file is
+            compatible with.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="CreationDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The CreationDate attribute specifies the date and the time for the creation of
+            the EDF file.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="FileKey" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="de">Das FileKey-Attribut ist den eindeutigen Bezeichner einer Accommodation Taxes&amp;Fees Definition. (Hat keinen Bezug zum FileKey im HotelEDF)</xs:documentation>
+          <xs:documentation xml:lang="en">The FileKey attribute specifies the unique identifier of one Accomodation Taxes&amp;Fees definition. (No reference to FileKey in HotelEDF)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="TypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TAX"/>
+      <xs:enumeration value="FEE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TaxFeeIncludedType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="included"/>
+      <xs:enumeration value="excluded"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OperatorEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AND"/>
+      <xs:enumeration value="OR"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="StayModeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Hotel"/>
+      <xs:enumeration value="Flight"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ApplyToStayEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Complete"/>
+      <xs:enumeration value="Stay"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PersonTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A"/>
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="I"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CalculationEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PN"/>
+      <xs:enumeration value="PS"/>
+      <xs:enumeration value="PW"/>
+      <xs:enumeration value="ON"/>
+      <xs:enumeration value="OS"/>
+      <xs:enumeration value="OW"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ChargeCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Room"/>
+      <xs:enumeration value="Board"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Appliances">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"/>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="PersonAppliance" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="PersonType" type="PersonTypeEnum">
+              <xs:annotation>
+                <xs:documentation xml:lang="en"><![CDATA[The PersonType attribute specifies to which type of person the tax should be applied to.
+                  Possible values:
+                  * A: Adult
+                  * C: Child
+                  * I: Infant
+
+                  Example: <PersonAppliance PersonType="A" MaxCount="1"> means that the tax only applies to the first adult.
+                  The same concept is used in the hotel EDF when setting the value "Person" for the Appliance/@Type attribute.]]></xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="MinCount">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">The MinCount attribute specifies the minimum number of persons in the
+                  offer.
+                  If an age range is set, the attribute refers to the minimum number of persons matching this specific
+                  age range.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:int">
+                  <xs:minInclusive value="0"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="MaxCount">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">The MaxCount attribute specifies the maximum number of persons in the
+                  offer.
+                  If an age range is set, the attribute refers to the maximum number of persons matching this specific
+                  age range.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:int">
+                  <xs:minInclusive value="0"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="MinAge">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">The MinAge attribute specifies the minimum age in years.
+                  Example:
+                  MinAge="12"
+                  Only valid from a minimum age of 12 years.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:int">
+                  <xs:minInclusive value="0"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="MaxAge">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">The MaxAge attribute specifies the maximum age in years.
+                  Example:
+                  MaxAge="12"
+                  Valid up to an age of 12 years.
+                </xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:int">
+                  <xs:minInclusive value="0"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TaxAppliance" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The TaxAppliance element specifies if the tax is to be applied in addition to the tax(es) specified in the Code attribute(s);
+                provided that one of the taxes is a percent tax (see the Percent attribute) and all taxes to be applied are included taxes (see the CalculationType attribute).
+                For a complex example, refer to https://documentation.peakwork.com/docs/#accomm_taxes_and_fees/examples.html
+              </xs:documentation>
+            </xs:annotation>
+            <xs:attribute name="Code" type="xs:string" use="required">
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,3372 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns="http://www.vilauma.de/edf/Calculation"
+		   elementFormDefault="qualified"
+		   targetNamespace="http://www.vilauma.de/edf/Calculation"
+			 version="${pom.version}"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="CalculationRoot">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Die Kalkulation besteht aus den beiden Komponenten "Regeln" und "Kalkulation".
+Alle Regeln werden in dem Element "Restrictions" abgebildet. Jede Regel wird analog zu dem Veranstalter-System mit einer Priorität versehen.
+Je Pauschalkalkulation kann genau eine Regel zutreffen. Die Regel mit der höchsten Priorität wird angewendet.
+Innerhalb einer Regel wird auf genau eine "Kalkulation" verwiesen. Der Verweis erfolgt über einen Kalkulationsnamen.
+Die eigentlichen Kalkulationswerte werden in dem Element "Calculations" abgebildet.
+Bei Kalkulationen mit negativen Prozentangaben oder Beträgen muss man sicherstellen, dass die Anwendung aller Kalkulationen trotzdem zu einem positiven Kalkulationswert führt.
+Sonst kann die Player-Funktionalität nicht gewährleistet werden.
+Dennoch sind die Nebeneffekte bei Kalkulationen mit negativen Werten keine Fehler sondern das normale Player-Verhalten.
+			</xs:documentation>
+			<xs:documentation xml:lang="en">The calculation is comprised of the two components Rules and Calculation.
+All rules are shown in the Restrictions element. Each rule is assigned a priority that corresponds to the tour operator system. Exactly one rule may apply per package pricing. The rule with the highest priority will be applied.
+Within one rule, exactly one "calculation" will be referenced. The reference is made by calculation name.
+The actual calculation values are shown in the Calculations element.
+In case of calculations with negative percentages or amounts, please make sure that the application of all calculations is still positive.
+Otherwise the Player functionality can not be guaranteed.
+Nevertheless, the side effects of calculations with negative results aren't bugs but the normal Player behaviour.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Exchanges" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Das Exchanges-Element ist eine Liste von Exchange-Elementen.</xs:documentation>
+						<xs:documentation xml:lang="en">The Exchanges element is a list of Exchange elements.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Exchange" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="de">Das Exchange-Element definiert einen Währungsumrechnungskurs.
+
+Beispiel:
+Code: USD
+Rate: 1.253</xs:documentation>
+									<xs:documentation xml:lang="en">The Exchange element defines a currency exchange rate.
+
+Example:
+Code: USD
+Rate: 1.253</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="Rate" type="xs:double">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">In diesem Attribut wird der aktuelle Umrechnungskurs der Fremdwährung zu dem unter Currency angegeben Währung definiert.
+
+Beispiel: Currency="EUR"
+1 Euro = 1,256 USD
+
+Rate= "1,256"</xs:documentation>
+											<xs:documentation xml:lang="en">This attribute specifies the current exchange rate of the foreign currency related to the currency indicated under Currency.
+
+Example: Currency="EUR"
+1 Euro = 1.256 USD
+
+Rate= "1.256"</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="Code">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das Code-Attribut legt die Währung fest, für die der Umrechnungskurs gelten soll.
+Die Währung wird als dreistelliger Währungscode nach ISO 4217 angegeben.
+Beispiel: USD für US Dollar</xs:documentation>
+											<xs:documentation xml:lang="en">The attribute shows the currency for which the exchange rate should apply.
+The currency is indicated by a three-digit currency code according to ISO 4217.
+Example: USD for U.S. dollars</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="[A-Z]{3}"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SourcePriorities" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Das SourcePriorities-Element ist eine Liste von SourcePriority-Elementen.</xs:documentation>
+						<xs:documentation xml:lang="en">The SourcePriorities element is a list of SourcePriority elements.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SourcePriority" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="de">Das SourcePriority-Element dient zur Festlegegung von Prioritäten der einzelnen Flugquellen oder Hotelquellen und ist optional.
+Es muss dennoch gesetzt werden, wenn beispielsweise Hin- und Rückflug unterschiedliche Quellen haben.
+In diesem Fall sind zwei verschiedene Kalkulationsregeln valide, allerdings kann nur eine Regel für den Kalkulationsprozess berücksichtigt werden.
+Mit dem Element kann priorisiert werden, welche Kalkulationsregel berücksichtigt werden soll.
+Daher muss eine Quelle priorisiert werden, um zu bestimmen, welche Kalkulationsregel angewandt werden soll.
+
+Wenn keine Prioritäten gesetzt sind, wird die Kalkulationsregel des Hinflugs angewandt.
+
+Beispiel:
+SourcePriorities
+SourcePriority ID=ABC Priority=0 /
+SourcePriority ID=XYZ Priority=1 /
+/SourcePriorities</xs:documentation>
+									<xs:documentation xml:lang="en">The SourcePriority element specifies the priority of each flight and hotel source and is optional; it must be set, however,
+if for example the sources for inbound and outbound flight are different.
+In such cases, two different calculations are valid, but it is only possible to consider one for the calculation process.
+With the element the customer can prioritize which source should be considered to find the correct valid calculation rule.
+So one source must be prioritized to determine the calculation that shall be used.
+
+
+If no priorities are set, the calculation rule of the outbound flight is applied.
+
+Example:
+SourcePriorities
+SourcePriority ID=ABC Priority=0 /
+SourcePriority ID=XYZ Priority=1 /
+/SourcePriorities</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="ID" type="xs:string">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das ID-Attribut legt die Quelle eines Fluges oder Hotels fest.</xs:documentation>
+											<xs:documentation xml:lang="en">The ID attribute specifies the source of a flight or a hotel.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="Priority">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das Priority-Attribut legt die Priorität fest, wobei die höchste Zahl der höchsten Priorität entspricht.
+
+Beispiel:
+SourcePriorities
+SourcePriority ID=ABC Priority=0 /
+SourcePriority ID=XYZ Priority=1 /
+/SourcePriorities
+
+Die Kalkulation mit der Source XYZ hat eine höhere Priorität.</xs:documentation>
+											<xs:documentation xml:lang="en">The Priority attribute specifies the priority; the higher the value, the higher the priority.
+
+Example:
+SourcePriorities
+SourcePriority ID=ABC Priority=0 /
+SourcePriority ID=XYZ Priority=1 /
+/SourcePriorities
+
+The calculation based on the XYZ source has a higher priority.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="0"/>
+												<xs:maxInclusive value="65535"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="ApplyToMode">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">
+												Das Attribut ApplyToMode kennzeichnet, ob es sich bei der unter ID genannten Quelle um eine Hotel-, Flug- oder andere Transportquelle, z.B. Zug, handelt.
+
+												Mögliche Werte:
+												* Hotel
+												* Flight
+                                              	* Transport
+											</xs:documentation>
+											<xs:documentation xml:lang="en">
+												The ApplyToMode attribute identifies, whether the source specified under ID is a hotel-, flight- or another transport source, e.g. train.
+
+												Possible values:
+												* Hotel
+												* Flight
+                                              	* Transport
+											</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="ApplyToModeEnum">
+												<xs:enumeration value="Flight" />
+												<xs:enumeration value="Hotel" />
+                                              	<xs:enumeration value="Transport" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Conflict" type="ConflictEnum">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Mögliche Werte:
+* Outbound (Default): Eine Rule mit einer bestimmten Source ist gültig, auch wenn nur der Outbound von dieser Source ist. Der Inbound muss nicht zwingend die gleiche Source haben. D.h. Der Hinflug gewinnt bei gleichen Prioritäten und unterschiedlichen Sourcen.
+* None: Hin- und Rückflug müssen die gleiche Source haben, damit eine Rule auf Sourceebene gültig ist.
+								</xs:documentation>
+								<xs:documentation xml:lang="en">Possible values:
+* Outbound (default): A rule with a certain source is valid, even when only the outbound flight comes from the specified source. The source of the inbound flight doesn't matter. This means: with identical priorities and different sources, the outbound flight "wins".
+* None: Outbound and inbound flight must have the same source, otherwise the rule cannot be valid on source level.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PersonTypeDefinitions" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Das PersonTypeDefinitions-Element ist eine Liste von PersonTypeDefinition-Elementen.</xs:documentation>
+						<xs:documentation xml:lang="en">The PersonTypeDefinitions element is a list of PersonTypeDefinition elements.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="PersonTypeDefinition" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="de"><![CDATA[Das PersonTypeDefinition-Element definiert global Personengruppen.
+
+Beispiel:
+<PersonTypeDefinitions>
+    <PersonTypeDefinition Type="A" MinAge="13" MaxAge="255" />
+    <PersonTypeDefinition Type="C" MinAge="2" MaxAge="12" />
+    <PersonTypeDefinition Type="I" MinAge="0" MaxAge="1" />
+</PersonTypeDefinitions> ]]></xs:documentation>
+									<xs:documentation xml:lang="en"><![CDATA[The PersonTypeDefinition element globally defines the different groups of persons in the calculation EDF file.
+
+Example:
+<PersonTypeDefinitions>
+    <PersonTypeDefinition Type="A" MinAge="13" MaxAge="255" />
+    <PersonTypeDefinition Type="C" MinAge="2" MaxAge="12" />
+    <PersonTypeDefinition Type="I" MinAge="0" MaxAge="1" />
+</PersonTypeDefinitions> ]]>
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="Type" type="PersonTypeDefinitionPersonTypeEnum">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das Type-Attribut legt einen Personentyp fest.
+
+Mögliche Werte:
+* A: adult (Erwachsener)
+* C: child (Kind)
+* I: infant (Baby)
+
+Beispiel: siehe PersonTypeDefinition-Element</xs:documentation>
+											<xs:documentation xml:lang="en">The Type attribute specifies a person type.
+
+Possible values:
+* A: adult
+* C: child
+* I: infant
+
+Example: see PersonTypeDefinition element</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="MinAge">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das MinAge-Attribut legt für diesen Personentyp das Mindestalter in Jahren fest.
+
+Beispiel: siehe PersonTypeDefinition-Element</xs:documentation>
+											<xs:documentation xml:lang="en">The MinAge attribute specifies for this person type the minimum age in years.
+
+Example: see PersonTypeDefinition element</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="0"/>
+												<xs:maxInclusive value="255"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="MaxAge">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das MaxAge-Attribut legt für diesen Personentyp das Maximalalter in Jahren fest.
+
+Beispiel: siehe PersonTypeDefinition-Element</xs:documentation>
+											<xs:documentation xml:lang="en">The MaxAge specifies for this person type the maximum age in years.
+
+Example: see PersonTypeDefinition element</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="1"/>
+												<xs:maxInclusive value="255"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Rules" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Das Rules-Element ist eine Liste von Rule-Elementen.</xs:documentation>
+						<xs:documentation xml:lang="en">The Rules element is a list of Rule elements.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence minOccurs="0">
+							<xs:element name="Rule" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="de">Das Rule-Element definiert eine Regel.</xs:documentation>
+									<xs:documentation xml:lang="en">The Rule element defines a rule.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Distribution" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das Distribution-Element ist eine Liste von Channel-Elementen.
+
+Falls ein Element kein Distribution-Element hat, gilt dieses Element für alle Vertriebskanäle.</xs:documentation>
+												<xs:documentation xml:lang="en">The Distribution element is a list of Channel elements.
+
+If an element has no Distribution element, this element is valid for all distribution channels.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Channel" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de"><![CDATA[Das Channel-Element definiert einen Distributionskanal.
+
+Das Channel-Element beschränkt die Kalkulation auf die angegebenen Distributionskanäle.
+
+Beispiel:
+<Distribution>
+    <Channel Name="C-1"/>
+</Distribution> ]]></xs:documentation>
+															<xs:documentation xml:lang="en">
+																<![CDATA[The Channel element defines one distribution channel.
+
+The Channel element restricts the calculation to the specified distribution channels.
+
+Example:
+<Distribution>
+    <Channel Name="C-1"/>
+</Distribution> ]]></xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Name" type="xs:string" use="required">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Name-Attribut legt den Namen des Distributionskanals fest.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Name attribute specifies the name of the distribution channel.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:choice minOccurs="0" maxOccurs="1">
+											<xs:element name="LocationRestrictions" minOccurs="0" maxOccurs="1">
+												<xs:annotation>
+													<xs:documentation xml:lang="de"><![CDATA[
+	Das LocationRestrictions-Element definiert, dass die Regel nur gültig ist für Reisen mit den hier festgelegten Anreise- und Abreiseorten.
+	Ein Ort kann dabei ein Flughafen, eine Bahnstation, etc. sein.
+	Das Element bezieht sich immer auf die Hinreise.
+
+	Beispiel:
+	<Rule CalculationName="demo">
+	   <LocationRestrictions>
+		  <DepartureLocations>
+			 <DepartureLocation LocationCode="123456"/>
+			 <DepartureLocation LocationCode="4711"/>
+		  </DepartureLocations>
+		  <ArrivalLocations>
+			 <ArrivalLocation LocationCode="1268"/>
+		  </ArrivalLocations>
+	   </LocationRestrictions>
+	</Rule>
+	Diese Regel legt fest, dass die Kalkulation mit dem Namen "demo" nur angewandt wird, wenn folgende Bedingungen erfüllt sind:
+	* Abreise ab 123456 oder 4711
+	* Ankunft in 1268
+	]]>
+													</xs:documentation>
+													<xs:documentation xml:lang="en"><![CDATA[
+	The LocationRestrictions element defines that the rule is only valid for travels including the departure locations and arrival locations stated here.
+	A location may be an airport, a train station, etc.
+	The element always refers to the outbound transport.
+
+	Example:
+	<Rule CalculationName="demo">
+	 	<LocationRestrictions>
+		  <DepartureLocations>
+			 <DepartureLocation LocationCode="123456"/>
+			 <DepartureLocation LocationCode="4711"/>
+		  </DepartureLocations>
+		  <ArrivalLocations>
+			 <ArrivalLocation LocationCode="1268"/>
+		  </ArrivalLocations>
+	   </LocationRestrictions>
+	</Rule>
+	This rule specifies that the calculation named "demo" only is applied if the following conditions are met:
+	* departure from 123456 or 4711
+	* arrival at 1268
+	]]>
+													</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="DepartureLocations" minOccurs="0" maxOccurs="1">
+															<xs:annotation>
+																<xs:documentation xml:lang="de">
+																	Das DepartureLocations-Element ist eine Liste von DepartureLocation-Elementen.
+																</xs:documentation>
+																<xs:documentation xml:lang="en">
+																	The DepartureLocations element is a list of DepartureLocation elements.
+																</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="DepartureLocation" minOccurs="1" maxOccurs="unbounded">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="de">
+																				Das DepartureLocation-Element definiert einen Abreiseort.
+																				Wenn ein DepartureLocations-Element mehrere DepartureLocation-Elemente hat, dann sind die DepartureLocation-Elemente mit einem logischen ODER verknüpft.
+																			</xs:documentation>
+																			<xs:documentation xml:lang="en">
+																				The DepartureLocation element defines one departure location.
+																				If a DepartureLocations element has more than one DepartureLocation element, these DepartureLocation elements are joined with a logical OR.
+																			</xs:documentation>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:attribute name="LocationCode" use="required" type="xs:string">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="en">
+																						The LocationCode attribute specifies a specific code of the departure location.
+																						A code specifies, for example, a train station.
+																					</xs:documentation>
+																				</xs:annotation>
+																			</xs:attribute>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+																<xs:attribute name="MainSegmentLocations" type="xs:boolean">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">
+																			Das MainSegmentLocations-Attribut wird ab der Player-Version 2.17.0 unterstützt.
+																			Es wird nur beim PXB-Merge angewandt.
+																			Während des Vorprozesses mit einem Converter/Constructor wird das Attribut nicht unterstützt.
+
+																			Wenn das Attribut angegeben ist und den Wert "true" hat, wird die Berechnungsregel nur auf das Angebot angewandt, wenn das Hauptsegment der Reisestrecke mit dem LocationRestrictions-Element übereinstimmt.
+																			Wenn das Attribut nicht angegeben ist, ist der Defaultwert "false".
+
+																			Das LocationRestrictions-Element kann nur auf eine Einschränkung angewandt werden; es ist nicht möglich, das Element sowohl auf das Hauptsegment als auch auf die gesamte Flugstrecke anzuwenden.
+																			Es kann beispielsweise nicht überprüft werden, ob die Strecke Berlin-München ist und es ein Hauptsegment von Frankfurt-München gibt.
+																		</xs:documentation>
+																		<xs:documentation xml:lang="en">
+																			The MainSegmentLocations attribute has been supported since Player version 2.17.0.
+																			It is only used by the PXB merge.
+																			A preprocess with a converter/constructor does not support this attribute.
+
+																			If the attribute is set and has the value "true", the calculation rule is only applied to the offer if the main segment of the travel route matches with the LocationRestriction element.
+																			If the attribute is not set, the default value is "false".
+
+																			It is not possible to use the LocationRestrictions element for both the main segment and the whole flight route.
+																			You can check only one restriction; i.e. it is not possible to check if your route is Berlin-München and there is a main segment from Frankfurt-München.
+																		</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="ArrivalLocations" minOccurs="0" maxOccurs="1">
+															<xs:annotation>
+																<xs:documentation xml:lang="de">
+																	Das ArrivalLocations-Element ist eine Liste von ArrivalLocation-Elementen.</xs:documentation>
+																<xs:documentation xml:lang="en">
+																	The ArrivalLocations element is a list of ArrivalLocation elements.
+																</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="ArrivalLocation" minOccurs="1" maxOccurs="unbounded">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="de">
+																				Das ArrivalLocation-Element definiert einen Ankunftsort.
+																			</xs:documentation>
+																			<xs:documentation xml:lang="en">
+																				The ArrivalLocation element defines one arrival location.
+																			</xs:documentation>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:attribute name="LocationCode" use="required" type="xs:string">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="en">
+																						The LocationCode attribute specifies a specific code of the arrival location.
+																						A code specifies, for example, a train station.
+																					</xs:documentation>
+																				</xs:annotation>
+																			</xs:attribute>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+																<xs:attribute name="MainSegmentLocations" type="xs:boolean">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">
+																			siehe hier: CalculationRoot / Rules / Rule / LocationRestrictions / DepartureLocations / @MainSegmentLocations
+																		</xs:documentation>
+																		<xs:documentation xml:lang="en">
+																			see also: CalculationRoot / Rules / Rule / LocationRestrictions / DepartureLocations / @MainSegmentLocations</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="AirportRestrictions" minOccurs="0" maxOccurs="1">
+												<xs:annotation>
+													<xs:documentation xml:lang="de"><![CDATA[
+	Das AirportRestrictions-Element definiert, dass die Regel nur gültig ist für Reisen mit den hier festgelegten Flughäfen.
+	Das Element bezieht sich immer auf die Hinreise.
+
+	Beispiel:
+	<Rule CalculationName="demo">
+	   <AirportRestrictions>
+		  <DepartureAirports>
+			 <DepartureAirport IataCode="DUS"/>
+			 <DepartureAirport IataCode="CGN"/>
+		  </DepartureAirports>
+		  <ArrivalAirports>
+			 <ArrivalAirport IataCode="PMI"/>
+		  </ArrivalAirports>
+	   </AirportRestrictions>
+	</Rule>
+	Diese Regel legt fest, dass die Kalkulation mit dem Namen "demo" nur angewandt wird, wenn folgende Bedingungen erfüllt sind:
+	* Abflug ab DUS oder CGN
+	* Ankunft in PMI
+	]]>
+													</xs:documentation>
+													<xs:documentation xml:lang="en"><![CDATA[
+	The AirportRestrictions element defines that the rule is only valid if the tour includes the departure airports and destination airports which are stated here.
+	The element always refers to the outbound flight.
+
+	Example:
+	<Rule CalculationName="demo">
+	   <AirportRestrictions>
+		  <DepartureAirports>
+			 <DepartureAirport IataCode="DUS"/>
+			 <DepartureAirport IataCode="CGN"/>
+		  </DepartureAirports>
+		  <ArrivalAirports>
+			 <ArrivalAirport IataCode="PMI"/>
+		  </ArrivalAirports>
+	   </AirportRestrictions>
+	</Rule>
+	This rule specifies that the calculation named "demo" only is applied if the following conditions are met:
+	* departure from DUS or CGN
+	* arrival at PMI
+	]]>
+													</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="DepartureAirports" minOccurs="0" maxOccurs="1">
+															<xs:annotation>
+																<xs:documentation xml:lang="de">
+																	Das DepartureAirports-Element ist eine Liste von DepartureAirport-Elementen.
+																</xs:documentation>
+																<xs:documentation xml:lang="en">
+																	The DepartureAirports element is a list of DepartureAirport elements.
+																</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="DepartureAirport" minOccurs="1" maxOccurs="unbounded">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="de">
+																				Das DepartureAirport-Element definiert einen Flughafen für den Abflug.
+																				Wenn ein DepartureAirports-Element mehrere DepartureAirport-Elemente hat, dann sind die DepartureAirport-Elemente mit einem logischen ODER verknüpft.
+																			</xs:documentation>
+																			<xs:documentation xml:lang="en">
+																				The DepartureAirport element defines one departure Airport.
+																				If a DepartureAirports element has more than one DepartureAirport element, these DepartureAirport elements are joined with a logical OR.
+																			</xs:documentation>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:attribute name="IataCode" use="required">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">
+																						Das IataCode-Attribut legt den dreistelligen IATA-Code des Flughafens fest.
+																					</xs:documentation>
+																					<xs:documentation xml:lang="en">
+																						The IataCode attribute specifies the three-letter IATA code of the departure airport.
+																					</xs:documentation>
+																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="xs:string">
+																						<xs:pattern value="[A-Z]{3}"/>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:attribute>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+																<xs:attribute name="MainSegmentAirports" type="xs:boolean">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">
+																			Das MainSegmentAirports-Attribut wird ab der Player-Version 2.17.0 unterstützt.
+																			Es wird nur beim PXB-Merge angewandt.
+																			Während des Vorprozesses mit einem Converter/Constructor wird das Attribut nicht unterstützt.
+
+																			Wenn das Attribut angegeben ist und den Wert "true" hat, wird die Berechnungsregel nur auf das Angebot angewandt, wenn das Hauptsegment der Reisestrecke mit dem AirportRestrictions-Element übereinstimmt.
+																			Wenn das Attribut nicht angegeben ist, ist der Defaultwert "false".
+
+																			Das AirportRestrictions-Element kann nur auf eine Einschränkung angewandt werden; es ist nicht möglich, das Element sowohl auf das Hauptsegment als auch auf die gesamte Flugstrecke anzuwenden.
+																			Es kann beispielsweise nicht überprüft werden, ob die Flugstrecke DUS-NYC ist und es ein Hauptsegment von FRA-NYC gibt.
+																		</xs:documentation>
+																		<xs:documentation xml:lang="en">
+																			The MainSegmentAirports attribute has been supported since Player version 2.17.0.
+																			It is only used by the PXB merge.
+																			A preprocess with a converter/constructor does not support this attribute.
+
+																			If the attribute is set and has the value "true", the calculation rule is only applied to the offer if the main segment of the travel route matches with the AirportRestriction element.
+																			If the attribute is not set, the default value is "false".
+
+																			It is not possible to use the AirportRestrictions element for both the main segment and the whole flight route.
+																			You can check only one restriction; i.e. it is not possible to check if your flight route is DUS-NYC and there is a main segment from FRA-NYC.
+																		</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="ArrivalAirports" minOccurs="0" maxOccurs="1">
+															<xs:annotation>
+																<xs:documentation xml:lang="de">
+																	Das ArrivalAirports-Element ist eine Liste von ArrivalAirport-Elementen.</xs:documentation>
+																<xs:documentation xml:lang="en">
+																	The ArrivalAirports element is a list of ArrivalAirport elements.
+																</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="ArrivalAirport" minOccurs="1" maxOccurs="unbounded">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="de">
+																				Das ArrivalAirport-Element definiert einen Flughafen für die Ankunft.
+																			</xs:documentation>
+																			<xs:documentation xml:lang="en">
+																				The ArrivalAirport element defines one arrival airport.
+																			</xs:documentation>
+																		</xs:annotation>
+																		<xs:complexType>
+																			<xs:attribute name="IataCode" use="required">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">
+																						Das IataCode-Attribut legt den dreistelligen IATA-Code des Flughafens fest.
+																					</xs:documentation>
+																					<xs:documentation xml:lang="en">
+																						The IataCode attribute specifies the three-letter IATA code of the arrival airport.
+																					</xs:documentation>
+																				</xs:annotation>
+																				<xs:simpleType>
+																					<xs:restriction base="xs:string">
+																						<xs:pattern value="[A-Z]{3}"/>
+																					</xs:restriction>
+																				</xs:simpleType>
+																			</xs:attribute>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+																<xs:attribute name="MainSegmentAirports" type="xs:boolean">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">
+																			siehe hier: CalculationRoot / Rules / Rule / AirportRestrictions / DepartureAirports / @MainSegmentAirports
+																		</xs:documentation>
+																		<xs:documentation xml:lang="en">
+																			see also: CalculationRoot / Rules / Rule / AirportRestrictions / DepartureAirports / @MainSegmentAirports</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:choice>
+										<xs:element name="DateRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das DateRestrictions-Element ist eine Liste von DateRestriction-Elementen.</xs:documentation>
+												<xs:documentation xml:lang="en">The DateRestrictions element is a list of DateRestriction elements.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="DateRestriction" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das DateRestriction-Element legt eine datumsbezogene Bedingung fest.
+
+Für eine Einschränkung auf Buchungs- und Reisezeitraum ist jeweils eine eigene DateRestriction zu schreiben.
+
+Beispiel: Buchungszeitraum zwischen 11.10.2010 bis 15.10.2010 und Reisezeitraum (Anreisen) zwischen 01.02.2011 bis 20.02.2011
+
+DateRestrictions
+DateRestriction  BookingStart="2021-10-11" BookingEnd="2021-10-15"
+DateRestriction  Start="2022-02-01" End="2022-02-20" ApplyTo="Arrival"
+/DateRestrictions</xs:documentation>
+															<xs:documentation xml:lang="en">The DateRestriction element defines a date-related condition.
+
+Restrictions to the booking and travel periods require a separate DateRestriction.
+
+Example: Booking time range from Oct 11, 2010 until Oct 15, 2010 and travel period (arrival) from Feb 01, 2011 until Feb 20, 2011
+
+DateRestrictions
+DateRestriction  BookingStart="2021-10-11" BookingEnd="2021-10-15"
+DateRestriction  Start="2022-02-01" End="2022-02-20" ApplyTo="Arrival"
+/DateRestrictions</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="ApplyTo" default="Arrival">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Kenner ob zugehörige Angabe Hotel-Anreise- oder Hotel-Aufenthaltsbezogen oder Flug-Anreise- oder Flug-Aufenthaltsbezogen ist. Ob sich der Wert auf die Flug- oder Hotelanreise, bzw. Flug- oder Hotelaufenthalt, etc. bezieht wird über das Attribut "ApplyToMode" gesteuert.
+Mögliche Werte:
+* Arrival: Der Zeitraum gilt anreisebezogen. Wenn das ApplyToMode nicht gesetzt wird (default), gelten X Tage als Basis ab der Ankunft im Hotel (für Packages wie für HotelOnly), wenn ApplyToMode="Flight" gesetzt is, gilt der Anreisetag vom Hinflug (für Packages).
+* Stay: Der Zeitraum gilt aufenthaltsbezogen. Es gelten X Tage als Basis.
+* Within: Der gesamte Reisezeitraum (jeder Aufenthaltstag der Reise) muss im Zeitraum (z.B. zwischen Start und End) liegen. Es gelten X Tage als Basis.
+* Departure: Der Zeitraum gilt abreisebezogen. Wenn das ApplyToMode nicht gesetzt wird (default), gelten X Tage als Basis ab der Abreise aus dem Hotel (für Packages wie für HotelOnly), wenn ApplyToMode="Flight" gesetzt ist, gilt der Abreisetag vom Rückflug (für Packages).
+* StayNights: Der Zeitraum gilt aufenthaltsbezogen, jedoch nächteweise.
+
+Beispiel Arrival/Departure mit ApplyToMode=Flight|Hotel für Reisezeitraum 01.01.22 - 07.01.22:
+* If the ApplyToMode is left at default or set to "Hotel", it always looks at the Hotel dates. (Same as for HotelOnly)
+
+Beispiel für StayNights:
+Es bestehen zwei Frühbucherermäßigungen, die aufenthaltsbezogen gelten, jedoch die Basis „Nächte“ haben.
+Frühbucher 1: vom 01.05.21 bis 12.06.21,   10%
+Frühbucher 2: vom 12.06.21, bis 15.08.21,  5%
+
+Im Falle des Wertes „StayNights“ wird bei zeitraumsüberschneidenden Buchungen der Frühbucher nur einmal berechnet, da die Basis Nächte ist.
+Der erste Frühbucher gilt als letztes für die Nacht vom 11.06. auf den 12.06.21.
+Der zweite Frühbucher gilt ab der Nacht vom 12.06.21 auf den 13.06.21.
+
+Bei einer Berechnung einer 8-tägigen Reise vom 11.06.21 bis 19.06.21 wird einmal für die erste Nacht der Frühbucher von 10% angewendet. Der Frühbucher von 5% wird siebenmal für alle folgenden Nächte berechnet.
+
+Beispiel für Arrival und ApplyToMode="Flight":
+1. Flug CGN – PMI 01.01.21 – 14.01.21
+2. Erstes Hotel PMI 01.01.21 – 07.01.21
+3. Zweites Hotel PMI 07.01.21 – 14.01.21
+
+Bei dem Anschlusshotel gibt es ein Incentive, das über die Fluganreise gesteuert wird. Das Incentive des zweiten Hotels gilt vom 01.01. bis 06.01.21.
+Auch wenn die Anreise im Hotel erst am 07.01.21 erfolgt, wird dennoch das Incentive (Beispiel 7=6) gewährt, da die Bedingung der Fluganreise erfüllt ist.
+
+Beispiel für Stay und ApplyToMode="Flight":
+1. Flug DUS – BKK 01.01 – 08.01.
+2. Hotelaufenthalt, weil Übernachtsflug 02.01. – 08.01.
+Bei dem Hotel gibt es ein Incentive 7=6, dieses würde für HotelStay nicht gezogen werden, da der Hotelaufenthalt nur 6 Tage ist. Wird ApplyTo=FlightStay gesetzt, so bezieht es sich auf die Dauer zwischen Hinflug und Rückflug. Das Incentive 7=6 wird gewährt.
+
+Beispiel für Within und ApplyToMode="Hotel":
+1. Flug MUC – TFS 15.01. – 22.01.
+2. Hotel TFS 15.01. – 22.01.
+Das Incentive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 31.01.
+Bei ApplyTo=Within muss der Hotelaufenthalt genau in diesen Zeitraum fallen.
+Gibt es dort eine Überschneidung, so wird das Extra nicht gezogen. z.B. Incentive 7=6 hat eine Gültigkeitsdauer vom 01.01. – 20.01.
+Das Incentive wäre in diesem Falle nicht gültig.</xs:documentation>
+																	<xs:documentation xml:lang="en">Identifier of whether the respective information refers to the hotel arrival or hotel stay, or to flight arrival or flight stay. The ApplyToMode attribute controls, if the value refers to the flight or hotel arrival or to the flight or hotel stay, etc.
+
+Possible values:
+* Arrival: The time range applies to the arrival. If the ApplyToMode is not set (default), the time range is counted starting with the arrival in the hotel (for Packages as for HotelOnly), if ApplyToMode="Flight" is set, the time range is counted starting with the arrival of the outbound flight (for Packages).
+* Stay: The time range applies to the stay.
+* Within: The entire travel period must be within the time range (for example between Start and End).
+* Departure: The time range applies to the departure. If the ApplyToMode is not set (default), the time range is counted starting with the departure from the hotel (for Packages as for HotelOnly), if ApplyToMode="Flight" is set, the time range is counted starting with the departure of the inbound flight (for Packages).
+* StayNights: The time range applies on a per night basis.</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="ApplyToEnum">
+																		<xs:enumeration value="Arrival" />
+																		<xs:enumeration value="Departure" />
+																		<xs:enumeration value="Stay" />
+																		<xs:enumeration value="StayNights" />
+																		<xs:enumeration value="Within" />
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="ApplyToMode" type="ApplyToModeEnum" default="Hotel">
+																<xs:annotation>
+
+																	<xs:documentation xml:lang="de">
+																		Das ApplyToMode-Attribut legt fest, ob sich die Angaben im ApplyTo-Attribut auf den Flug oder das Hotel oder einen anderen Transport (z.b. Zug) beziehen.
+																		Mögliche Werte:
+																		* Hotel
+																		* Flight
+																		* Transport
+
+																		Der Defaultwert - sofern das Attribut nicht gesetzt ist - ist "Hotel".
+																	</xs:documentation>
+																	<xs:documentation xml:lang="en">
+																		The ApplyToMode attribute specifies whether the data in the ApplyTo attribute are flight or hotel or another transport (e.g. train) related.
+
+																		Possible values:
+																		* Hotel
+																		* Flight
+																		* Transport
+																		If no attribute is set, the default value is Hotel.
+																	</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="BookingStart" type="xs:date" use="optional">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das BookingStart-Attribut legt das Datum fest, nach dem die Reise gebucht sein muss, damit die Bedingung erfüllt ist.
+Beispiel:
+
+DateRestrictions
+DateRestriction  BookingStart="2010-10-11" BookingEnd="2010-10-15"
+/DateRestrictions
+
+Die Bedingung ist nur erfüllt bei einer Buchung zwischen 11.10.2010 und 15.10.2010.</xs:documentation>
+																	<xs:documentation xml:lang="en">The BookingStart attribute specifies the date after which the travel must be booked for the condition to be met.
+
+Example:
+
+DateRestrictions
+DateRestriction  BookingStart="2010-10-11" BookingEnd="2010-10-15"
+/DateRestrictions
+
+The condition is only met with a booking between Oct 11, 2010 and Oct 15, 2010.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="BookingEnd" type="xs:date" use="optional">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das BookingEnd-Attribut legt das Datum fest, vor dem die Reise gebucht sein muss, damit die Bedingung erfüllt ist.
+
+Beispiel: siehe BookingStart.</xs:documentation>
+																	<xs:documentation xml:lang="en">The BookingEnd attribute specifies the date before which the travel must be booked for the condition to be met.
+
+Example: see BookingStart.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="MinBookingOffset" type="xs:duration">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das MinBookingOffset-Attribut legt fest, wie viele Tage minimal zwischen Buchung und Anreise liegen müssen.
+
+Beispiel:
+MinBookingOffset="P60D"
+Die Buchung muss mindestens 60 Tage vor der Anreise liegen.</xs:documentation>
+																	<xs:documentation xml:lang="en">The MinBookingOffset attribute specifies the minimum number of days prior to the arrival.
+
+Example:
+MinBookingOffset="P60D"
+The booking must be at least 60 days before arrival.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="MaxBookingOffset" type="xs:duration">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das MaxBookingOffset-Attribut legt fest, wie viele Tage maximal zwischen Buchung und Anreise liegen dürfen.
+
+Beispiel:
+MaxBookingOffset="90"
+Die Buchung darf maximal 90 Tage vor der Anreise liegen.</xs:documentation>
+																	<xs:documentation xml:lang="en">The MaxBookingOffset attribute specifies the maximum number of days prior to the arrival.
+
+Example:
+MaxBookingOffset="90"
+The booking may be at most 90 days before arrival.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Start" type="xs:date">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Start-Attribut legt ein Anfangsdatum fest. Das ApplyTo-Attribut legt fest, wie dieses Anfangsdatum mit den Reisedaten verglichen wird.
+Beispiel:
+
+DateRestrictions
+DateRestriction  Start="2011-02-01" End="2011-02-20" ApplyTo="Arrival"
+/DateRestrictions
+
+Die Anreise muss zwischen 01.02.2011 und 20.02.2011 sein.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Start attribute specifies a start date. The ApplyTo attribute specifies how this start date is compared to the travel dates.
+
+Example:
+
+DateRestrictions
+DateRestriction  Start="2011-02-01" End="2011-02-20" ApplyTo="Arrival"
+/DateRestrictions
+
+The arrival must be between Feb 01, 2011 and Feb 20, 2011.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="End" type="xs:date">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das End-Attribut legt ein Enddatum fest. Das ApplyTo-Attribut legt fest, wie dieses Enddatum mit den Reisedaten verglichen wird.
+
+
+Beispiel: siehe Start-Attribut.</xs:documentation>
+																	<xs:documentation xml:lang="en">The End attribute specifies an end date. The ApplyTo attribute specifies how this end date is compared to the travel dates.
+
+Example: see Start attribute.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Operator" type="OperatorEnum" default="OR">
+													<xs:annotation>
+														<xs:documentation xml:lang="de"><![CDATA[
+Das Operator-Attribut legt fest, wie die DateRestriction-Elemente in diesem DateRestrictions-Element logisch verknüpft werden.
+
+Mögliche Werte:
+* AND: Die DateRestriction-Elemente sind mit einem logischen UND verknüpft. Alle Bedingungen müssen zutreffen.
+* OR: Die DateRestriction-Elemente sind mit einem logischen ODER verknüpft. Mindestens eine Bedingung muss zutreffen.
+
+Beispiel:
+<DateRestrictions>
+   <DateRestriction Start="2018-04-01" End="2018-04-30" ApplyTo="Arrival"/>
+   <DateRestriction Start="2018-08-01" End="2018-08-31" ApplyTo="Arrival"/>
+</DateRestrictions>
+Die Bedingung des DateRestrictions-Elementes ist erfüllt, wenn man im April oder im August anreist.
+
+Beispiel:
+<DateRestrictions Operator="AND">
+  <DateRestriction BookingStart="2018-04-01" BookingEnd="2018-04-30"/>
+   <DateRestriction Start="2018-08-01" End="2018-08-31" ApplyTo="Arrival"/>
+</DateRestrictions>
+Die Bedingung des DateRestrictions-Elementes ist erfüllt, wenn man im April bucht und im August anreist.
+]]></xs:documentation>
+														<xs:documentation xml:lang="en"><![CDATA[
+The Operator attribute specifies how the DateRestriction elements in this DateRestrictions element logically are joined.
+
+Possible values:
+* AND: The DateRestriction elements are joined by a logical AND. All conditions must be met.
+* OR: The DateRestriction elements are joined by a logical OR. At least one condition must be met.
+
+Example:
+<DateRestrictions>
+   <DateRestriction Start="2018-04-01" End="2018-04-30" ApplyTo="Arrival"/>
+   <DateRestriction Start="2018-08-01" End="2018-08-31" ApplyTo="Arrival"/>
+</DateRestrictions>
+The condition of the DateRestrictions element is met if the arrival is in April or in August.
+
+Example:
+<DateRestrictions Operator="AND">
+   <DateRestriction BookingStart="2018-04-01" BookingEnd="2018-04-30"/>
+   <DateRestriction Start="2018-08-01" End="2018-08-31" ApplyTo="Arrival"/>
+</DateRestrictions>
+The condition of the DateRestrictions element is met if the booking is in April and the arrival is in August.
+]]></xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="WeekdayRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das WeekdayRestrictions-Element ist eine Liste von WeekdayRestriction-Elementen.</xs:documentation>
+												<xs:documentation xml:lang="en">The WeekdayRestrictions element is a list of WeekdayRestriction elements.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="WeekdayRestriction" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das WeekdayRestriction-Element definiert eine Bedingung, die sich auf Wochentage bezieht.
+Beispiel: Anreise oder Buchung müssen auf bestimmte Tage fallen.
+
+Für eine Einschränkung auf Anreise- und Buchungstag ist jeweils eine eigene WeekdayRestriction zu schreiben.
+
+Beispiel: Anreisetag Montag und Donnerstag und Buchungstag(Anreisen) Samstag und Sonntag
+
+WeekdayRestrictions
+WeekdayRestriction ApplyTo="Arrival" Mask="YNNYNNN"
+WeekdayRestriction ApplyTo="Booking" Mask="NNNNNYY"
+/WeekdayRestrictions</xs:documentation>
+															<xs:documentation xml:lang="en">The WeekdayRestriction element defines a condition with respect to days of the week.
+Example: Arrival or booking must be on certain days.
+
+Restrictions to the arrival and booking days require a separate WeekdayRestriction.
+
+Example: Arrival day Monday and Thursday, booking day (arrival) Saturday and Sunday
+
+WeekdayRestrictions
+WeekdayRestriction ApplyTo="Arrival" Mask="YNNYNNN"
+WeekdayRestriction ApplyTo="Booking" Mask="NNNNNYY"
+/WeekdayRestrictions</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="ApplyTo" type="ApplyToWeekdayEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das ApplyTo-Attribut legt fest, ob sich die Wochentage im Mask-Attribut auf die Fluganreise oder auf die Buchung beziehen.
+Mögliche Werte:
+* Arrival: Die Wochentage beziehen sich auf die Fluganreise.
+* Booking: Die Wochentage beziehen sich auf die Buchung.</xs:documentation>
+																	<xs:documentation xml:lang="en">The ApplyTo attribute specifies whether the weekdays in the Mask attribute are related to the flight arrival or to the booking.
+
+Possible values:
+* Arrival: The weekdays are related to the flight arrival.
+* Booking: The weekdays are related to the booking.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Mask" use="required">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Mask-Attribut legt die Wochentage fest, an denen Anreise oder Buchung erlaubt sind.
+Der Wert des Mask-Attributes ist eine Zeichenkette der Länge 7.
+Jedes Zeichen steht für einen Wochentag. Das erste Zeichen steht für den Montag, das zweite für den Dienstag usw.
+Für jeden Wochentag kann man entweder Y (Yes) oder N (No) angeben.
+
+Beispiel: Anreisetag Montag und Donnerstag und Buchungstag Samstag und Sonntag
+
+WeekdayRestrictions
+WeekdayRestriction ApplyTo="Arrival" Mask="YNNYNNN"
+WeekdayRestriction ApplyTo="Booking" Mask="NNNNNYY"
+/WeekdayRestrictions</xs:documentation>
+																	<xs:documentation xml:lang="en">The Mask attribute specifies the weekdays on which arrival or booking are allowed.
+
+The value of the Mask attribute is a string of 7 characters.
+Each character represents one weekday. The first character represents Monday, the second one Tuesday etc.
+For each weekday, one can specify either Y (Yes) or N (No).
+
+Example: Arrival day Monday and Thursday, booking day Saturday and Sunday
+
+WeekdayRestrictions
+WeekdayRestriction ApplyTo="Arrival" Mask="YNNYNNN"
+WeekdayRestriction ApplyTo="Booking" Mask="NNNNNYY"
+/WeekdayRestrictions</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:pattern value="[YN]{7}"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="BoardRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das BoardRestrictions-Element ist eine Liste von BoardRestriction-Elementen.</xs:documentation>
+												<xs:documentation xml:lang="en">The BoardRestrictions element is a list of BoardRestriction elements.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="BoardRestriction" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das BoardRestriction-Element definiert eine verpflegungsbezogene Bedingung.</xs:documentation>
+															<xs:documentation xml:lang="en">The BoardRestriction element defines a board-related condition.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Code" type="xs:string" use="optional">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Code-Attribut legt den veranstalterinternen Verpflegungscode fest.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Code attribute specifies the tour operator-internal board code.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="StayRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das Element StayRestrictions definiert eine Einschränkung bezogen auf eine Aufenhaltsdauer.
+Dieses Element korrespondiert mit dem Feld "Reisedauer" aus der Veranstalter-Kalkulation / Regeln.
+
+Sofern in dem Veranstaltersystem mehrere Aufenthaltsdauern gesteuert werden,
+ist für jede Aufenthaltsdauer bzw. Aufenthaltsrange (von 1 - 10 Tagen, von 11 - 15 Tagen, etc.) eine StayRestriction zu schreiben.</xs:documentation>
+												<xs:documentation xml:lang="en">The StayRestrictions element defines a restriction with respect to a stay duration.
+This element corresponds to the "Travel duration" field in the tour operator's calculation and rules.
+
+If multiple stay durations exist in the tour operator system,
+a StayRestriction must be set for each stay duration or stay range (1-10 days, 11-15 days etc.).</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="StayRestriction" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">In dem Unterelement StayRestriction können die Einschränkungen bezogen auf die Reisedauern gesteuert werden.
+
+Für den Export aus dem Veranstalter-Kalkulationssystem kann entweder eine Aufenthaltsdauer (7 Tage) oder eine Aufenthaltsrange (von 1 - 10 Tagen) oder mehrere Aufenthaltsdauern oder Ranges definiert werden.
+Für jede unterschiedliche Dauer bzw. Range ist eine eigene StayRestriction zu schreiben.
+
+Beispiel: Aufenthaltsdauer 1-10 Tage oder 20-30 Tage oder genau 25 Tage
+
+StayRestrictions
+StayRestriction Min="P1D" Max="P10D" Mode="Flight"
+StayRestriction Min="P20D" Max="P30D" Mode="Flight"
+StayRestriction Min="P25D" Max="P25D" Mode="Flight"
+/StayRestrictions
+
+Wenn ein StayRestrictions-Element mehrere StayRestriction-Elemente hat, dann sind die StayRestriction-Elemente mit einem logischen ODER verknüpft.</xs:documentation>
+															<xs:documentation xml:lang="en">The StayRestriction subelement is used to control the restrictions with respect to the travel durations.
+
+A stay duration (7 days), a stay range (1-10 days) or multiple stay durations/ranges can be set for exporting from the tour operator's accounting system.
+A separate StayRestriction must be set for each different duration or range.
+
+Example: Stay duration 1-10 days, 20-30 days or exactly 25 days
+
+StayRestrictions
+StayRestriction Min="P1D" Max="P10D" Mode="Flight"
+StayRestriction Min="P20D" Max="P30D" Mode="Flight"
+StayRestriction Min="P25D" Max="P25D" Mode="Flight"
+/StayRestrictions
+
+If a StayRestrictions element has more than one StayRestriction element, these StayRestriction elements are joined with a logical OR.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Min" type="xs:duration" use="optional">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Min-Attribut steuert die Mindestaufenthaltstage. Es korrespondiert mit dem Feld "Reisedauer" der Veranstalter-Kalkulation / Regeln.
+Beispiel: Aufenthaltsdauer 1-10 Tage oder 20-30 Tage oder genau 25 Tage
+
+StayRestrictions
+StayRestriction Min="P1D" Max="P10D" Mode="Flight"
+StayRestriction Min="P20D" Max="P30D" Mode="Flight"
+StayRestriction Min="P25D" Max="P25D" Mode="Flight"
+/StayRestrictions
+
+Angabe einer Mindestaufenthaltsdauer in Tagen, Wochen oder Monaten.
+Beispiel
+Min=P3D: Es gilt eine Mindestaufenthaltsdauer von 3 Tagen.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Min attribute controls the minimum stay duration in days. It corresponds to the "Travel duration" field in the tour operator's calculation and rules.
+
+Example: Stay duration 1-10 days, 20-30 days or exactly 25 days
+
+StayRestrictions
+StayRestriction Min="P1D" Max="P10D" Mode="Flight"
+StayRestriction Min="P20D" Max="P30D" Mode="Flight"
+StayRestriction Min="P25D" Max="P25D" Mode="Flight"
+/StayRestrictions
+
+Indicates a minimum stay duration in days, weeks or months.
+Example
+Min=P3D: The minimum stay duration is 3 days.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Max" type="xs:duration" use="optional">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">
+Das Max-Attribut steuert die maximale Aufenthaltsdauer. Es korrespondiert mit dem Feld "Reisedauer" der Veranstalter-Kalkulation / Regeln.
+Beispiel: Aufenthaltsdauer 1-10 Tage oder 20-30 Tage oder genau 25 Tage
+
+StayRestrictions
+StayRestriction Min="P1D" Max="P10D" Mode="Flight"
+StayRestriction Min="P20D" Max="P30D" Mode="Flight"
+StayRestriction Min="P25D" Max="P25D" Mode="Flight"
+/StayRestrictions
+
+Angabe einer  Maximalaufenthaltsdauer in Tagen, Wochen oder Monaten.
+Beispiel
+Max=P21D: Es gilt eine Maximalaufenthaltsdauer von 21 Tagen.</xs:documentation>
+																	<xs:documentation xml:lang="en">The Max attribute controls the maximum stay duration. It corresponds to the "Travel duration" field in the tour operator's calculation and rules.
+
+Example: Stay duration 1-10 days, 20-30 days or exactly 25 days
+
+StayRestrictions
+StayRestriction Min="P1D" Max="P10D" Mode="Flight"
+StayRestriction Min="P20D" Max="P30D" Mode="Flight"
+StayRestriction Min="P25D" Max="P25D" Mode="Flight"
+/StayRestrictions
+
+Indicates a maximum stay duration in days, weeks or months.
+Example
+Max=P21D: The maximum stay duration is 21 days.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Mode" type="StayModeEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">
+
+																		Das Attribute "Mode" beschreibt die Reisedauereinschränkung auf die Hotelaufenthaltsdauer oder die Flugaufenthaltsdauer oder andere Transportaufenhtaltsdauer (z.B. Zug).
+																		Mögliche Werte:
+																		* Hotel
+																		* Flight
+																		* Transport (allgemeine Reise)
+																	</xs:documentation>
+																	<xs:documentation xml:lang="en">
+																		The Mode attribute describes the restriction of the travel duration pertaining to the hotel stay duration or the flight stay duration or other transport duration (e.g. train).
+																		Possible values:
+																		* Hotel
+																		* Flight
+																		* Transport (more abstract than flight)
+																	</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="HotelRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">
+Das Element HotelRestrictions definiert eine Einschränkung bezogen auf bestimmte Hotelcodes, Hotelkategorien und Hotelpreise.
+Dieses Element korrespondiert mit den Feldern "Hotelcodes" und Kategorie aus der Veranstalter-Kalkulation / Regeln.
+
+Wenn im Calculation-Element ApplyTo den Wert "FlightPrice" hat, dann darf die dazugehörende Regel keine Hotel-Restrictions haben.
+												</xs:documentation>
+												<xs:documentation xml:lang="en">
+The HotelRestrictions element defines a restriction with respect to specific hotel codes, categories and prices.
+This element corresponds to the "Hotel codes" and "Category" fields in the tour operator's calculation and rules.
+
+When in the Calculation element ApplyTo has the value "FlightPrice", then the rule that belongs to this calculation mustn't have any hotel restriction.
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="HotelRestriction" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">
+Das HotelRestrictions-Element definiert eine Einschränkung bezogen auf bestimmte Hotelcodes, Hotelkategorien und Hotelpreise.
+Dieses Element korrespondiert mit den Feldern "Hotelcodes" und Kategorie aus der Veranstalter-Kalkulation / Regeln.
+
+Auf dieser Ebene können die Attribute "MinPrice" und "MaxPrice" genutzt werden,
+um die im Veranstalter-Kalkulationssystem definierten von/bis Preise des Hotelanteils im EK zu definieren.</xs:documentation>
+															<xs:documentation xml:lang="en">
+The HotelRestrictions element defines a restriction with respect to specific hotel codes, categories and prices.
+This element corresponds to the "Hotel codes" and "Category" fields in the tour operator's calculation and rules.
+
+At this level, the MinPrice and MaxPrice attributes can be used
+to set the minimum/maximum purchase prices of the hotel portion that are defined in the tour operator's accounting system.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Locations" minOccurs="0" maxOccurs="1">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="Location" type="LocationType" minOccurs="1" maxOccurs="unbounded">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de"><![CDATA[Das Element Location dient dazu, die Regionszuordnung des Hotels bzw. des Produktes zu definieren.
+Mittels dieser Informationen können Vertriebssysteme dynamische Regionszuordnungen vornehmen. Beispielsweise ist so eine Suche nach allen Produkten an der "Costa del Sol" etc. möglich.
+
+Wenn ein Locations-Element mehrere Location-Elemente hat, sind die Location-Elemente mit einem logischen ODER verknüpft.
+
+Beispiel:
+
+<HotelRestriction>
+   <Locations>
+      <Location Code="A" Type="Country" />
+      <Location Code="B" Type="Country" />
+   </Locations>
+</HotelRestriction>
+
+In diesem Beispiel gilt das HotelRestriction-Element nur für Produkte, die im Land A oder im Land B sind.]]></xs:documentation>
+																					<xs:documentation xml:lang="en"><![CDATA[
+The Location element is used to define the geographical allocation of the hotel or product.
+Using this information, sales systems will be able to dynamically assign regions. For example, all products at the "Costa del Sol" could be searched for.
+
+If a Locations element has more than one Location element, these Location elements are joined with a logical OR.
+
+
+Example:
+
+<HotelRestriction>
+   <Locations>
+      <Location Code="A" Type="Country" />
+      <Location Code="B" Type="Country" />
+   </Locations>
+</HotelRestriction>
+
+This example defines the HotelRestriction element for products that are located in country A or in country B.]]></xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="Categories" minOccurs="0" maxOccurs="1">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">Das Element "Categories" korrespondiert mit den Feldern "Hotelkategorie" der Veranstalter-Kalkulation.
+Hier wird die Regel auf bestimmte Hotelkategorien restriktiert: Die Regel darf nur angewendet werden,
+sofern die Sternekategorie des Hotels der hier transportierten Kategorie entspricht.</xs:documentation>
+																		<xs:documentation xml:lang="en">The Categories element corresponds to the "Hotel category" fields in the tour operator's calculation.
+Here, the rule is restricted to specific hotel categories: The rule may only be applied,
+if the hotel's star category equals the given category.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="Category" minOccurs="1" maxOccurs="unbounded">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">
+Das Element "Categories" korrespondiert mit den Feldern "Hotelkategorie" der Veranstalter-Kalkulation.
+Hier wird die Regel auf bestimmte Hotelkategorien restriktiert: Die Regel darf nur angewendet werden, sofern die Sternekategorie des Hotels der hier transportierten Kategorie entspricht.
+
+Es können sowohl genaue Kategorien angegeben werden (Beispiel 3 Sterne) als auch eine Kategoriespanne (von 1 - 3 Sternen).
+Je exakter Kategorie oder Range wird eine "Category" geschrieben. Daher kann das Element "Category" mehrfach auftreten.
+
+Beispiel: Regel ist gültig für Hotels mit 5 Sternen und für Hotels von 2 - 3 Sternen
+
+Categories
+Category  Min="5" Max="5"
+Category Min="2" Max="3"
+/Categories</xs:documentation>
+																					<xs:documentation xml:lang="en">The Categories element corresponds to the "Hotel category" fields in the tour operator's calculation.
+Here, the rule is restricted to specific hotel categories: The rule may only be applied, if the hotel's star category equals the given category.
+
+The category can be defined explicitly (e. g. 3 stars) or as a range (1 to 3 stars).
+The category or range should be set as precisely as possible to limit Category to a specific range. Hence, the Category element can occur more than once.
+
+Example: The rule applies to hotels with 5 stars as well as to hotels with 2-3 stars
+
+Categories
+Category  Min="5" Max="5"
+Category Min="2" Max="3"
+/Categories</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:attribute name="Min" type="xs:decimal">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="de">Attribut "Min" korrespondiert mit den Feldern "Hotelkategorie" der Veranstalter-Kalkulation.
+Es können sowohl genaue Kategorien angegeben werden (Beispiel 3 Sterne) als auch eine Kategoriespanne (von 1 - 3 Sternen).
+Je exakter Kategorie oder Range wird eine "Category" geschrieben. Daher kann das Element "Category" mehrfach auftreten.
+
+Beispiel: Regel ist gültig für Hotels mit 5 Sternen und für Hotels von 2 - 3 Sternen
+
+Categories
+Category  Min="5" Max="5"
+Category Min="2" Max="3"
+/Categories</xs:documentation>
+																							<xs:documentation xml:lang="en">The Min attribute corresponds to the "Hotel category" fields in the tour operator's calculation.
+
+The category can be defined explicitly (e. g. 3 stars) or as a range (1 to 3 stars).
+The category or range should be set as precisely as possible to limit Category to a specific range. Hence, the Category element can occur more than once.
+
+Example: The rule applies to hotels with 5 stars as well as to hotels with 2-3 stars
+
+Categories
+Category  Min="5" Max="5"
+Category Min="2" Max="3"
+/Categories</xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																					<xs:attribute name="Max" type="xs:decimal">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="de">Attribut "Max" korrespondiert mit den Feldern "Hotelkategorie" der Veranstalter-Kalkulation.
+Es können sowohl genaue Kategorien angegeben werden (Beispiel 3 Sterne) als auch eine Kategoriespanne (von 1 - 3 Sternen).
+Je exakter Kategorie oder Range wird eine "Category" geschrieben. Daher kann das Element "Category" mehrfach auftreten.
+
+Beispiel: Regel ist gültig für Hotels mit 5 Sternen und für Hotels von 2 - 3 Sternen
+
+Categories
+Category  Min="5" Max="5"
+Category Min="2" Max="3"
+/Categories</xs:documentation>
+																							<xs:documentation xml:lang="en">The Max attribute corresponds to the "Hotel category" fields in the tour operator's calculation.
+
+The category can be defined explicitly (e. g. 3 stars) or as a range (1 to 3 stars).
+The category or range should be set as precisely as possible to limit Category to a specific range. Hence, the Category element can occur more than once.
+
+Example: The rule applies to hotels with 5 stars as well as to hotels with 2-3 stars
+
+Categories
+Category  Min="5" Max="5"
+Category Min="2" Max="3"
+/Categories</xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="Hotels" minOccurs="0" maxOccurs="1">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">Das Hotels-Element ist eine Liste von Hotel-Elementen.
+
+Wenn ein Hotels-Element mehrere Hotel-Elemente hat, sind die Hotel-Elemente mit einem logischen ODER verknüpft.</xs:documentation>
+																		<xs:documentation xml:lang="en">The Hotels element is a list of Hotel elements.
+
+If a Hotels element has more than one Hotel elements, these Hotel elements are joined with a logical OR.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="Hotel" minOccurs="1" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:attribute name="Code" type="xs:string" use="required" />
+																					<xs:attribute name="RoomCode" type="xs:string">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="de">Einschränkung auf einen bestimmten Zimmertyp, sofern ein Anschlusshotel mit einem bestimmten Zimmer gebucht werden muss.
+
+Hier ist der veranstalterinterne Zimmercode anzugeben, der in dem Datentyp SellingData/Rooms/Room/Code angegeben ist.
+																							</xs:documentation>
+																							<xs:documentation xml:lang="en">The restriction to a specific room type, if a connecting hotel must be booked in connection with a specific room.
+
+Indicates the tour operator’s internal room code, specified in the SellingData/Rooms/Room/Code data type.</xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="Sources" type="Sources" minOccurs="0" maxOccurs="1">
+																</xs:element>
+																<xs:element name="RateCodes" minOccurs="0" maxOccurs="1">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="RateCode" minOccurs="1" maxOccurs="unbounded">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="de">Ein RateCode dient zur Kalkulation einer Rate im Hotelvertrag.
+Dafür wird im Hotel-EDF auf Zimmerebene das Attribut RateCode (in der Peakwork Box sog. "SupplierRateCode") festgelegt.
+Die Anwendung erfolgt im PXB2Tool (beim PXB-Merge) und im Calc-Plugin.
+
+Mehrere CustomCode-Attribute sind ODER-verknüpft.</xs:documentation>
+																					<xs:documentation xml:lang="en">The RateCode is used for the calculation of a hotel contract rate.
+Therefore, in the Hotel EDF for the element Room, you need to determine the attribute RateCode (in the Peakwork Box: "SupplierRateCode").
+It is applied in the PXB2Tool (during the PXB merge) and in the Calc plugin.
+
+Multiple CustomCode attributes are disjunctive.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:attribute name="CustomCode" type="xs:string">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="de"><![CDATA[Die Kalkulation kann auf einen CustomCode eingeschränkt werden (in der Box sog. "CustomRateCode").
+
+Beispiel mit zwei verschiedenen Regeln:
+
+<!-- Diese Regel wird auf alle Angebote mit Hotel Code "ATI05" und einem der beiden Custom Codes angewendet -->
+
+      <Rule Name="TZOO KW29 CTA61B 622" SortIndex="1" CalculationName="TestAnd">
+         <HotelRestrictions Operator="AND">
+            <HotelRestriction>
+                  <RateCodes>
+                        <RateCode CustomCode="BAR"/>
+                        <RateCode CustomCode="OPAC"/>
+                  </RateCodes>
+            </HotelRestriction>
+            <HotelRestriction>
+                  <Hotels>
+                        <Hotel Code="ATI05"/>
+                  </Hotels>
+            </HotelRestriction>
+         </HotelRestrictions>
+      </Rule>
+
+<!-- Diese Regel wird auf alle Angebote mit Custom Code "KAP1" angewendet -->
+
+      <Rule Name="TZOO KW29 CTA61B 622" SortIndex="1" CalculationName="TestOr">
+         <HotelRestrictions Operator="OR">
+            <HotelRestriction>
+                  <RateCodes>
+                        <RateCode CustomCode="KAP1"/>
+                  </RateCodes>
+            </HotelRestriction>
+         </HotelRestrictions>
+      </Rule>
+   </Rules>]]></xs:documentation>
+																							<xs:documentation xml:lang="en"><![CDATA[The calculation can be restricted to a CustomCode (in the Box: "SupplierRateCode").
+
+Example of two different rules:
+
+<!-- This rule applies to all offers with the Hotel Code "ATI05" including one of the following CustomCodes-->
+
+<Rule Name="TZOO KW29 CTA61B 622" SortIndex="1" CalculationName="TestAnd">
+
+            <HotelRestrictions Operator="AND">
+                <HotelRestriction>
+                        <RateCodes>
+                            <RateCode CustomCode="BAR"/>
+                            <RateCode CustomCode="OPAC"/>
+                        </RateCodes>
+                </HotelRestriction>
+                <HotelRestriction>
+                        <Hotels>
+                            <Hotel Code="ATI05"/>
+                        </Hotels>
+                </HotelRestriction>
+            </HotelRestrictions>
+        </Rule>
+
+<!-- This rule applies to all offers including the CustomCode "KAP1" -->
+
+        <Rule Name="TZOO KW29 CTA61B 622" SortIndex="1" CalculationName="TestOr">
+            <HotelRestrictions Operator="OR">
+                <HotelRestriction>
+                        <RateCodes>
+                            <RateCode CustomCode="KAP1"/>
+                        </RateCodes>
+                </HotelRestriction>
+            </HotelRestrictions>
+        </Rule>
+    </Rules>]]></xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="MinPrice" type="xs:decimal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Die Attribute "MinPrice" und "MaxPrice" korrespondieren mit den Feldern "Hotelpreis von" und Hotelpreis bis" aus der Veranstalter-Kalkulation.
+Hier ist der Hotelpreis bzw. Hotelanlteil der Buchung gemeint.
+Diese Felder restriktieren eine Regel wie folgt: Die Regel darf nur angewendet werden,
+sofern der ermittelte Hotelanteil im Einkauf in dieser Preisspanne liegt.</xs:documentation>
+																	<xs:documentation xml:lang="en">
+																		The MinPrice and MaxPrice attributes correspond to the "Min. hotel price" and "Max. hotel price" fields from the tour operator's calculation.
+																		This refers to the hotel price or hotel portion of the booking. These fields restrict a rule as follows: The rule may only be applied, if the resulting hotel portion falls into the purchase price range.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="MaxPrice" type="xs:decimal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Die Attribute "MinPrice" und "MaxPrice" korrespondieren mit den Feldern "Hotelpreis von" und Hotelpreis bis" aus der Veranstalter-Kalkulation.
+Hier ist der Hotelpreis bzw. Hotelanlteil der Buchung gemeint. Diese Felder restriktieren eine Regel wie folgt: Die Regel darf nur angewendet werden,
+sofern der ermittelte Hotelanteil im Einkauf in dieser Preisspanne liegt.</xs:documentation>
+																	<xs:documentation xml:lang="en">The MinPrice and MaxPrice attributes correspond to the "Min. hotel price" and "Max. hotel price" fields from the tour operator's calculation.
+This refers to the hotel price or hotel portion of the booking.
+These fields restrict a rule as follows: The rule may only be applied, if the resulting hotel portion falls into the purchase price range.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="GuestRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das Element GuestRestrictions definiert eine Einschränkung bezogen auf Personengruppen und damit die Anzahl von Erwachsenen, Kindern und Infants.
+Eine Restriktion in einer Personengruppe bezieht sich stets auf die Buchung. Beispiel: Die Regel findet nur Anwendung, wenn in der Buchung 2 Erwachsene und 2 Kinder sind.
+Dieses Element korrespondiert mit Feldern wie "Anz. Erwachsene", "Anz. Kinder" und "Anz. Babies" aus der Veranstalter-Kalkulation / Regeln.
+
+Sofern in dem Veranstaltersystem mehrere Personengruppen in einer Regel restriktiert werden, ist für jede Personengruppe eine GuestRestriction zu schreiben.</xs:documentation>
+												<xs:documentation xml:lang="en">The GuestRestrictions element defines a restriction with respect to guest groups, i. e. the number of adults, children and infants.
+A restriction on a guest group always refers to the booking. Example: The rule will only be applied, if the booking comprises 2 adults and 2 children.
+This element corresponds to the "No. of adults", "No. of children" and "No. of infants" fields in the tour operator's calculation and rules.
+
+If multiple guest groups in the tour operator system are restricted by a rule, a GuestRestriction must be set for each group.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="GuestRestriction" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das Element GuestRestrictions definiert eine Einschränkung bezogen auf Personengruppen und damit die Anzahl von Erwachsenen, Kindern und Infants.
+Eine Restriktion in einer Personengruppe bezieht sich stets auf die Buchung. Beispiel: Die Regel findet nur Anwendung, wenn in der Buchung 2 Erwachsene und 2 Kinder sind.
+Dieses Element korrespondiert mit dem Feldern "Anz. Erwachsene", "Anz. Kinder" und "Anz. Babies" aus der Veranstalter-Kalkulation / Regeln.
+
+Sofern in dem Veranstaltersystem mehrere Personengruppen in einer Regel restriktiert werden, ist für jede Personengruppe eine GuestRestriction zu schreiben.
+
+Beispiel: Die Regel ist nur gültig, wenn in der Buchung 2 Erwachsene, 1 Kind und 1 Infant sind
+
+GuestRestrictions
+GuestRestriction MinPerson="2" MaxPerson="2" PersonType="A"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="C"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="I"
+/GuestRestrictions
+</xs:documentation>
+															<xs:documentation xml:lang="en">The GuestRestrictions element defines a restriction with respect to guest groups, i. e. the number of adults, children and infants.
+A restriction on a guest group always refers to the booking. Example: The rule will only be applied, if the booking comprises 2 adults and 2 children.
+This element corresponds to the "No. of adults", "No. of children" and "No. of infants" fields in the tour operator's calculation and rules.
+
+If multiple guest groups in the tour operator system are restricted by a rule, a GuestRestriction must be set for each group.
+
+Example: The rule is only valid, if the booking comprises 2 adults, 1 child and 1 infant.
+
+GuestRestrictions
+GuestRestriction MinPerson="2" MaxPerson="2" PersonType="A"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="C"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="I"
+/GuestRestrictions</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="MinPerson" type="xs:unsignedShort">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Element GuestRestrictions definiert eine Einschränkung bezogen auf Personengruppen und damit die Anzahl von Erwachsenen, Kindern und Infants.
+Eine Restriktion in einer Personengruppe bezieht sich stets auf die Buchung. Beispiel: Die Regel findet nur Anwendung, wenn in der Buchung 2 Erwachsene und 2 Kinder sind.
+Das Attribut "MinPerson" korrespondiert mit dem Feldern "Anz. Erwachsene von", "Anz. Kinder von" und "Anz. Babies von" aus der Veranstalter-Kalkulation / Regeln.
+
+Sofern in dem Veranstaltersystem mehrere Personengruppen in einer Regel restriktiert werden, ist für jede Personengruppe eine GuestRestriction zu schreiben.
+
+Beispiel: Die Regel ist nur gültig, wenn in der Buchung 2 Erwachsene, 1 Kind und 1 Infant sind
+
+GuestRestrictions
+GuestRestriction MinPerson="2" MaxPerson="2" PersonType="A"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="C"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="I"
+/GuestRestrictions</xs:documentation>
+																	<xs:documentation xml:lang="en">The GuestRestrictions element defines a restriction with respect to guest groups, i. e. the number of adults, children and infants.
+A restriction on a guest group always refers to the booking. Example: The rule will only be applied, if the booking comprises 2 adults and 2 children.
+The MinPerson attribute corresponds to the "No. of adults: From", "No. of children: From" and "No. of infants: From" fields in the tour operator's calculation and rules.
+
+If multiple guest groups in the tour operator system are restricted by a rule, a GuestRestriction must be set for each group.
+
+Example: The rule is only valid, if the booking comprises 2 adults, 1 child and 1 infant.
+
+GuestRestrictions
+GuestRestriction MinPerson="2" MaxPerson="2" PersonType="A"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="C"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="I"
+/GuestRestrictions</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="MaxPerson" type="xs:unsignedShort">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Element GuestRestrictions definiert eine Einschränkung bezogen auf Personengruppen und damit die Anzahl von Erwachsenen, Kindern und Infants.
+Eine Restriktion in einer Personengruppe bezieht sich stets auf die Buchung. Beispiel: Die Regel findet nur Anwendung, wenn in der Buchung 2 Erwachsene und 2 Kinder sind.
+Das Attribut "MaxPerson" korrespondiert mit dem Feldern "Anz. Erwachsene bis", "Anz. Kinder von" und "Anz. Babies bis" aus der Veranstalter-Kalkulation / Regeln.
+
+
+Sofern in dem Veranstaltersystem mehrere Personengruppen in einer Regel restriktiert werden, ist für jede Personengruppe eine GuestRestriction zu schreiben.
+
+Beispiel: Die Regel ist nur gültig, wenn in der Buchung 2 Erwachsene, 1 Kind und 1 Infant sind
+
+GuestRestrictions
+GuestRestriction MinPerson="2" MaxPerson="2" PersonType="A"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="C"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="I"
+/GuestRestrictions</xs:documentation>
+																	<xs:documentation xml:lang="en">The GuestRestrictions element defines a restriction with respect to guest groups, i. e. the number of adults, children and infants.
+A restriction on a guest group always refers to the booking. Example: The rule will only be applied, if the booking comprises 2 adults and 2 children.
+The MaxPerson attribute corresponds to the "No. of adults: To", "No. of children: To" and "No. of infants: To" fields in the tour operator's calculation and rules.
+
+If multiple guest groups in the tour operator system are restricted by a rule, a GuestRestriction must be set for each group.
+
+Example: The rule is only valid, if the booking comprises 2 adults, 1 child and 1 infant.
+
+GuestRestrictions
+GuestRestriction MinPerson="2" MaxPerson="2" PersonType="A"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="C"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="I"
+/GuestRestrictions</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="PersonType" type="PersonTypeEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Element GuestRestrictions definiert eine Einschränkung bezogen auf Personengruppen und damit die Anzahl von Erwachsenen und Kindern.
+Eine Restriktion in einer Personengruppe bezieht sich stets auf die Buchung. Beispiel: Die Regel findet nur Anwendung, wenn in der Buchung 2 Erwachsene und 2 Kinder sind.
+
+Mögliche Werte:
+* A: adult (Erwachsener)
+* C: child (Kind)
+
+Beispiel: Die Regel ist nur gültig, wenn in der Buchung 2 Erwachsene und 1 Kind sind.
+
+GuestRestrictions
+GuestRestriction MinPerson="2" MaxPerson="2" PersonType="A"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="C"
+/GuestRestrictions
+</xs:documentation>
+																	<xs:documentation xml:lang="en">The GuestRestrictions element defines a restriction with respect to guest groups, i. e. the number of adults, children and infants.
+A restriction on a guest group always refers to the booking. Example: The rule will only be applied, if the booking comprises 2 adults and 2 children.
+
+Possible values:
+* A: adult
+* C: child
+
+Example: The rule is only valid, if the booking comprises 2 adults and 1 child.
+
+GuestRestrictions
+GuestRestriction MinPerson="2" MaxPerson="2" PersonType="A"
+GuestRestriction MinPerson="1" MaxPerson="1" PersonType="C"
+/GuestRestrictions</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="TransportRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="TransportRestriction" type="TransportRestriction" minOccurs="1" maxOccurs="unbounded" />
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="FlightRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das Element FlightRestrictions definiert eine Einschränkung bezogen auf bestimmte Flugquellen, wie z.B. "Published", "Pooling", als auch den Fluganteil (Flugeinkaufspreis) der Buchung.
+Dieses Element bezieht sich auf die Quelle und den Flugpreis aus der Veranstalter-Kalkulation / Regeln.
+
+Pro unterschiedlicher Quelle und Preisspanne, wird eine FlightRestriction geschrieben.</xs:documentation>
+												<xs:documentation xml:lang="en">The FlightRestrictions element defines a restriction with respect to both, specific flight sources, e. g. Published or Pooling, as well as to the flight percentage (flight-related purchase price) of the booking.
+This element refers to the source and the flight price from the tour operator's calculation and rules.
+
+One FlightRestriction is written for each different source and price range.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="FlightRestriction" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Dieses Element bezieht sich auf die Quelle und den Flugpreis aus der Veranstalter-Kalkulation / Regeln.
+Pro unterschiedlicher Quelle und Preisspanne, wird eine FlightRestriction geschrieben.
+
+Beispiel: Die Regel ist nur gültig für Pooling Flüge
+
+FlightRestrictions
+FlightRestriction Source="Pooling"
+/FlightRestrictions
+
+
+Beispiel: Die Regel ist nur gültig für Pooling Flüge mit eienr Preisspanne des Fluganteils (Einkauf) zwischen 0 - 300,00 EUR
+FlightRestrictions
+FlightRestriction Source="Pooling"
+FlightRestriction MinPrice="0.00" MaxPrice="300.00"
+/FlightRestrictions</xs:documentation>
+															<xs:documentation xml:lang="en">The FlightRestrictions element defines a restriction with respect to both, specific flight sources, e. g. Published or Pooling, as well as to the flight percentage (flight-related purchase price) of the booking.
+This element refers to the source and the flight price from the tour operator's calculation and rules.
+
+One FlightRestriction is written for each different source and price range.
+
+Example: The rule is only valid for pooling flights
+
+FlightRestrictions
+FlightRestriction Source="Pooling"
+/FlightRestrictions
+
+
+Example: The rule is only valid for pooling flights, where the flight percentage lies within a price range (purchase) from 0-300.00 EUR
+FlightRestrictions
+FlightRestriction Source="Pooling"
+FlightRestriction MinPrice="0.00" MaxPrice="300.00"
+/FlightRestrictions</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Sources" type="Sources" minOccurs="0" maxOccurs="1">
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="MinPrice" type="xs:decimal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">
+Das Attribut "MinPrice" korrespondiert mit dem Feld "Flugpreis von" aus der Veranstalter-Kalkulation / Regeln.
+Hier wird der Ab Preis des Fluganteils (Einkauf) transportiert, für den die Regel gilt.
+
+Beispiel: Die Regel ist nur gültig für Published-Flüge mit einer Preisspanne des Fluganteils (Einkauf) zwischen 0 - 300,00 EUR
+FlightRestrictions
+FlightRestriction Source="Published"
+FlightRestriction MinPrice="0.00" MaxPrice="300.00"
+/FlightRestrictions
+																	</xs:documentation>
+																	<xs:documentation xml:lang="en">The MinPrice attribute corresponds to the "Flight price: From" field in the tour operator's calculation and rules.
+The From price of the flight percentage (purchase) the rule applies to is propagated here.
+
+Example: The rule is only valid for published flights, where the flight percentage lies within a price range (purchase) from 0-300.00 EUR
+FlightRestrictions
+FlightRestriction Source="Published"
+FlightRestriction MinPrice="0.00" MaxPrice="300.00"
+/FlightRestrictions</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="MaxPrice" type="xs:decimal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Attribut "MaxPrice" korrespondiert mit dem Feld "Flugpreis bis" aus der Veranstalter-Kalkulation / Regeln.
+Hier wird der Bis Preis des Fluganteils (Einkauf) transportiert, für den die Regel gilt.
+
+Beispiel: Die Regel ist nur gültig für Pooling-Flüge mit einer Preisspanne des Fluganteils (Einkauf) zwischen 0 - 300,00 EUR
+FlightRestrictions
+FlightRestriction Source="Pooling"
+FlightRestriction MinPrice="0.00" MaxPrice="300.00"
+/FlightRestrictions
+</xs:documentation>
+<xs:documentation xml:lang="en">
+The MaxPrice attribute corresponds to the "Flight price: To" field in the tour operator's calculation and rules.
+The To price of the flight percentage (purchase) the rule applies to is propagated here.
+
+Example: The rule is only valid for pooling flights, where the flight percentage lies within a price range (purchase) from 0-300.00 EUR
+FlightRestrictions
+FlightRestriction Source="Pooling"
+FlightRestriction MinPrice="0.00" MaxPrice="300.00"
+/FlightRestrictions</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Airline" type="xs:string">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Mit dem Attribut Airline kann man eine Regel erstellen, die auf eine spezifische Airline einschränkt.
+z.B. Airline=AB =&gt; diese Regel wird nur bei einem Flug mit der Airline AB angewandt. Diese Rule muss im Outbound oder im Inbound zutreffen.
+</xs:documentation>
+																	<xs:documentation xml:lang="en"></xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="CabinClass" type="FlightClassEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Mit dem Attribut CabinClass kann man eine Regel erstellen, die auf eine spezifische Kabinenklasse einschränkt.
+z.B. CabinClass=Y =&gt; diese Regel wird nur bei einem Flug mit der Klasse Y angewandt. Diese Rule muss im Outbound oder im Inbound zutreffen.
+																	</xs:documentation>
+																	<xs:documentation xml:lang="en"></xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="BookingClass" type="xs:string">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Die Anwendung erfolgt im PXB2Tool (beim PXB-Merge) und im Calc-Plugin.
+Während des Vorprozesses mit einem Converter/Constructor wird das Attribut nicht unterstützt.
+                                                                      
+                                                                      Mit dem Attribut BookingClass kann man eine Regel erstellen, die auf eine spezifische Buchungsklasse einschränkt.
+Z.B. BookingClass=X =&gt; diese Regel wird nur bei einem Flug mit der Buchungsklasse X angewandt. Diese Regel muss im Outbound zutreffen.
+																	</xs:documentation>
+																	<xs:documentation xml:lang="en">It is applied in the PXB2Tool (during the PXB merge) and in the Calc plugin.
+A preprocess with a converter/constructor does not support this attribute.
+                                                                      
+                                                                      With the attribute Bookingclass it is possible to define a rule which restricts the calculation to a booking class. The outbound booking class is considered.
+E.G. BookingClass=X =&gt; this rule is only available for a flight with booking class X.
+																	</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="AirType" type="AirTypeEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Definition ob die Rule auf einen Charter- oder Linienflug angewendet werden soll.
+Mögliche Typen:
+* Charter
+* Scheduled</xs:documentation>
+																	<xs:documentation xml:lang="en">Specifies whether the rule is available for a charter flight or a scheduled flight.
+Possible types:
+* Charter
+* Scheduled</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="PriceRestrictions" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das Element PriceRestrictions definiert eine Einschränkung bezogen auf Netto-preise.
+												</xs:documentation>
+												<xs:documentation xml:lang="en">The element PriceRestrictions defines a restriction of the net price.
+
+Usage of PriceRestriction is discouraged. You should use &lt;Range&gt; elements inside the &lt;Calculation&gt; instead.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="PriceRestriction" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">The element PriceRestrictions defines a restriction of the uncalculated price.
+
+Usage of PriceRestriction is discouraged. You should use &lt;Range&gt; elements inside the &lt;Calculation&gt; instead.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="MinPrice" type="xs:decimal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Die Attribute "MinPrice" und "MaxPrice" dienen der Festlegung von Preisgrenzen,
+für die die Regel angewendet werden soll.</xs:documentation>
+																	<xs:documentation xml:lang="en">The attributes "MinPrice" and "MaxPrice" are used to the define price ranges, for
+which this rule is valid.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="MaxPrice" type="xs:decimal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Die Attribute "MinPrice" und "MaxPrice" dienen der Festlegung von Preisgrenzen,
+für die die Regel angewendet werden soll.</xs:documentation>
+																	<xs:documentation xml:lang="en">The attributes "MinPrice" and "MaxPrice" are used to the define price ranges, for
+which this rule is valid.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="ApplyTo" type="ApplianceTypeEnum" default="TotalPrice">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das ApplyTo-Attribut definiert auf welchen Nettopreis das PriceRestriction-Element angewandt wird.
+
+Mögliche Werte:
+* TotalPrice
+* HotelPrice
+* FlightPrice
+* FlightBasePrice
+* TransportPrice
+
+
+Derzeit wird im Player nur der Wert TotalPrice in den PriceRestrictions unterstützt.
+Wenn kein ApplyTo-Attribut gesetzt wird, so bezieht sich die PriceRestriction immer auf den Gesamtpreis.
+Der Wert FlightBasePrice bezieht sich auf den Flugbasispreis. Dieser muss im Flug-EDF mit dem Type=Base gekennzeichnet sein.
+</xs:documentation>
+																	<xs:documentation xml:lang="en">The attribute ApplyTo defines on which net price the PriceRestriction shall be applied:
+
+
+																		Possible values:
+																		* TotalPrice
+																		* HotelPrice
+																		* FlightPrice
+																		* FlightBasePrice
+																		* TransportPrice (more abstract than FlightPrice)
+
+
+TotalPrice is at the moment the only value, which is processed by the Player in this section.
+If no ApplyTo attribute is set, the PriceRestriction is always applied to the total price.
+The value FlightBasePrice applies to the flight base price. A flight base price is defined by setting Type=Base in the flight EDF.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="ApplyToMode" type="PriceApplyToModeEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Mit dem Wert MaxAgePerson wird nur auf die älteste Person kalkuliert.
+Mögliche Werte:
+* MaxAgePerson</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Operator" type="OperatorEnum" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="de">
+Mögliche Werte:
+
+* AND
+* OR
+
+Innerhalb einer ProductRestricition sind mehrere ProductRestriction ODER-verknüpft.
+
+Um die ODER-Verknüpfung aufzuheben  und in eine UND-Verknüpfung umzuwandeln, kann der Operator=AND genutzt werden.
+
+Bei der Verwendung des Operator=AND sind alle untergeordneten ProductRestriction UND-verknüpft.
+
+Um eine Kombination von UND und ODER-Verknüpfungen zu erzielen, kann innerhalb der Restriction ein Attribut Required genutzt werden.
+Als Default-Wert wird immer OR angenommen.</xs:documentation>
+														<xs:documentation xml:lang="en">
+Possible values:
+
+* AND
+* OR
+
+Within one ProductRestricition, multiple ProductRestrictions are linked using OR.
+
+In order to cancel the OR operator and transform it into an AND operator, Operator=AND can be used.
+When using the Operator=AND, all subordinate ProductRestrictions are linked using AND.
+To combine AND and OR operators, the Required attribute can be used within the restriction.
+OR is always the assumed default.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="HotelCurrencyRestriction" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">
+													<![CDATA[Das HotelCurrencyRestriction-Element ist eine Liste von Währungselementen des Hotels. Diese dienen zur Formulierung von Kalkulationsregeln, die in Abhängigkeit der Quellwährung des Hotels gezogen werden sollen. Eine Currency ist die Quellwährung, die der Lieferant im Cache geliefert hat, oder innerhalb der Live Suche die Währung, die in Angeboten der Live-Lieferanten-API verwendet wird.
+Die Anwendung erfolgt im PXB2Tool (beim PXB-Merge) und im Calc-Plugin sowie in der Live Suche.
+
+Beispiel mit zwei verschiedenen Währungen:
+
+<!-- Diese Regel wird auf alle Angebote mit Hotel Source "HOTEL_SUPPLIER" und einem der beiden Quellwährungen "EUR" oder "CHF" angewendet -->
+
+    <Rule Name="SourceCurrency1" SortIndex="1" CalculationName="SourceCurrency_Name1" CombiGroupId="1">
+        <HotelRestrictions>
+            <HotelRestriction>
+                <Sources>
+                    <Source ID="HOTEL_SUPPLIER"/>
+                </Sources>
+            </HotelRestriction>
+        </HotelRestrictions>
+        <HotelCurrencyRestriction>
+            <Currency Code="EUR" />
+            <Currency Code="USD" />
+        </HotelCurrencyRestriction>
+   </Rule>]]>
+												</xs:documentation>
+												<xs:documentation xml:lang="en">
+													<![CDATA[The HotelCurrencyRestriction element is a list of currency elements of the hotel. These are used to formulate calculation rules that are to be drawn depending on the hotel's source currency. A currency is the source currency that the supplier has provided in cache or within Live search the currency used in offers of the live supplier API.
+It is used in the PXB2Tool (during the PXB merge) and in the Calc plugin as well as in live search.
+
+Example with two different currencies:
+
+<!-- This rule applies to all offers with the hotel source "HOTEL_SUPPLIER" including one of the following source currencies "EUR" or "CHF" -->
+
+    <Rule Name="SourceCurrency1" SortIndex="1" CalculationName="SourceCurrency_Name1" CombiGroupId="1">
+        <HotelRestrictions>
+            <HotelRestriction>
+                <Sources>
+                    <Source ID="HOTEL_SUPPLIER"/>
+                </Sources>
+            </HotelRestriction>
+        </HotelRestrictions>
+        <HotelCurrencyRestriction>
+            <Currency Code="EUR" />
+            <Currency Code="USD" />
+        </HotelCurrencyRestriction>
+   </Rule>]]>
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Currency" type="Currency" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+                              <xs:documentation xml:lang="de">Das Currency-Element definiert eine Quellwährungsbedingung, d.h sie dient zur Kalkulation in Abhängigkeit der Quellwährung des Hotels.
+								  Eine Currency ist die Quellwährung, die der Lieferant im Cache geliefert hat, oder innerhalb der Live Suche die Währung, die in Angeboten der Live-Lieferanten-API verwendet wird.
+Die Anwendung erfolgt im PXB2Tool (beim PXB-Merge) und im Calc-Plugin sowie in der Live Suche.
+
+Mehrere Currency-Elemente sind ODER-verknüpft</xs:documentation>
+                              <xs:documentation xml:lang="en">The Currency element defines a source currency condition, that means it is used for calculation depending on the source currency of the hotel.
+								  A currency is the source currency that the supplier has provided in cache or within live search the currency used in offers of the live supplier API.
+It is used in the PXB2Tool (during the PXB merge) and in the Calc plugin as well as in live search.
+
+Multiple currency elements are OR-linked</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Appliances" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Über die Appliances wird gesteuert, ob personenbasiert kalkuliert werden soll. Wenn eine Appliance mit Type="Person" geschrieben wird, dann werden alle
+mitreisenden Personen einzeln kalkuliert. Mithilfe der Attribute MinAge und MaxAge ist so zum Beispiel möglich für Kinder anders zu kalkulieren als
+für Erwachsene.
+
+Zu beachten ist, dass bei Nutzung der Appliance für die personenbasierte Kalkulation die EK-Grenzen in Rules und Calculations pro Person betrachtet werden.
+Entsprechend muss eine Appliance mit Type="Person" gesetzt werden, wenn die EK-Grenzen personenbasiert betrachtet werden sollen.
+
+Wird keine Appliance mit Type="Person" gesetzt, gelten Rule, Calculation und die jeweiligen EK-Grenzen für alle Mitreisenden.</xs:documentation>
+												<xs:documentation xml:lang="en">By using the Appliances you can steer, if the Player shall calculate each travelling person differently. Therefore you can calculate children an adults
+differently, if you write the Appliances and fill the attribute Type with the value "Person" and setting a MinAge and MaxAge.
+
+If the Appliances are used, the price ranges in the rules and calculations are considered per person. Therefore you can use this appliance, if you
+want the flight, hotel an total net prices to be considered for each person.
+
+This element should not be written, if you want to calculate all travellers with one single calculation.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Appliance" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Über die Appliances wird gesteuert, ob personenbasiert kalkuliert werden soll.
+Wenn eine Appliance mit Type="Person" geschrieben wird, dann werden alle mitreisenden Personen einzeln kalkuliert.
+Mithilfe der Attribute MinAge und MaxAge ist so zum Beispiel möglich für Kinder anders zu kalkulieren als
+für Erwachsene.
+
+Zu beachten ist, dass bei Nutzung der Appliance für die personenbasierte Kalkulation die EK-Grenzen in Rules und Calculations pro Person betrachtet werden.
+Entsprechend muss eine Appliance mit Type="Person" gesetzt werden, wenn die EK-Grenzen personenbasiert betrachtet werden sollen.
+
+Wird keine Appliance mit Type="Person" gesetzt, gelten Rule, Calculation und die jeweiligen EK-Grenzen für alle Mitreisenden.
+															</xs:documentation>
+															<xs:documentation xml:lang="en">By using the Appliances you can steer, if the Player shall calculate each travelling person differently. Therefore you can calculate children an adults
+differently, if you write the Appliances and fill the attribute Type with the value "Person" and setting a MinAge and MaxAge.
+
+If the Appliances are used, the price ranges in the rules and calculations are considered per person. Therefore you can use this appliance, if you
+want the flight, hotel an total net prices to be considered for each person.
+
+This element should not be written, if you want to calculate all travellers with one single calculation.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Type" type="ApplianceEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">
+Mögliche Werte:
+
+* Person
+
+Über die Appliances wird gesteuert, ob personenbasiert kalkuliert werden soll. Wenn eine Appliance mit Type="Person" geschrieben wird, dann werden alle
+mitreisenden Personen einzeln kalkuliert. Mithilfe der Attribute MinAge und MaxAge ist so zum Beispiel möglich für Kinder anders zu kalkulieren als
+für Erwachsene.
+
+Zu beachten ist, dass bei Nutzung der Appliance für die personenbasierte Kalkulation die EK-Grenzen in Rules und Calculations pro Person betrachtet werden.
+Entsprechend muss eine Appliance mit Type="Person" gesetzt werden, wenn die EK-Grenzen personenbasiert betrachtet werden sollen.
+
+Wird keine Appliance mit Type="Person" gesetzt, gelten Rule, Calculation und die jeweiligen EK-Grenzen für alle Mitreisenden.</xs:documentation>
+																	<xs:documentation xml:lang="en">
+Possible values:
+* Person
+
+By using the Appliances you can steer, if the Player shall calculate each travelling person differently. Therefore you can calculate children an adults
+differently, if you write the Appliances and fill the attribute Type with the value "Person" and setting a MinAge and MaxAge.
+
+If the Appliances are used, the price ranges in the rules and calculations are considered per person. Therefore you can use this appliance, if you
+want the flight, hotel an total net prices to be considered for each person.
+
+This element should not be written, if you want to calculate all travellers with one single calculation.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="MinAge">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Angabe eines Mindestalters.
+Beispiel
+
+MinAge=12:
+Gültigkeit erst ab einem Mindestalter von 12 Jahren.
+
+Die Altersangabe wird nur im Zusammenhang mit Type=Person beachtet.
+																	</xs:documentation>
+																	<xs:documentation xml:lang="en">Specifies a minimum age.
+Example
+
+MinAge=12:
+Only valid from a minimum age of 12 years.
+
+The specification of age is only observed in conjunction with Type=Person.</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:int">
+																		<xs:minInclusive value="0"/>
+																		<xs:maxInclusive value="255"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="MaxAge">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Angabe eines Maximalalters.
+Beispiel
+MaxAge=12:
+Gültigkeit bis zu einem Alter von 12 Jahren.</xs:documentation>
+																	<xs:documentation xml:lang="en">Specifies a maximum age.
+	Example
+	MaxAge=12:
+	Valid up to an age of 12 years.</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:int">
+																		<xs:minInclusive value="1"/>
+																		<xs:maxInclusive value="255"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="CompatibleRules" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">CompatibleRules ist ein übergeordnetes Element, welches alle CompatibleWith Elemente zusammenfasst.
+Mit CompatibleWith kann die Kompatibilität zwischen Rules ausgedrückt oder unterdrückt werden, durch Invertierung.
+Defaultmäßig sind nur Rules mit Ihrer eigenen CombiGroupId kombinierbar.
+</xs:documentation>
+												<xs:documentation xml:lang="en">CompatibleRules is a parent element, that encompasses all CompatibleWith elements.
+Using CompatibleWith the compatibility between rules can be expressed or suppressed through inversion.
+Only rules with the same CombiGroupId can be combined, by default.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="CompatibleWith" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Mit CompatibleWith kann die Kompatibilität zwischen Rules ausgedrückt oder unterdrückt werden, durch Invertierung.</xs:documentation>
+															<xs:documentation xml:lang="en">Using CompatibleWith the compatibility between rules can be expressed or suppressed through inversion.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="GroupId" type="xs:int">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Das Attribut GroupId gibt einen Verweis auf Rules mit entsprechender CombiGroupId.</xs:documentation>
+																	<xs:documentation xml:lang="en">The GroupId attribute refers to rules with the corresponding CombiGroupId.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Invert" type="xs:boolean" default="false">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Veraltet: Stattdessen Invert Attribut von CompatibleRules benutzen.
+Das Attribut Invert ist nur zu setzen, sofern Rules einer bestimmten CombiGroupId invertiert werden sollen. Alle Listeneinträge müssen auf denselben Wert gesetzt werden, da es ansonsten nicht wie erwartet funktioniert.
+Ist keine Invertierung gewünscht, muss das Attribut nicht geschrieben werden.
+Daher ist der Defaultwert false.</xs:documentation>
+																	<xs:documentation xml:lang="en">Deprecated: Use Invert attribute of CompatibleRules.
+The Invert attribute is only set, if rules of a specific CombiGroupId are to be inverted. All list entries must be set to the same value, otherwise it will not work as expected.
+If no inversion is desired, the attribute need not be written.
+Therefore, the default is false.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Invert" type="xs:boolean" default="false">
+													<xs:annotation>
+														<xs:documentation xml:lang="de">Das Attribut Invert ist nur zu setzen, sofern alle Rules invertiert werden sollen.
+Ist keine Invertierung gewünscht, muss das Attribut nicht geschrieben  werden.
+Daher ist der Defaultwert false.</xs:documentation>
+														<xs:documentation xml:lang="en">The Invert attribute is only set, if all rules are to be inverted.
+If no inversion is desired, the attribute need not be written.
+Therefore, the default is false.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="Name" type="xs:string">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">
+Name der Regel bzw. Restriction gem. dem Feld "Bezeichnung" des Veranstalter-Kalkulationssystems / Regeln.
+Der Name wird in der PlayerBridgeXML-Response (Offer/@CalculationName) angezeigt; diese Response wiederum wird für die Anzeige im LPAC Travelviewer (Taste Playerbridge) verwendet.
+											</xs:documentation>
+											<xs:documentation xml:lang="en">
+The name of the rule or restriction based on the "Identifier" field in the tour operator's accounting system and rules.
+The name is delivered in the PlayerBridgeXML response (Offer/@CalculationName); this response is used for displaying information in the LPAC Travelviewer (button Playerbridge).
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="SortIndex" type="xs:int">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Der SortIndex beschreibt die Priorität der Regel. Dabei hat der kleinste Wert die höchste Priorität.
+Für jedes Reiseprodukt, das kalkuliert wird, kann genau eine Regel zutreffen. Die Regel mit der höchsten Priorität, welche die Anwendungsbedingungen erfüllt, wird zu Grunde gelegt.
+Das Feld SortIndex wird mit dem Inhalt des Feldes "Index" aus dem Veranstalter-Kalkulationssystem befüllt.
+0 = höchste Prioriät
+999 = niedrigste Priorität</xs:documentation>
+											<xs:documentation xml:lang="en">SortIndex describes the priority of the rule. The lower the value, the higher the priority.
+For each travel product calculated, exactly one rule can apply. The rule with the highest priority satisfying the application conditions serves as the basis.
+The SortIndex field is populated with the contents of the "Index" field from the tour operator's accounting system.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="CalculationName" type="xs:string">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das Attribut "CalculationName" transportiert den Kalkulationsnamen, der in dem Veranstaltersystem unter "Regeldetails", Feld "Bezeichnung" hinterlegt ist.
+Der Kalkulationsname ist der Schlüssel zur Ermittlung der eigentlichen Kalkulation. Über den Kalkulationsnamen wird auf die Kalkulation verwiesen, die der Regel zu Grunde liegt.
+
+Der Verweis auf die für die Regel gültige Kalkulation wird über das Element "CalculationName" gesteuert.</xs:documentation>
+											<xs:documentation xml:lang="en">The CalculationName attribute specifies the calculation name indicated under "Rule Details" ("Identifier" field) in the tour operator system.
+The calculation name is the key to the actual calculation. The calculation name references the underlying calculation of the rule.
+
+The applicable rule for the calculation is referenced by the CalculationName element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="TaxName" type="xs:string">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">
+												References the &lt;Tax&gt; element this Rule element should be applied to.
+												The TaxName and CalculationName attributes are mutually exclusive.
+												If TaxName is used, the 'Mandatory' attribute must not be used.
+
+												All tax rules have an implicit compability to other non-tax rules.
+												Tax rules have no implicit compability to another.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="CombiGroupId" type="xs:int">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Wird für die Kombinierbarkeit gebraucht. Gibt an zu welcher Konbinierungsgruppe diese Regel gehört
+											</xs:documentation>
+											<xs:documentation xml:lang="en">It is crucial for the combinability. It shows to which combination-group the rule belongs. </xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="Mandatory" type="MandatoryEnum" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Mögliche Werte:
+* True
+* False, Disable
+* Include
+* Exclude
+
+Mandatory=True -&gt; Preis bzw. Extra wird mit eingerechnet
+Mandatory=False/Disabled -&gt; Extra wird verworfen und nicht mit eingerechnet
+Mandatory=Include -&gt; Extra wird mit eingerechnet, aber dieser Extra-Preis wird zusätzlich noch einzeln mit ausgegeben
+Mandatory=Exclude -&gt; Extra wird nicht mit eingerechnet, aber dieser Extra-Preis wird zusätzlich noch einzeln mit ausgegeben
+Der Defaultwert ist true</xs:documentation>
+											<xs:documentation xml:lang="en">The default value is True.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Calculations" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Das Calculations-Element ist eine Liste von Calculation-Elementen.</xs:documentation>
+						<xs:documentation xml:lang="en">The Calculations element is a list of Calculation elements.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Rounding" type="Rounding" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation xml:lang="de">Das Rounding-Element legt fest, wie Preise, auf die eine Kalkulation angewendet wird, gerundet werden.
+									</xs:documentation>
+									<xs:documentation xml:lang="en">The Rounding element specifies the rounding of the prices to which a calculation is applied.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+							<xs:element name="Tax" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="de">
+	Regeln bezogen auf Steuern werden benutzt, um den auf die Marge anzuwendenden Steueranteil zu berechnen.
+	Der Steueranteil wird aufaddiert, und getrennt in der Response ausgewiesen.
+	Das Tax-Element wird immer auf den TotalPrice angewandt.
+	Regeln bezogen auf Steuern haben untereinander keine implizite Kompabilität.
+	Regeln bezogen auf Steuern haben zu anderen Regeln allerdings eine implizite Kompabilität.
+									</xs:documentation>
+									<xs:documentation xml:lang="en">
+	Tax-rules are used to calculate the tax amount of the margin.
+	All tax rules have an implicit compability to other non-tax rules.
+	Tax rules have no implicit compability to another.
+
+	This amount is added to the TotalPrice, and will be shown in the response as an additional information.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Charge" minOccurs="1" maxOccurs="1">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Pricing" minOccurs="1" maxOccurs="1">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">
+																The Pricing element contains the values for calculating the tax amount.
+
+																There are 2 calculation methods:
+																* Absolute additional charges per booking (Amount)
+																* Percentage additional charges per booking (Percent)
+															</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="Amount" type="xs:double">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">An absolute tax-amount</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="Percent" type="xs:double">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">
+																		The Percent attribute contains the percentage charges that are applied to the total margin.
+
+																		Example:
+																		Total calculation-margin is 100€.
+																		A &lt;Tax&gt; rule with Percent="10" will show a total-tax-amount of 10€ in the response, and add 10€ to the total price.
+																		</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="Name" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">
+												The tax name of the restrictions (rules, TaxName attribute) references the underlying tax-calculation of the rule.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="Proportion" type="ProportionEnum" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">
+The value says on which proportion of the margin the tax amount has to be calculated. Using a Proportion only makes sense for percentage taxes.
+
+Possible values:
+* Flight: The percentual proportion of the margin matches the percentual proportion of the flight price to the total price.
+* Hotel: The percentual proportion of the margin matches the percentual proportion of the hotel price to the total price.
+
+The percentual proportion of the margin matches the percentual proportion of the flight price to the total price.
+
+At the moment this attribute is only applied for specific tour operators.
+It is not used by default, so the tax amount relates to the total margin amount.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="Mode" type="TaxModeEnum">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">
+												Possible values:
+												* AbsoluteRelative: The given percentage shall NOT affect the amount of this Tax.
+												* RelativeAbsolute: The given percentage shall affect the amount of this Tax.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attributeGroup ref="optional-autoappliance" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Calculation" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="de">Das Calculation-Element definiert eine Kalkulation.
+Über einen eindeutigen Kalkulationsnamen und/oder Kalkulationscode wird von der Regel (Restriction) auf die jeweilige Kalkulation verwiesen.
+
+Beispiel:
+Calculations
+Calculation Name="Weihnachten Beach" Code="WEBE"
+.....
+/Calculations
+Jedes Rule-Element muss auf ein Calculation-Element verweisen. Wenn das gleiche Rule-Element mehrere Verweise auf Calculation-Elemente hat,
+wird das zuletzt genannte übernommen.</xs:documentation>
+									<xs:documentation xml:lang="en">The Calculation element defines a calculation.
+The rule (restriction) references the respective calculation by a unique calculation name and/or calculation code.
+
+Example:
+Calculations
+Calculation Name="Weihnachten Beach" Code="WEBE"
+.....
+/Calculations
+Every Rule element must reference to a Calculation element.
+If a Rule element refers to more than one Calculation element, the last mentioned one overrules.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Charges" minOccurs="0" maxOccurs="1">
+											<xs:annotation>
+												<xs:documentation xml:lang="de">Das Element "Charges" enthält alle Zu- und Abschläge sowie Fixpreise, die bei der Kalkulation berechnet werden sollen.
+
+Das Element "Charges" kann genau einmal auftreten. Es ist ein Kontainer für den Transport von "Charge",
+bei dem unterschiedliche Preisspannen des Pauschal-Einkaufspreises gelten können.
+Bei Kalkulationen mit negativen Prozentangaben oder Beträgen muss man sicherstellen, dass die Anwendung aller Kalkulationen trotzdem zu einem positiven Kalkulationswert führt.
+Sonst kann die Player-Funktionalität nicht gewährleistet werden.
+Dennoch sind die Nebeneffekte bei Kalkulationen mit negativen Werten keine Fehler sondern das normale Player-Verhalten.
+												</xs:documentation>
+												<xs:documentation xml:lang="en">The Charges element comprises any extra charges, reductions and fixed prices to be included in the calculation.
+
+The Charges element can occur exactly once. It provides a container for the Charge element,
+which supports different price ranges for the package purchase price.
+In case of calculations with negative percentages or amounts, please make sure that the application of all calculations is still positive.
+Otherwise the Player functionality can not be guaranteed.
+Nevertheless, the side effects of calculations with negative results aren't bugs but the normal Player behaviour.
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Charge" minOccurs="1" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="de">Das Element "Charge" kann mehrfach auftreten.
+Je unterschiedlicher Kalkulationsstufe und deren Preisberechnung wird ein "Charge" Element geschrieben.
+Es korrespondiert zu den Feldern der "Kalkulationsstufen" aus dem Veranstalter-Kalkulationssystem. Je Stufe erhält eine Charge eine "Id". Die "Id" dient der besseren Übersicht. Die erste Stufe erhält die "Id" 1, die zweite Stufe, "Id" 2, etc.
+Es besteht die feste Regel, dass zunächst Fixe Zuschläge berechnet werden und dann von dem Gesamtbetrag ein prozentualer Aufschlag errechnet wird.
+
+Beispiel:
+In Stufe 1: beträgt der Pauschal Einkaufspreis 0 - 399,00 EUR, besteht ein Aufschlag von 32,00 EUR und ein prozentualer Zuschlag auf den Pauschal EK von 21 Prozent.
+In Stufe 2: beträgt der Pauschal Einkaufspreis 400,00 EUR - 598,00 EUR, besteht ein Aufschlag von 32,00 EUR und ein prozentualer Zuschlag auf den Pauschal EK von 20 Prozent.
+
+Calculations
+Calculation Mode="AbsoluteRelative"
+Charges
+Charge  Id="1"
+Range Min="0.00" Max="399.00"
+Pricing Amount="32.00" Percent="21.00"
+/Charge
+Charge  Id="2"
+Range Min="400.00" Max="598.00"
+Pricing Amount="32.00" Percent="20.00"
+/Charge
+/Charges
+/Calculation
+/Calcualtions</xs:documentation>
+															<xs:documentation xml:lang="en">The Charge element can occur more than once.
+A Charge element is written for every calculation level and associated price calculation.
+This element corresponds to the "Calculation level" fields from the tour operator's accounting system.
+To provide a better overview, each Charge is assigned a specific level Id. The first level receives Id 1, the second Id 2 and so forth.
+There is a general rule stating that fixed extra charges are calculated first to subsequently calculate a percentage markup from the total amount.
+
+Example:
+On level 1, the package purchase price is 0-399.00 EUR and the extra charges amount to 32.00 EUR and the percentage markup to the package purchase price to 21 percent.
+On level 2, the package purchase price is 400.00-598.00 EUR and the extra charges amount to 32.00 EUR and the percentage markup to the package purchase price to 20 percent.
+
+Calculations
+Calculation Mode="AbsoluteRelative"
+Charges
+Charge  Id="1"
+Range Min="0.00" Max="399.00"
+Pricing Amount="32.00" Percent="21.00"
+/Charge
+Charge  Id="2"
+Range Min="400.00" Max="598.00"
+Pricing Amount="32.00" Percent="20.00"
+/Charge
+/Charges
+/Calculation
+/Calculations</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Range" minOccurs="0" maxOccurs="1">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">
+																			Das Element "Range" ist eine Bedingung.
+																			Sofern der Einkaufspreis (EK), d.h der unkalkulierte Preis der Flug- oder Hotelkomponente, in diese Preisspanne fällt, wird die Aufschlagskalkulation in dem Element "Pricing" angewendet.
+																			Ausnahmen:
+																			* Wenn im ApplyTo-Attribut der Wert "TotalPrice" gesetzt ist, dann bezieht sich die Preisspanne auf die Summe der kalkulierten Komponentenpreise (Hotel, Flug/Transport).
+																			* Wenn im PersonMode-Attribut der Wert "PerPerson" gesetzt ist, dann wird die Preisspanne für jede *einzelne* Person individuell errechnet (nach dem Verteilungsschlüssel).
+																			 - wenn allerdings im Hotel-EDF im CalculationMode-Attribut der Wert "O" (Objektpreis) gesetzt ist, dann werden die objektbasierten Preise nur auf die erste Person angewendet
+																			   (objektbasierte Preise werden nicht zuerst auf alle Personen aufgeteilt; wie man dieses Verhalten dennoch erreichen kann, steht hier:
+																				https://documentation.peakwork.com/docs/#player_application_stack_installation/Player_element.html#player-element)
+
+
+																			Beispiel:
+																			In Stufe 1: beträgt der Einkaufspreis 0 - 399,00 EUR, besteht ein Aufschlag von 32,00 EUR und ein prozentualer Zuschlag auf den Pauschal-EK von 21 Prozent.
+																			In Stufe 2: beträgt der Einkaufspreis 400,00 EUR - 598,00 EUR, besteht ein Aufschlag von 32,00 EUR und ein prozentualer Zuschlag auf den Pauschal-EK von 20 Prozent.
+
+																			Calculations
+																			Calculation Mode="AbsoluteRelative"
+																			Charges
+																			Charge  Id="1"
+																			Range Min="0.00" Max="399.00"
+																			Pricing Amount="32.00" Percent="21.00"
+																			/Charge
+																			Charge  Id="2"
+																			Range Min="400.00" Max="598.00"
+																			Pricing Amount="32.00" Percent="20.00"
+																			/Charge
+																			/Charges
+																			/Calculation
+																			/Calculations
+																		</xs:documentation>
+																		<xs:documentation xml:lang="en">
+																			The Range element constitutes a condition.
+																			If the purchase price, i.e. the uncalculated price of the flight or hotel component, is in this price range, the markup calculation is applied in the Pricing element.
+																			Exceptions:
+																			* If the ApplyTo attribute has the value "TotalPrice", the price range refers to the sum of the calculated prices of the components (hotel, flight/transport).
+																			* If the PersonMode attribute has the value "PerPerson", the price range is evaluated for each person individually (according to the distribution key).
+																			 - but if, in the Hotel EDF, the CalculationMode attribute has the value "O" (object-based price), the object-based prices are only applied to the first person
+																				(object-based prices are not first divided between all persons; how to achieve this behavior is described here:
+																			     https://documentation.peakwork.com/docs/#player_application_stack_installation/Player_element.html#player-element)
+
+																			Example:
+																			On level 1, the purchase price is 0-399.00 EUR and the extra charges amount to 32.00 EUR and the percentage markup to the package purchase price to 21 percent.
+																			On level 2, the purchase price is 400.00-598.00 EUR and the extra charges amount to 32.00 EUR and the percentage markup to the package purchase price to 20 percent.
+
+																			Calculations
+																			Calculation Mode="AbsoluteRelative"
+																			Charges
+																			Charge  Id="1"
+																			Range Min="0.00" Max="399.00"
+																			Pricing Amount="32.00" Percent="21.00"
+																			/Charge
+																			Charge  Id="2"
+																			Range Min="400.00" Max="598.00"
+																			Pricing Amount="32.00" Percent="20.00"
+																			/Charge
+																			/Charges
+																			/Calculation
+																			/Calculations</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:attribute name="Min" type="xs:decimal">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">
+																					Das Attribut "Min" korrespondiert mit dem Feld "ab €" aus der Veranstalter-Kalkulation.
+																					Sofern der Einkaufspreis in diese Preisspanne fällt, die sich aus den Attributen "Min" und "Max" ergibt, wird die Aufschlagskalkulation in dem Element "Pricing" angewendet.
+
+																					Definitionen und Beispiele für die Begriffe "Einkaufspreis" sowie "Preisspanne" sind im Range-Element zu finden.
+																				</xs:documentation>
+																				<xs:documentation xml:lang="en">
+																					The Min attribute corresponds to the "From €" field in the tour operator's calculation.
+																					If the purchase price falls into the price range that results from the Min and Max attributes, the markup calculation is applied in the Pricing element.
+
+																					See the Range element for the definitions and examples of the terms "purchase price" and "price range".
+																				</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="Max" type="xs:decimal">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">
+																					Das Attribut "Max" ist nicht direkt in der Veranstalter-Kalkulation vorhanden. Es ergibt sich jedoch durch Differenzrechnung aus der nächsten Preisspanne (nächste Preisspanne, Feld "ab €" minus 1).
+																					Sofern der Einkaufspreis in diese Preisspanne fällt, die sich aus den Attributen "Min" und "Max" ergibt, wird die Aufschlagskalkulation in dem Element "Pricing" angewendet.
+
+																					Definitionen und Beispiele für die Begriffe "Einkaufspreis" sowie "Preisspanne" sind im Range-Element zu finden.
+
+																				</xs:documentation>
+																				<xs:documentation xml:lang="en">
+																					The Max attribute is not directly included in the tour operator's calculation, but results from calculating the difference from the next price range (next price range, "From €" field minus 1).
+																					If the purchase price falls into the price range that results from the Min and Max attributes, the markup calculation is applied in the Pricing element.
+
+																					See the Range element for the definitions and examples of the terms "purchase price" and "price range".
+																				</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="Pricing" minOccurs="0" maxOccurs="1">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="de">Das Element "Pricing" enthält die Werte für die Verkaufspreis-Kalkulation.
+
+Die Kalkulation kann auf 3 Wegen erfolgen:
+* Absoluter Zuschlag oder Abschlag pro Buchung (Amount)
+* Prozentualer Zuschlag oder Abschlag pro Buchung (Percent)
+* Übersteuen eines fixen Verkaufspreises (FixedPreis)
+</xs:documentation>
+																		<xs:documentation xml:lang="en">The Pricing element contains the values for calculating the sales price.
+
+There are 3 calculation methods:
+* Absolute additional charges or reductions per booking (Amount)
+* Percentage additional charges or reductions per booking (Percent)
+* Overriding a fixed sales price (FixedPrice)
+</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:attribute name="Amount" type="xs:double">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">Das Attribut "Amount" beinhaltet den absoluten Zu- oder Abschlag aus dem Feld "Berechnung"
+der Veranstalter-Kalkulation, sofern die Kalkulationsart (Attribut "Mode") den Wert "AbsoluteRelative" hat.
+
+Zuschläge werden als positive Werte transportiert. Abschläge werden als negative Werte transportiert.
+
+Bei der Kalkulationsart Fixwert (Attribut Mode="Fix") steuert das Attribut "Amount" den Fixwert.
+
+Bei der Kalkulationsart "AbsoluteRelative" kann das Attribut "Amount" in Verbindung mit dem Attribut "Percent" gesetzt werden. In diesem Falle wird zuerst der prozentuale Zu- oder Abschlag errechnet und dann der absolute Betrag addiert.
+
+Beispiel:
+In Stufe 1: beträgt der Pauschal Einkaufspreis 0 - 399,00 EUR, besteht ein Aufschlag von 32,00 EUR und ein prozentualer Zuschlag auf den Pauschal EK von 21 Prozent.
+In Stufe 2: beträgt der Pauschal Einkaufspreis 400,00 EUR - 598,00 EUR, besteht ein Aufschlag von 32,00 EUR und ein prozentualer Zuschlag auf den Pauschal EK von 20 Prozent.
+
+Calculations
+Calculation Mode="AbsoluteRelative"
+Charges
+Charge  Id="1"
+Range Min="0.00" Max="399.00"
+Pricing Amount="32.00" Percent="21.00"
+/Charge
+Charge  Id="2"
+Range Min="400.00" Max="598.00"
+Pricing Amount="32.00" Percent="20.00"
+/Charge
+/Charges
+/Calculation
+/Calcualtions
+</xs:documentation>
+																				<xs:documentation xml:lang="en">The Amount attribute contains the absolute additional charges or reductions from the "Calculation" field in the tour operator's calculation,
+provided the calculation type (Mode attribute) is AbsoluteRelative.
+Additional charges are propagated as positive values. Reductions are propagated as negative values.
+
+Calculation types based on the Fix value (Attribute Mode="Fix") use the Amount attribute to control the fixed value.
+
+Calculation types based on the AbsoluteRelative value can combine the Amount attribute with the Percent attribute.
+In this case, the percentage additional charges or reductions are calculated first, to subsequently add the total amount.
+
+Example:
+On level 1, the package purchase price is 0-399.00 EUR and the extra charges amount to 32.00 EUR and the percentage markup to the package purchase price to 21 percent.
+On level 2, the package purchase price is 400.00-598.00 EUR and the extra charges amount to 32.00 EUR and the percentage markup to the package purchase price to 20 percent.
+
+Calculations
+Calculation Mode="AbsoluteRelative"
+Charges
+Charge  Id="1"
+Range Min="0.00" Max="399.00"
+Pricing Amount="32.00" Percent="21.00"
+/Charge
+Charge  Id="2"
+Range Min="400.00" Max="598.00"
+Pricing Amount="32.00" Percent="20.00"
+/Charge
+/Charges
+/Calculation
+/Calculations</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="Percent" type="xs:decimal">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="de">
+Das Attribut "Percent" beinhaltet den prozentualen Zu- oder Abschlag aus dem Feld "%" der Veranstalter-Kalkulation. Dieses Attribut wird nur bei der Kalkulationsart "AbsoluteRelative" gesetzt.
+Zuschläge werden als positive Werte transportiert. Abschläge werden als negative Werte transportiert.
+
+Das Attribut "Percent" kann in Verbindung mit dem Attribut "Amount" gesetzt werden. In diesem Falle wird zuerst der prozentuale Zu- oder Abschlag errechnet und dann der absolute Betrag addiert.
+
+Beispiel:
+In Stufe 1: beträgt der Pauschal Einkaufspreis 0 - 399,00 EUR, besteht ein Aufschlag von 32,00 EUR und ein prozentualer Zuschlag auf den Pauschal EK von 21 Prozent.
+In Stufe 2: beträgt der Pauschal Einkaufspreis 400,00 EUR - 598,00 EUR, besteht ein Aufschlag von 32,00 EUR und ein prozentualer Zuschlag auf den Pauschal EK von 20 Prozent.
+
+Calculations
+Calculation Mode="AbsoluteRelative"
+Charges
+Charge  Id="1"
+Range Min="0.00" Max="399.00"
+Pricing Amount="32.00" Percent="21.00"
+/Charge
+Charge  Id="2"
+Range Min="400.00" Max="598.00"
+Pricing Amount="32.00" Percent="20.00"
+/Charge
+/Charges
+/Calculation
+/Calcualtions
+</xs:documentation>
+																				<xs:documentation xml:lang="en">The Percent attribute contains the percentage additional charges or reductions from the "%" field in the tour operator's calculation.
+This attribute is only specified for the AbsoluteRelative calculation type.
+Additional charges are propagated as positive values. Reductions are propagated as negative values.
+
+The Percent attribute can be combined with the Amount attribute. In this case, the percentage additional charges or reductions are calculated first, to subsequently add the total amount.
+
+Example:
+On level 1, the package purchase price is 0-399.00 EUR and the extra charges amount to 32.00 EUR and the percentage markup to the package purchase price to 21 percent.
+
+On level 2, the package purchase price is 400.00-598.00 EUR and the extra charges amount to 32.00 EUR and the percentage markup to the package purchase price to 20 percent.
+
+Calculations
+Calculation Mode="AbsoluteRelative"
+Charges
+Charge  Id="1"
+Range Min="0.00" Max="399.00"
+Pricing Amount="32.00" Percent="21.00"
+/Charge
+Charge  Id="2"
+Range Min="400.00" Max="598.00"
+Pricing Amount="32.00" Percent="20.00"
+/Charge
+/Charges
+/Calculation
+/Calculations</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="Id" type="xs:int" />
+															<xs:attribute name="StayMode" type="ChargeStayModeEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Steuert ob die Calculation auf den Gesamtpreis angewendet werden soll oder auf den Preis pro Nacht für die Hoteldauer oder für die Reisedauer des Transports, z.B. Flug oder Zug.
+																		Mögliche Werte:
+																		None (default) - Kalkulation wird auf den Gesamtpreis berechnet, also über alle Tage zusammen.
+																		Hotel - Kalkulation wird nächteweise auf die Hoteldauer berechnet
+																		Flight - Kalkulation wird nächteweise auf die gesamte Reisedauer des Fluges berechnet (nicht Dauer der Flugstrecke)
+																		Transport - Kalkulation wird nächteweise auf die gesamte Reisedauer eines Transportmittels berechnet (nicht Dauer der Transportstrecke)
+
+
+Bsp: 7 Tage mit Übernachtsflug, deswegen nur 6 Tage Hotelaufenthalt/Pricing Amount=30:
+* Charge StayMode=None: Es werden einmalig 30 € auf den Gesamtpreis berechnet.
+* Charge StayMode=Hotel: Es werden 6 mal 30€ = 180€ auf den Gesamtpreis berechnet, wegen der 6 Tage Hoteldauer.
+* Charge StayMode=Flight: Es werden 7 mal 30€ = 210€ auf den Gesamtpreis berechnet, wegen der 7 Tage Reiseflugdauer.
+																	</xs:documentation>
+																	<xs:documentation xml:lang="en">
+																		Steers whether the calculation should be applied to the total price or to the price per night for hotel duration or transport duration, e.g. flight or train.
+
+Possible values:
+None (default) - calculation is applied to total price, meaning to all days in total
+Hotel - calculation is applied per night to hotel duration
+Flight - calculation is applied per night to entire journey duration of the flight (not duration of the flight route)
+Transport - calculation is applied per night to the entire journey duration of the means of transport (not duration of the transport)
+
+
+Example: 7 days with overnight flight, thus only 6 days hotel stay/Pricing Amount=30
+* Charge StayMode=None: 30 € are calculated one-time to total price
+* Charge StayMode=Hotel: 6 times 30€ = 180€ are calculated to total price (due to hotel duration of 6 days)
+* Pricing Amount=30: 7 times 30€ = 210€ are calculated to total price (due to flight duration of 7 days)
+
+</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+															<xs:attribute name="PersonMode" type="ChargePersonModeEnum">
+																<xs:annotation>
+																	<xs:documentation xml:lang="de">Steuert wie die Preise berechnet werden.
+Mögliche Werte:
+* None (default) - es soll auf den Gesamtflugpreis, GesamtHotelpreis oder Gesamtpreis kalkuliert werden, also über alle mitreisenden Personen. Es findet keine Aufteilung auf die einzelnen Personen statt.
+* PerPerson - wenn PerPerson gesetzt ist, so soll auf den pro Personen Flugpreis, Hotelpreis oder Gesamtpreis kalkuliert werden. D.h. die Calculation wird für jede Person angewendet.
+* TotalToPerson -wenn TotalToPerson gesetzt ist, so soll auf den Fluggesamtpreis, Hotelgesamtpreis oder Gesamtpreis (Flug+Hotel) kalkuliert werden, also über alle mitreisenden Personen.
+	D.h. die Calculation wird einmalig angewendet, aber dann auf die Mitreisenden Personen aufgeteilt.
+																	</xs:documentation>
+																	<xs:documentation xml:lang="en">
+																		Steers how the prices are calculated
+
+																		Possible values:
+																		* None (default) - calculation on total flight price, total hotel price or total price for all travellers. There is no allocation to each traveller separately.
+																		* PerPerson - when PerPerson is set, the calculation is applied to per person flight price, hotel price or total price. The calculation is applied to each person separately.
+																		* TotalToPerson -when TotalToPerson is set, the calculation is applied to total flight price, total hotel price or total price (flight + hotel), i.e. for all travellers.
+																			I.e. the calculation is applied once and allocated to each traveller afterwards.
+</xs:documentation>
+																	<xs:documentation xml:lang="en">Steers how the prices are calculated.
+
+
+Possible values:
+None (default) - calculation on total flight price, total hotel price or total price for all travellers. There is no allocation to each traveller separately.
+PerPerson - when PerPerson is set, the calculation is applied to per person flight price, hotel price or total price. The calculation is applied to each person separately.
+
+TotalToPerson -when TotalToPerson is set, the calculation is applied to total flight price, total hotel price or total price (flight + hotel), i.e. for all travellers.
+I.e. the calculation is applied once and allocated to each traveller afterwards.
+
+</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="Name" type="xs:string">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das Name-Attribut legt den Kalkulationsnamen fest.
+
+Der Kalkulationsname ist der Schlüssel zur Ermittlung der eigentlichen Kalkulation.
+Über den Kalkulationsnamen der Restriktions (Regeln, Attribut "CalculationName" wird auf die Kalkulation verwiesen, die der Regel zu Grunde liegt.</xs:documentation>
+											<xs:documentation xml:lang="en">
+The Name attribute specifies the calculation name.
+The calculation name is the key to the actual calculation.
+The calculation name of the restrictions (rules, CalculationName attribute) references the underlying calculation of the rule.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="Mode" type="ModeEnum">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">Das Attribut "Mode" steuert die Art der Kalkulation.
+Mögliche Werte:
+* AbsoluteRelative
+* RelativeAbsolute
+* Fix
+
+Der Wert AbsoluteRelative steuert die Aufschlagskalkulation in Form eines Zu- oder Abschlags. Hier wird auf den Ausgangspreis zuerst der Prozentsatz angewendet und dann der Amount.
+Beispiel:  (100 € + 5% )+ 10€ = 115€
+Der Wert RelativeAbsolute steuert die Aufschlagskalkulation in Form eines Zu- oder Abschlags. Hier wird auf den Ausgangspreis zuerst der Amount angewendet und auf diesen Wert dann der Prozentsatz
+Beispiel:  (100 € + 10€) + 5% = 115,50€
+Der Wert "Fix" dient dazu, einen festen Verkaufspreis anhand einer Range des Pauschal Einkaufspreises zu ermitteln. Der Pauschalverkaufspreis gilt pro Buchung.
+</xs:documentation>
+											<xs:documentation xml:lang="en">The Mode attribute specifies the type of the calculation:
+Possible values:
+* AbsoluteRelative
+* RelativeAbsolute
+* Fix
+
+The AbsoluteRelative value controls the markup calculation, i. e. additional or reduced charges.
+The Fix value is used to derive a fixed sales price basing on a range of the package purchase price.
+The package sales price applies per booking.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ApplyTo" type="ApplianceTypeEnum" default="TotalPrice">
+										<xs:annotation>
+											<xs:documentation xml:lang="de">
+												Das ApplyTo-Attribut legt fest, auf was die Kalkulation angewandt wird.
+
+Mögliche Werte:
+* TotalPrice: Die Kalkulation wird auf den Gesamtpreis angewandt.
+* HotelPrice: Die Kalkulation wird auf den Hotelpreis angewandt.
+* FlightPrice: Die Kalkulation wird auf den Flugpreis angewandt.
+* FlightBasePrice: Die Kalkulation wird auf den Flugbasispreis angewandt. Dieser muss in der Flug-EDF-Datei mit Type="Base" gekennzeichnet sein.
+
+Wenn ApplyTo="FlightPrice", dann darf die Regel, die zur aktuellen Kalkulation gehört, keine Hotel-Restrictions haben.
+
+											</xs:documentation>
+											<xs:documentation xml:lang="en">
+												The ApplyTo attribute specifies what the calculation is applied to.
+Possible values:
+* TotalPrice: The calculation is applied to the total price.
+* HotelPrice: The calculation is applied to the hotel price.
+* FlightPrice: The calculation is applied to the flight price.
+* FlightBasePrice: The calculation is applied to the flight base price. This price component must have Type="Base" in the flight EDF file.
+
+When ApplyTo="FlightPrice", then the rule that belongs to the current calculation mustn't have any hotel restriction.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attributeGroup ref="optional-autoappliance" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="SchemaVersion" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Das SchemaVersion-Attribut legt fest, mit welcher Schema-Version die EDF-Datei kompatibel ist.</xs:documentation>
+					<xs:documentation xml:lang="en">The SchemaVersion attribute specifies with which schema version the EDF file is compatible.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="CreationDate" type="xs:dateTime" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The CreationDate attribute specifies the date and the time for the creation of the EDF file.
+
+This timestamp is used to identify CalcEdf-files between player and the calculation-service.
+When overwriting a previous calculation with a different file with different content, you must ensure to change the value of this attribute.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Currency" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Das Currency-Attribut legt die Währung der Kalkulationen in dieser EDF-Datei fest.
+
+Die Währung wird als dreistelliger Währungscode nach ISO 4217 angegeben.
+
+Beispiel: EUR für Euro</xs:documentation>
+					<xs:documentation xml:lang="en">The Currency attribute specifies the currency of the calculations in this EDF file.
+
+The currency is indicated by a three-digit currency code according to ISO 4217.
+
+Example: EUR for Euros</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Z]{3}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="TourOperatorCode" type="xs:string">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Das Attribut TourOperatorCode transportiert den Veranstaltercode.
+
+Wird diese Calculation angewendet, wird dieser Code als Veranstaltercode für alle Hotels zurückgegeben.
+
+Somit überschreibt dieser Code alle anderen TourOperatorCodes aus dem Hotel- und Flug EDF.</xs:documentation>
+					<xs:documentation xml:lang="en">The TourOperatorCode attribute is used to specify the tour operator code.
+
+If this calculation is used, this code is returned as tour operator code for all hotels.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Version" type="xs:int">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Das Attribut Version kann dafür genutzt werden um eine Versionsnummer hochzuzählen.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+      <xs:attribute name="CalculationOnPricesBeforeTaxes" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+			The CalculationOnPricesBeforeTaxes attribute specifies whether the calculation of the margin should be applied to the net or the gross price. This means before or after applying taxes and fees.
+			If the attribute is set to "true", the net price is used.
+			The default is set to "false".
+			This feature is not supported in PlayerBridge Calculation Plugin. Therefore, it is not possible to use this option in case the booking process is based on the Peakwork D-Hub.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+	  <xs:attribute name="BlockUncalculatedOffers" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+			The BlockUncalculatedOffers attribute specifies if offers for which no Calculation Rule matches are to be removed from search. The default is set to false.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="AirTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Charter" />
+			<xs:enumeration value="Scheduled" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplianceCodeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hotel" />
+			<xs:enumeration value="Flight" />
+			<xs:enumeration value="Total" />
+			<xs:enumeration value="Transport" />
+            <xs:enumeration value="SellingCurrency" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplianceTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TotalPrice" />
+			<xs:enumeration value="HotelPrice" />
+			<xs:enumeration value="TransportPrice" />
+			<xs:enumeration value="FlightPrice" />
+			<xs:enumeration value="FlightBasePrice" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplyToEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Arrival" />
+			<xs:enumeration value="Stay" />
+			<xs:enumeration value="Within" />
+			<xs:enumeration value="Departure" />
+			<xs:enumeration value="StayNights" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplyToModeEnum">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Kenner, ob zugehörige Angabe sich auf das Hotel oder den Flug oder einen anderen Transport bezieht. Steht in Zusammenhang mit ApplyTo.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hotel" />
+			<xs:enumeration value="Transport" />
+			<xs:enumeration value="Flight" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplyToWeekdayEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Arrival" />
+			<xs:enumeration value="Booking" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplianceEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Person" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ChargeStayModeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None" />
+			<xs:enumeration value="Hotel" />
+			<xs:enumeration value="Transport" />
+			<xs:enumeration value="Flight" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ChargePersonModeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None" />
+			<xs:enumeration value="PerPerson" />
+			<xs:enumeration value="TotalToPerson" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConflictEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None" />
+			<xs:enumeration value="Outbound" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FlightClassEnum">
+		<xs:annotation>
+			<xs:documentation />
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="economy" />
+			<xs:enumeration value="comfort" />
+			<xs:enumeration value="first" />
+			<xs:enumeration value="business" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Typ der Regionbeschreibung.
+Folgende Inhalte sind möglich:
+Country - Zuordnung des Hotels zu einem Land
+Region - Zuordnung des Hotels zu einer Region
+City - Zuordnung des Hotels zu einer Stadt
+</xs:documentation>
+			<xs:documentation xml:lang="en">The type of region description.
+The following inputs are possible:
+Country - assignment of the hotel to a country
+Region - assignment of the hotel to a region
+City - assignment of the hotel to a city</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Type" type="LocationTypeEnum" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Typ der Regionbeschreibung.
+Folgende Inhalte sind möglich:
+Country - Zuordnung des Hotels zu einem Land
+Region - Zuordnung des Hotels zu einer Region
+City - Zuordnung des Hotels zu einer Stadt
+
+Beispiel:
+/Location Code="E" Type="Country" /
+</xs:documentation>
+				<xs:documentation xml:lang="en">The type of region description.
+The following inputs are possible:
+Country - assignment of the hotel to a country
+Region - assignment of the hotel to a region
+City - assignment of the hotel to a city
+
+Example:
+/Location Code="ES" Type="Country" /
+</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Code" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Abkürzung der Regionsbeschreibung, beispielsweise PMI oder E.
+
+Dieser Code ist der veranstalterinterne Code.
+
+Beispiel:
+/Location Code="ES" Type="Country" /
+</xs:documentation>
+				<xs:documentation xml:lang="en">The abbreviation of a region description, e. g. PMI or E.
+
+This code is the tour operator-internal code.
+
+Example:
+/Location Code="ES" Type="Country" /
+</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="LocationTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Country" />
+			<xs:enumeration value="Region" />
+			<xs:enumeration value="City" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ModeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Fix" />
+			<xs:enumeration value="AbsoluteRelative" />
+			<xs:enumeration value="RelativeAbsolute" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TaxModeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AbsoluteRelative" />
+			<xs:enumeration value="RelativeAbsolute" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OperatorEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AND" />
+			<xs:enumeration value="OR" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonTypeDefinitionPersonTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A" />
+			<xs:enumeration value="C" />
+			<xs:enumeration value="I" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersonTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A" />
+			<xs:enumeration value="C" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PriceApplyToModeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MaxAgePerson" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RoundingEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Up" />
+			<xs:enumeration value="Down" />
+			<xs:enumeration value="Commercial" />
+			<xs:enumeration value="No" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ScopeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Final" />
+			<xs:enumeration value="Person" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StayModeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hotel" />
+			<xs:enumeration value="Transport" />
+			<xs:enumeration value="Flight" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MandatoryEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Include" />
+			<xs:enumeration value="Exclude" />
+			<xs:enumeration value="False" />
+			<xs:enumeration value="True" />
+			<xs:enumeration value="Disabled" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProportionEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Flight" />
+			<xs:enumeration value="Hotel" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Sources">
+		<xs:sequence>
+			<xs:element name="Source" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Das Element Source definiert die Quelle eines Fluges oder Hotels.
+
+Wenn ein Sources-Element mehrere Source-Elemente hat, dann sind diese Source-Elemente mit einem logischen ODER verknüpft.
+
+Das Element ist optional. Es steuert, für welche Flug- und Hotelquellen eine Kalkulation gültig ist.
+
+Mögliche Flugquellen sind zum Beispiel:
+
+- Published
+- Pooling
+
+Mögliche Hotelquellen sind zum Beispiel:
+
+- Bettenbanken
+
+
+Gibt es keine Einschränkungen, d.h. die Regel gilt für alle Flug- und Hotelquellen, dann ist das Element "Sources" nicht zu schreiben.
+
+Wenn die Regel lediglich für eine oder zwei Flug- oder Hotelquellen gültig ist, dann sind diese explizit über das Attribut "Source" zu nennen.
+
+
+Beispiel: Die Regel ist nur gültig für Pooling Flüge
+
+FlightRestrictions
+
+FlightRestriction
+
+Sources
+
+Source ID=Pooling
+
+/Sources
+
+/FlightRestriction
+
+/FlightRestrictions
+
+Hotelquellen werden unter HotelRestrictions angegeben.
+</xs:documentation>
+					<xs:documentation xml:lang="en">The Source element defines the source of a flight or a hotel.
+
+If a Sources element has more than one Source element, these Source elements are joined with a logical OR.
+
+The element is optional. It defines which flight and hotel sources a calculation applies to.
+
+Possible flight sources:
+
+- Published
+- Pooling
+
+Possible hotel sources:
+
+- supplier of bed banks
+
+
+If there are no restrictions, i. e. the rule applies to all flight and hotel sources, the Sources element must not be defined.
+
+If the rule only applies to one or two flight or hotel sources, those sources must be explicitly specified via the Source attribute.
+
+
+Example: The rule is only valid for pooling flights
+
+FlightRestrictions
+
+FlightRestriction
+
+Sources
+
+Source ID=Pooling
+
+/Sources
+
+/FlightRestriction
+
+/FlightRestrictions
+
+Hotel sources are specified under HotelRestrictions.</xs:documentation>
+</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="ID" type="xs:string">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Das Attribut "ID" beihnaltet den Langnamen der Quelle eines Fluges oder Hotels.
+
+Hier wird der Langtext der Quelle übergeben. z.B.:
+
+- Published
+
+- Name der Bettenbank
+
+Beispiel: Die Regel ist nur gültig für Pooling Flüge.
+
+FlightRestrictions
+
+FlightRestriction
+
+Sources
+
+Source ID="Pooling"
+
+/Sources
+
+/FlightRestriction
+
+/FlightRestrictions</xs:documentation>
+								<xs:documentation xml:lang="en">The ID attribute includes the long name of a flight or hotel source.
+
+Here, the long description of the source is passed in.
+
+For example:
+
+- Published
+
+- name of the bed bank
+
+Example: The rule is only valid for pooling flights.
+
+FlightRestrictions
+
+FlightRestriction
+
+Sources
+
+Source ID="Pooling"
+
+/Sources
+
+/FlightRestriction
+
+/FlightRestrictions</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Rounding">
+		<xs:sequence>
+			<xs:element name="Appliances" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Appliance" minOccurs="1" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="Code" type="ApplianceCodeEnum">
+									<xs:annotation>
+										<xs:documentation xml:lang="de">Das Code-Attribut legt fest, welcher Preis gerundet werden soll.
+
+											Mögliche Werte:
+											* Flight: Der Flugpreis soll gerundet werden.
+											* Hotel: Der Hotelpreis soll gerundet werden.
+											* Total: Der Gesamtpreis soll gerundet werden.
+					* Transport: Der Transportpreis soll gerundet werden.
+					* SellingCurrency: Der Gesamtpreis nach der Währungsumrechnung soll gerundet werden.
+										</xs:documentation>
+										<xs:documentation xml:lang="en">
+											The Code attribute specifies which price has to be rounded.
+
+											Possible values:
+											* Flight: Apply the rounding to the flight price.
+											* Hotel: Apply the rounding to the hotel price.
+											* Total: Apply the rounding to the total price.
+					* Transport: Apply the rounding to the transport price.
+					* SellingCurrency: Apply the rounding to the total price after currency conversion.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Mode" type="RoundingEnum" default="No">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das Mode-Attribut legt fest, wie gerundet wird.
+
+Mögliche Werte:
+* Up: aufrunden
+* Down: abrunden
+* Commercial: kaufmännisch runden
+* No: nicht runden
+</xs:documentation>
+				<xs:documentation xml:lang="en">The Mode specifies how a number is rounded.
+
+Possible values:
+* Up: round up
+* Down: round down
+* Commercial: round to two positions after the decimal point
+* No: no rounding
+</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DecimalPlace" default="0">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das DecimalPlace-Attribut legt die Anzahl der Nachkommastellen fest.
+
+Der Wert 0 bedeutet, dass auf eine Ganzzahl gerundet wird.</xs:documentation>
+				<xs:documentation xml:lang="en">The DecimalPlace attribute specifies the number of decimal places.
+
+The value 0 means rounding to an integer value.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:unsignedInt">
+					<xs:maxInclusive value="7" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Scope" type="ScopeEnum">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Scope - gibt an, wann gerundet werden soll.
+
+Mögliche Werte:
+Final -  am Ende wird gerundet (Defaultwert)
+Person - pro Person wird gerundet</xs:documentation>
+				<xs:documentation xml:lang="en">Scope - specifies when to round.
+
+Possible values:
+Final - rounding takes place at the end (default)
+Person - rounding per person</xs:documentation>
+</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	
+	<xs:complexType name="TransportRestriction">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The TransportRestriction element restricts the calculation rule to specific transport connections (flights, railway). The attributes of the TransportRestriction element always apply to the outbound.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="BookingClass" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+With the BookingClass attribute it is possible to define a rule which restricts the calculation to a booking class. The outbound booking class is considered.
+The BookingClass depends on the supplier and is not standardized.
+E.g. BookingClass=X =&gt; this rule is only available for a fare with booking class X.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	
+	<xs:attributeGroup name="optional-autoappliance">
+		<xs:attribute name="AutoAppliance" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">Das Attribut AutoAppliance kann genutzt werden, wenn man mehrere Kalkulationen auf eine Preiskomponente anwenden möchte. Hier kann unterschieden werden zwischen
+					1. die Kalkulation wird auf den bereits kalkulierten Wert angewendet. (AutoAppliance=true) oder
+					2. die Kalkulation wird immer auf den Einkaufspreis (EK) angewendet (AutoAppliance=false)
+
+					Mögliche Werte:
+					* true - Defaultwert - wenn mehrere Kalkulationen auf eine Preiskomponente (HotelPrice, FlightPrice oder TotalPrice) wirken, so wird per default die nächste Berechnung immer auf den bereits berechneten Preis aufaddiert.
+						Bsp:
+						Hotelpreis 100€
+						1. Calculation +20%
+						2. Calculation +30€
+						3. Calculation +10%
+						Berechnung: 100 + (100*0,2) + 30 + ((100 + (100*0,2) + 30)*0,1) = 180
+
+					* false - wenn mehrere Kalkulationen auf eine Preiskomponente (HotelPrice, FlightPrice oder TotalPrice) wirken, so wird die zu berechnende Kalkulation immer auf den EK Preis addiert.
+						Bsp:
+						Hotelpreis 100€
+						1. Calculation +20%
+						2. Calculation +30€
+						3. Calculation +10%
+						Berechnung: 100 + (100*0,2) + 30 + (100*0,1) = 160
+				</xs:documentation>
+				<xs:documentation xml:lang="en">
+
+					The attribute AutoAppliance can be used, if several calculations should impact a price component (HotelPrice, FlightPrice oder TotalPrice). You can decide whether
+					1. the calculation is applied on the calculated price (AutoAppliance=true) or
+					2. the calculation is applied on the purchase price (AutoAppliance=false)
+
+					Possible values:
+					* true - default value
+						Example:
+						hotel price 100€
+						1. Calculation +20%
+						2. Calculation +30€
+						3. Calculation +10%
+						100 + (100*0.2) + 30 + ((100 + (100*0.2) + 30)*0.1) = 180
+					* false
+						Example:
+						hotel price 100€
+						1. Calculation +20%
+						2. Calculation +30€
+						3. Calculation +10%
+						100 + (100*0.2) + 30 + (100*0.1) = 160
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:complexType name="Currency">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Der Currency-Typ referenziert eine Währung nach ISO 4217 Standard</xs:documentation>
+			<xs:documentation xml:lang="en">The Currency type references a currency as of ISO 4217 standard</xs:documentation>
+		</xs:annotation>
+			<xs:attribute name="Code" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Das Code-Attribut legt die Währung fest. Die Währung wird als dreistelliger Währungscode nach ISO 4217 angegeben.</xs:documentation>
+					<xs:documentation xml:lang="en">The Code attribute specifies the currency. The currency is indicated by a three-digit currency code according to ISO 4217.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+	</xs:complexType>
+</xs:schema>
