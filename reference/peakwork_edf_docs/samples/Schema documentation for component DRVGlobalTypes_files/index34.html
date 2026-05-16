@@ -1,0 +1,1425 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0105)https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id58 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+      <title>Schema documentation for component DRVGlobalTypes</title>
+      <link rel="stylesheet" href="./docHtml.css" type="text/css"><script type="text/javascript">
+         <!--
+        var propertiesBoxes= new Array('properties_id58', 
+				'properties_id59', 
+				'properties_id60', 
+				'properties_id61', 
+				'properties_id62', 
+				'properties_id63', 
+				'properties_id64');
+
+        
+        var usedByBoxes= new Array('usedBy_id58', 
+				'usedBy_id61', 
+				'usedBy_id62', 
+				'usedBy_id63', 
+				'usedBy_id64');
+
+        var sourceBoxes= new Array('source_id58', 
+				'source_id59', 
+				'source_id60', 
+				'source_id61', 
+				'source_id62', 
+				'source_id63', 
+				'source_id64');
+
+        var instanceBoxes= new Array('instance_id58', 
+				'instance_id59');
+
+        var diagramBoxes= new Array('diagram_id58', 
+				'diagram_id59', 
+				'diagram_id60');
+
+        var annotationBoxes= new Array('annotations_id58', 
+				'annotations_id59', 
+				'annotations_id60', 
+				'annotations_id61', 
+				'annotations_id62', 
+				'annotations_id63', 
+				'annotations_id64');
+
+        var attributesBoxes= new Array('attributes_id60');
+
+        
+        var button_prefix = 'button_';
+        
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+    
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updatePageTitle(message) {
+            top.document.title = message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id, isChunked, indexFileLocation, indexFileNamespace, indexFileComponent){
+
+            if (!isChunked) {
+             var selectIds = new Array('toc_group_by_namespace', 'toc_group_by_location', 'toc_group_by_component_type');
+             // Make all the tabs invisible.
+               for (i = 0; i < 3; i++){
+                  var tab = getElementObject(selectIds[i]);
+                  tab.style.display = 'none';
+               }
+               var selTab = getElementObject(id);
+               selTab.style.display = 'block';
+            } else {
+             if (id == 'toc_group_by_namespace') {
+               parent.indexFrame.location = indexFileNamespace;
+             } else  if (id == 'toc_group_by_location') {
+               parent.indexFrame.location = indexFileLocation;
+             } else  if (id == 'toc_group_by_component_type') {
+              parent.indexFrame.location = indexFileComponent;
+             }
+            }
+         }
+          
+
+    --></script></head>
+   <body>
+      <div id="global_controls" class="globalControls" style="position: fixed; right: 0px;">
+         <table class="rt">
+            <tbody><tr>
+               <td class="rt_cornerTopLeft"></td>
+               <td class="rt_lineTop"></td>
+               <td class="rt_cornerTopRight"></td>
+            </tr>
+            <tr>
+               <td class="rt_lineLeft"></td>
+               <td class="rt_content">
+                  <h3>Showing:</h3>
+                  <table>
+                     <tbody><tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, annotationBoxes);" class="control"></span><span class="globalControlName">Annotations</span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, attributesBoxes);" class="control"></span><span class="globalControlName">Attributes </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, diagramBoxes);" class="control"></span><span class="globalControlName">Diagrams</span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, instanceBoxes);" class="control"></span><span class="globalControlName">Instances</span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, propertiesBoxes);" class="control"></span><span class="globalControlName">Properties </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, sourceBoxes);" class="control"></span><span class="globalControlName">Source</span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, usedByBoxes);" class="control"></span><span class="globalControlName">Used by </span></td>
+                     </tr>
+                  </tbody></table>
+                  <div align="right"><span><input type="button" onclick="getElementObject(&#39;global_controls&#39;).style.display = &#39;none&#39;;" value="Close"></span></div>
+               </td>
+               <td class="rt_lineRight"></td>
+            </tr>
+            <tr>
+               <td class="rt_cornerBottomLeft"></td>
+               <td class="rt_lineBottom"></td>
+               <td class="rt_cornerBottomRight"></td>
+            </tr>
+         </tbody></table>
+      </div><a id="id58"></a><div class="componentTitle">Element <span class="qname">DRVGlobalTypes</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>http://www.vilauma.de/edf/Hotel</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id58" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id58&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id58" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das DRVGlobalTypes-Element ist eine Liste von DRVGlobalType-Elementen.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The DRVGlobalTypes element is a list of DRVGlobalType elements.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_id58" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;diagram_id58&#39;);" class="control"></div>
+                        </td>
+                        <td class="diagram">
+                           <div id="diagram_id58" style="display:block"><img alt="Diagram" border="0" src="./index.html95.jpeg" usemap="#index_46_html95"><map name="index_46_html95" id="index_46_html95">
+                                 <area alt="index13.tmp#id59" href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id59" coords="239,6,352,30"></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id58" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id58&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id58" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>complex</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id58" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id58&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id58" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Elements </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index29.html#id106" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component Extra&#39;)">Extra</a></b>, <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index11.html#id2" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component HotelRoot/BasicData&#39;)">HotelRoot/BasicData</a></b>, <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index11.html#id78" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component HotelRoot/SellingData&#39;)">HotelRoot/SellingData</a></b>, <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index11.html#id277" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component HotelRoot/SellingData/Rooms/Room&#39;)">HotelRoot/SellingData/Rooms/Room</a></b>, <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index11.html#id318" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component HotelRoot/SellingData/Rooms/Room/Boards/Board&#39;)">HotelRoot/SellingData/Rooms/Room/Boards/Board</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Model</b></td>
+                        <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id59" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalType*&#39;)">DRVGlobalType*</a></b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Children</b></td>
+                        <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id59" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalType&#39;)">DRVGlobalType</a></b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Instance</b></div>
+                           <div class="floatRight"><input id="button_instance_id58" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;instance_id58&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="instance_id58" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;DRVGlobalTypes</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;DRVGlobalType</span><span class="tEl">&gt;</span><span class="tT">{0,unbounded}</span><span class="tEl">&lt;/DRVGlobalType&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/DRVGlobalTypes&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id58" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id58&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id58" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"DRVGlobalTypes"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das DRVGlobalTypes-Element ist eine Liste von DRVGlobalType-Elementen.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The DRVGlobalTypes element is a list of DRVGlobalType elements.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:sequence</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"DRVGlobalType"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">/&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:sequence</span><span class="tEl">&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"GTAttribute"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das GTAttribute-Element definiert einen DRV GlobalType mit dazugehörigen SubTypes und AdditionalTypes.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The GTAttribute element defines a DRV GlobalType with corresponding SubTypes and AdditionalTypes.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"GT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">&gt;</span><span class="tI">
+                  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+                    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das GT-Attribut legt den Code des GlobalTypes fest. Beispiel: GT03-WELL.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+                    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The GT attribute specifies the code of the GlobalType. Example: GT03-WELL.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+                  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ST"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+                  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+                    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ST-Attribut legt den Code des SubTypes fest. Beispiel: ST03-MASS.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+                    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ST attribute specifies the code of the SubType. Example: ST03-MASS.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+                  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"AT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+                  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+                    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das AT-Attribut legt den Code des AdditionalTypes fest. Beispiel: AT03-SYNC.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+                    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The AT attribute specifies the code of the AdditionalType. Example: AT03-SYNC.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+                  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"CT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+                  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+                    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das CT-Attribut legt den Code des CustomTypes fest.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+                    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The CT attribute specifies the code of the CustomType.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+                  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+                </span><span class="tEl">&lt;xs:attributeGroup</span><span class="tAN"> ref=</span><span class="tAV">"TimeRangeAttributes"</span><span class="tEl">/&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;/xs:element&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;/xs:sequence&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:element&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:sequence&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:element&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id59"></a><div class="componentTitle">Element <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id58" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes&#39;)">DRVGlobalTypes</a></b> / DRVGlobalType</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>http://www.vilauma.de/edf/Hotel</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id59" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id59&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id59" style="display:block">
+                              <div class="annotation"></div>
+                              <div class="annotation"></div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_id59" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;diagram_id59&#39;);" class="control"></div>
+                        </td>
+                        <td class="diagram">
+                           <div id="diagram_id59" style="display:block"><img alt="Diagram" border="0" src="./index.html99.jpeg" usemap="#index_46_html99"><map name="index_46_html99" id="index_46_html99">
+                                 <area alt="index13.tmp#id60" href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" coords="233,6,327,30"></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id59" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id59&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id59" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>complex</b></td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn">minOccurs:
+                                       
+                                    </td>
+                                    <td><b>0</b></td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn">maxOccurs:
+                                       
+                                    </td>
+                                    <td><b>unbounded</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Model</b></td>
+                        <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component GTAttribute*&#39;)">GTAttribute*</a></b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Children</b></td>
+                        <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component GTAttribute&#39;)">GTAttribute</a></b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Instance</b></div>
+                           <div class="floatRight"><input id="button_instance_id59" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;instance_id59&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="instance_id59" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;DRVGlobalType</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;GTAttribute</span><span class="tT"> </span><span class="tAN">AT=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">CT=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">End=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">GT=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">ST=</span><span class="tAV">""</span><span class="tT"> </span><span class="tAN">Start=</span><span class="tAV">""</span><span class="tEl">&gt;</span><span class="tT">{0,unbounded}</span><span class="tEl">&lt;/GTAttribute&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/DRVGlobalType&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id59" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id59&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id59" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"DRVGlobalType"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:sequence</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"GTAttribute"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das GTAttribute-Element definiert einen DRV GlobalType mit dazugehörigen SubTypes und AdditionalTypes.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The GTAttribute element defines a DRV GlobalType with corresponding SubTypes and AdditionalTypes.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"GT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das GT-Attribut legt den Code des GlobalTypes fest. Beispiel: GT03-WELL.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The GT attribute specifies the code of the GlobalType. Example: GT03-WELL.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ST"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ST-Attribut legt den Code des SubTypes fest. Beispiel: ST03-MASS.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ST attribute specifies the code of the SubType. Example: ST03-MASS.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"AT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das AT-Attribut legt den Code des AdditionalTypes fest. Beispiel: AT03-SYNC.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The AT attribute specifies the code of the AdditionalType. Example: AT03-SYNC.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"CT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das CT-Attribut legt den Code des CustomTypes fest.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+              </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The CT attribute specifies the code of the CustomType.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+            </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+          </span><span class="tEl">&lt;xs:attributeGroup</span><span class="tAN"> ref=</span><span class="tAV">"TimeRangeAttributes"</span><span class="tEl">/&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:element&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:sequence&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:element&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id60"></a><div class="componentTitle">Element <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id58" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes&#39;)">DRVGlobalTypes</a></b> / <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id59" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalType&#39;)">DRVGlobalType</a></b> / GTAttribute</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>http://www.vilauma.de/edf/Hotel</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id60" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id60&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id60" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das GTAttribute-Element definiert einen DRV GlobalType mit dazugehörigen SubTypes und AdditionalTypes.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The GTAttribute element defines a DRV GlobalType with corresponding SubTypes and AdditionalTypes.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_id60" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;diagram_id60&#39;);" class="control"></div>
+                        </td>
+                        <td class="diagram">
+                           <div id="diagram_id60" style="display:block"><img alt="Diagram" border="0" src="./index.html133.jpeg" usemap="#index_46_html133"><map name="index_46_html133" id="index_46_html133">
+                                 <area alt="index13.tmp#id61" href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id61" coords="136,40,249,82">
+                                 <area alt="index13.tmp#id62" href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id62" coords="136,92,249,134">
+                                 <area alt="index13.tmp#id63" href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id63" coords="136,144,249,186">
+                                 <area alt="index13.tmp#id64" href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id64" coords="136,196,249,238">
+                                 <area alt="index4.tmp#id6" href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index4.html#id6" coords="139,251,307,277"></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id60" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id60&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id60" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>complex</b></td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn">minOccurs:
+                                       
+                                    </td>
+                                    <td><b>0</b></td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn">maxOccurs:
+                                       
+                                    </td>
+                                    <td><b>unbounded</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Attributes</b></div>
+                           <div class="floatRight"><input id="button_attributes_id60" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;attributes_id60&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="attributes_id60" style="display:block">
+                              <table class="attributesTable">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Type</th>
+                                       <th>Fixed</th>
+                                       <th>Default</th>
+                                       <th>Use</th>
+                                       <th>Annotation</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody><tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id63" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component AT&#39;)">AT</a></b></td>
+                                    <td><b>xs:string</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das AT-Attribut legt den Code des AdditionalTypes fest. Beispiel: AT03-SYNC.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The AT attribute specifies the code of the AdditionalType. Example: AT03-SYNC.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id64" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component CT&#39;)">CT</a></b></td>
+                                    <td><b>xs:string</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das CT-Attribut legt den Code des CustomTypes fest.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The CT attribute specifies the code of the CustomType.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index4.html#id8" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component End&#39;)">End</a></b></td>
+                                    <td><b>xs:date</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das End-Attribut legt das Ende des Zeitraums fest. Format: JJJJ-MM-TT.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The End attribute specifies the end of the period. Format: YYYY-MM-DD.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id61" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component GT&#39;)">GT</a></b></td>
+                                    <td><b>xs:string</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>required</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das GT-Attribut legt den Code des GlobalTypes fest. Beispiel: GT03-WELL.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The GT attribute specifies the code of the GlobalType. Example: GT03-WELL.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id62" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component ST&#39;)">ST</a></b></td>
+                                    <td><b>xs:string</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das ST-Attribut legt den Code des SubTypes fest. Beispiel: ST03-MASS.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The ST attribute specifies the code of the SubType. Example: ST03-MASS.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index4.html#id7" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component Start&#39;)">Start</a></b></td>
+                                    <td><b>xs:date</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das Start-Attribut legt den Beginn des Zeitraums fest. Format: JJJJ-MM-TT.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The Start attribute specifies the start of the period. Format: YYYY-MM-DD.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id60" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id60&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id60" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:element</span><span class="tAN"> name=</span><span class="tAV">"GTAttribute"</span><span class="tAN"> minOccurs=</span><span class="tAV">"0"</span><span class="tAN"> maxOccurs=</span><span class="tAV">"unbounded"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das GTAttribute-Element definiert einen DRV GlobalType mit dazugehörigen SubTypes und AdditionalTypes.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The GTAttribute element defines a DRV GlobalType with corresponding SubTypes and AdditionalTypes.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:complexType</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"GT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das GT-Attribut legt den Code des GlobalTypes fest. Beispiel: GT03-WELL.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The GT attribute specifies the code of the GlobalType. Example: GT03-WELL.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ST"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ST-Attribut legt den Code des SubTypes fest. Beispiel: ST03-MASS.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ST attribute specifies the code of the SubType. Example: ST03-MASS.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"AT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das AT-Attribut legt den Code des AdditionalTypes fest. Beispiel: AT03-SYNC.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The AT attribute specifies the code of the AdditionalType. Example: AT03-SYNC.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"CT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das CT-Attribut legt den Code des CustomTypes fest.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The CT attribute specifies the code of the CustomType.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:attributeGroup</span><span class="tAN"> ref=</span><span class="tAV">"TimeRangeAttributes"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:complexType&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:element&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id61"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id58" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes&#39;)">DRVGlobalTypes</a></b> / <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id59" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalType&#39;)">DRVGlobalType</a></b> / <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component GTAttribute&#39;)">GTAttribute</a></b> / @GT</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id61" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id61&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id61" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das GT-Attribut legt den Code des GlobalTypes fest. Beispiel: GT03-WELL.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The GT attribute specifies the code of the GlobalType. Example: GT03-WELL.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id61" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id61&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id61" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">use:
+                                       
+                                    </td>
+                                    <td><b>required</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id61" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id61&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id61" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Element </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes/DRVGlobalType/GTAttribute&#39;)">DRVGlobalTypes/DRVGlobalType/GTAttribute</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id61" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id61&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id61" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"GT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das GT-Attribut legt den Code des GlobalTypes fest. Beispiel: GT03-WELL.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The GT attribute specifies the code of the GlobalType. Example: GT03-WELL.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id62"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id58" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes&#39;)">DRVGlobalTypes</a></b> / <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id59" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalType&#39;)">DRVGlobalType</a></b> / <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component GTAttribute&#39;)">GTAttribute</a></b> / @ST</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id62" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id62&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id62" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das ST-Attribut legt den Code des SubTypes fest. Beispiel: ST03-MASS.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The ST attribute specifies the code of the SubType. Example: ST03-MASS.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id62" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id62&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id62" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id62" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id62&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id62" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Element </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes/DRVGlobalType/GTAttribute&#39;)">DRVGlobalTypes/DRVGlobalType/GTAttribute</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id62" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id62&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id62" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ST"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ST-Attribut legt den Code des SubTypes fest. Beispiel: ST03-MASS.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ST attribute specifies the code of the SubType. Example: ST03-MASS.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id63"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id58" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes&#39;)">DRVGlobalTypes</a></b> / <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id59" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalType&#39;)">DRVGlobalType</a></b> / <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component GTAttribute&#39;)">GTAttribute</a></b> / @AT</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id63" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id63&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id63" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das AT-Attribut legt den Code des AdditionalTypes fest. Beispiel: AT03-SYNC.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The AT attribute specifies the code of the AdditionalType. Example: AT03-SYNC.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id63" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id63&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id63" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id63" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id63&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id63" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Element </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes/DRVGlobalType/GTAttribute&#39;)">DRVGlobalTypes/DRVGlobalType/GTAttribute</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id63" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id63&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id63" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"AT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das AT-Attribut legt den Code des AdditionalTypes fest. Beispiel: AT03-SYNC.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The AT attribute specifies the code of the AdditionalType. Example: AT03-SYNC.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id64"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id58" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes&#39;)">DRVGlobalTypes</a></b> / <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id59" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalType&#39;)">DRVGlobalType</a></b> / <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component GTAttribute&#39;)">GTAttribute</a></b> / @CT</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id64" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id64&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id64" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das CT-Attribut legt den Code des CustomTypes fest.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The CT attribute specifies the code of the CustomType.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id64" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id64&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id64" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id64" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id64&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id64" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Element </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/hotel/5.1.2/doc/index13.html#id60" target="mainFrame" title="http://www.vilauma.de/edf/Hotel" onclick="updatePageTitle(&#39;Schema documentation for component DRVGlobalTypes/DRVGlobalType/GTAttribute&#39;)">DRVGlobalTypes/DRVGlobalType/GTAttribute</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id64" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id64&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id64" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"CT"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das CT-Attribut legt den Code des CustomTypes fest.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The CT attribute specifies the code of the CustomType.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table>
+      <div class="footer">
+         <hr>
+         <div align="center">XML Schema documentation generated by <a href="http://www.oxygenxml.com/" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Editor.
+         </div>
+      </div><script type="text/javascript">
+         <!--                     
+                     // The namespace is the selected option in the TOC combo.
+                    
+                     // Floats the toolbar.
+                     var globalControls = getElementObject("global_controls"); 
+                     
+                     if(globalControls != null){
+	                     var browser=navigator.appName;
+						 var version = parseFloat(navigator.appVersion.split('MSIE')[1]);
+						 
+						 var IE6 = false;
+						 if ((browser=="Microsoft Internet Explorer") && (version < 7)){
+						 	IE6 = true;
+						 }
+	
+	                     //alert (IE6 + " |V| " + version);
+	                     
+	                     if(IE6){
+	                     	// On IE 6 the 'fixed' property is not supported. We must use javascript. 
+	                         globalControls.style.position='absolute';                         
+	                         // The global controls will do not exist in the TOC frame, when chunking.
+	                         findAndFloat("global_controls", 225, 30);    
+	                     } else {
+	                      	  globalControls.style.position='fixed';                     	
+	                     }
+	                     
+	                     globalControls.style.right='0';                       
+                     }
+                --></script>
+</body></html>

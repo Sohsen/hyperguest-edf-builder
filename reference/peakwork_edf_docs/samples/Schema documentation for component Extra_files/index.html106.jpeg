@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" class="h-full">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./peakwork-logo.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="./_app/immutable/assets/0.L8k-mDXw.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.Cu31g1jr.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/entry.B5WIgn1y.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.CSICprSC.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.F2OocQ7l.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.Lez6dpep.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/preload-helper.D6kgxu3v.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.7MztnZPm.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.CwMyWo0w.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.BLqghxP1.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/3.B2z3sjC_.js">
+	</head>
+	<body data-sveltekit-preload-data="hover" class="h-full bg-gray-200 ">
+		<div style="display: contents">  <main class="h-screen flex items-center justify-center"><div><div class="flex justify-center items-center"><div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96"><div class="p-6"><h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">Authentication in progress</h5> <p class="mb-2 block font-sans text-base antialiased font-light leading-relaxed text-inherit">This might take a few seconds.</p>  <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700" data-svelte-h="svelte-phsfa3"><div class="animate-pulse bg-pwk-600 bg-gradient-to-r from-pwk-200 to-pwk-800 h-2.5 rounded-full" style="width: 100%"></div></div></div> <div class="p-6 pt-0"><a rel="external" href="/" class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-pwk-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">Go back</a></div></div></div> <div class="flex justify-center items-center"><footer data-svelte-h="svelte-gnq9i"><div class="mx-auto max-w-screen-xl px-4 pb-8 pt-16 sm:px-6 lg:px-8 lg:pt-24"><div class="mt-16 border-t border-gray-300 pt-8 sm:flex sm:items-center sm:justify-between lg:mt-24"><ul class="mt-6 flex flex-wrap justify-center gap-4 text-xs lg:justify-end"><li><a href="https://www.peakwork.com/imprint/" class="text-gray-500 transition hover:opacity-75">Imprint</a></li> <li><a href="https://www.peakwork.com/privacy-policy/" class="text-gray-500 transition hover:opacity-75">Privacy Policy</a></li> <li><a href="https://www.peakwork.com/agb/" class="text-gray-500 transition hover:opacity-75">Terms &amp; Conditions</a></li> <li><a href="https://www.peakwork.com" rel="noreferrer" target="_blank" class="text-gray-500 transition hover:opacity-75">© 2024 Peakwork GmbH. All rights reserved.</a></li></ul></div></div></footer></div></div></main> 
+			
+			<script>
+				{
+					__sveltekit_1mkqbe9 = {
+						base: new URL(".", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.Cu31g1jr.js"),
+						import("./_app/immutable/entry/app.Lez6dpep.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 3],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
