@@ -1,4 +1,4 @@
- import {
+import {
   Hotel,
   ProductDefinition,
   ARIMap,
@@ -137,8 +137,24 @@ export function buildHotelEdfModel(input: BuildHotelEdfModelInput): HotelEdfMode
     }
   }
 
+  const hotelIdentifier: {
+    hyperguestId: string;
+    giataId?: string;
+    peakworkId?: string;
+  } = {
+    hyperguestId: hotel.id,
+  };
+
+  if (hotel.giataId) {
+    hotelIdentifier.giataId = hotel.giataId;
+  }
+
+  if (hotel.peakworkId) {
+    hotelIdentifier.peakworkId = hotel.peakworkId;
+  }
+
   const model: HotelEdfModel = {
-    hotelId: hotel.id,
+    hotel: hotelIdentifier,
     metadata: {
       tourOperatorCode: 'PEAKWORK',
       usage: 'HotelOnly',
