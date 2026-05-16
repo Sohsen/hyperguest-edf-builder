@@ -1,0 +1,2651 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0112)https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+      <title>Schema documentation for component TransportRestriction</title>
+      <link rel="stylesheet" href="./docHtml.css" type="text/css"><script type="text/javascript">
+         <!--
+        var propertiesBoxes= new Array('properties_id34', 
+				'properties_id36', 
+				'properties_id37', 
+				'properties_id38', 
+				'properties_id39', 
+				'properties_id40', 
+				'properties_id41', 
+				'properties_id42', 
+				'properties_id43', 
+				'properties_id44', 
+				'properties_id45', 
+				'properties_id46');
+
+        var facetsBoxes= new Array('facets_id34', 
+				'facets_id36', 
+				'facets_id37');
+
+        var usedByBoxes= new Array('usedBy_id33', 
+				'usedBy_id34', 
+				'usedBy_id36', 
+				'usedBy_id37', 
+				'usedBy_id38', 
+				'usedBy_id39', 
+				'usedBy_id40', 
+				'usedBy_id41', 
+				'usedBy_id42', 
+				'usedBy_id43', 
+				'usedBy_id44', 
+				'usedBy_id45', 
+				'usedBy_id46');
+
+        var sourceBoxes= new Array('source_id33', 
+				'source_id34', 
+				'source_id36', 
+				'source_id37', 
+				'source_id38', 
+				'source_id39', 
+				'source_id40', 
+				'source_id41', 
+				'source_id42', 
+				'source_id43', 
+				'source_id44', 
+				'source_id45', 
+				'source_id46');
+
+        
+        var diagramBoxes= new Array('diagram_id33');
+
+        var annotationBoxes= new Array('annotations_id33', 
+				'annotations_id34', 
+				'annotations_id36', 
+				'annotations_id37', 
+				'annotations_id38', 
+				'annotations_id39', 
+				'annotations_id40', 
+				'annotations_id41', 
+				'annotations_id42', 
+				'annotations_id43', 
+				'annotations_id44', 
+				'annotations_id45', 
+				'annotations_id46');
+
+        var attributesBoxes= new Array('attributes_id33');
+
+        
+        var button_prefix = 'button_';
+        
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+    
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updatePageTitle(message) {
+            top.document.title = message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id, isChunked, indexFileLocation, indexFileNamespace, indexFileComponent){
+
+            if (!isChunked) {
+             var selectIds = new Array('toc_group_by_namespace', 'toc_group_by_location', 'toc_group_by_component_type');
+             // Make all the tabs invisible.
+               for (i = 0; i < 3; i++){
+                  var tab = getElementObject(selectIds[i]);
+                  tab.style.display = 'none';
+               }
+               var selTab = getElementObject(id);
+               selTab.style.display = 'block';
+            } else {
+             if (id == 'toc_group_by_namespace') {
+               parent.indexFrame.location = indexFileNamespace;
+             } else  if (id == 'toc_group_by_location') {
+               parent.indexFrame.location = indexFileLocation;
+             } else  if (id == 'toc_group_by_component_type') {
+              parent.indexFrame.location = indexFileComponent;
+             }
+            }
+         }
+          
+
+    --></script></head>
+   <body>
+      <div id="global_controls" class="globalControls" style="position: fixed; right: 0px;">
+         <table class="rt">
+            <tbody><tr>
+               <td class="rt_cornerTopLeft"></td>
+               <td class="rt_lineTop"></td>
+               <td class="rt_cornerTopRight"></td>
+            </tr>
+            <tr>
+               <td class="rt_lineLeft"></td>
+               <td class="rt_content">
+                  <h3>Showing:</h3>
+                  <table>
+                     <tbody><tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, annotationBoxes);" class="control"></span><span class="globalControlName">Annotations</span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, attributesBoxes);" class="control"></span><span class="globalControlName">Attributes </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, diagramBoxes);" class="control"></span><span class="globalControlName">Diagrams</span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, facetsBoxes);" class="control"></span><span class="globalControlName">Facets </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, propertiesBoxes);" class="control"></span><span class="globalControlName">Properties </span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, sourceBoxes);" class="control"></span><span class="globalControlName">Source</span></td>
+                     </tr>
+                     <tr>
+                        <td><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, usedByBoxes);" class="control"></span><span class="globalControlName">Used by </span></td>
+                     </tr>
+                  </tbody></table>
+                  <div align="right"><span><input type="button" onclick="getElementObject(&#39;global_controls&#39;).style.display = &#39;none&#39;;" value="Close"></span></div>
+               </td>
+               <td class="rt_lineRight"></td>
+            </tr>
+            <tr>
+               <td class="rt_cornerBottomLeft"></td>
+               <td class="rt_lineBottom"></td>
+               <td class="rt_cornerBottomRight"></td>
+            </tr>
+         </tbody></table>
+      </div><a id="id33"></a><div class="componentTitle">Complex Type <span class="qname">TransportRestriction</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>http://www.vilauma.de/edf/SalesControl</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id33" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id33&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id33" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das TransportRestriction-Element definiert eine Einschränkung, die sich auf einen Flug bezieht.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Die Attribute eines TransportRestriction-Elements sind untereinander mit einem logischen UND verknüpft.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The TransportRestriction element defines a restriction that is related to a flight.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">The attributes of a TransportRestriction element are always joined by a logical AND.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_id33" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;diagram_id33&#39;);" class="control"></div>
+                        </td>
+                        <td class="diagram">
+                           <div id="diagram_id33" style="display:block"><img alt="Diagram" border="0" src="./index.html17.jpeg" usemap="#index_46_html17"><map name="index_46_html17" id="index_46_html17">
+                                 <area alt="index2.tmp#id34" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id34" coords="209,38,330,80">
+                                 <area alt="index2.tmp#id36" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id36" coords="209,90,401,132">
+                                 <area alt="index2.tmp#id37" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id37" coords="209,142,401,184">
+                                 <area alt="index2.tmp#id38" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id38" coords="209,194,328,236">
+                                 <area alt="index2.tmp#id39" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id39" coords="209,246,330,288">
+                                 <area alt="index2.tmp#id40" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id40" coords="209,298,329,340">
+                                 <area alt="index2.tmp#id41" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id41" coords="209,350,356,392">
+                                 <area alt="index2.tmp#id42" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id42" coords="209,402,359,444">
+                                 <area alt="index2.tmp#id43" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id43" coords="209,454,338,496">
+                                 <area alt="index2.tmp#id44" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id44" coords="209,506,341,548">
+                                 <area alt="index2.tmp#id45" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id45" coords="209,558,322,600">
+                                 <area alt="index2.tmp#id46" href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id46" coords="209,610,411,652"></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id33" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id33&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id33" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Elements </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index1.html#id32" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component SalesControlRoot/Restrictions/Restriction/FlightRestrictions/FlightRestriction&#39;)">SalesControlRoot/Restrictions/Restriction/FlightRestrictions/FlightRestriction</a></b>, <b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index1.html#id49" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component SalesControlRoot/Restrictions/Restriction/TransportRestrictions/TransportRestriction&#39;)">SalesControlRoot/Restrictions/Restriction/TransportRestrictions/TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Attributes</b></div>
+                           <div class="floatRight"><input id="button_attributes_id33" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;attributes_id33&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="attributes_id33" style="display:block">
+                              <table class="attributesTable">
+                                 <thead>
+                                    <tr>
+                                       <th>QName</th>
+                                       <th>Type</th>
+                                       <th>Fixed</th>
+                                       <th>Default</th>
+                                       <th>Use</th>
+                                       <th>Annotation</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody><tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id45" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component Airline&#39;)">Airline</a></b></td>
+                                    <td><b>xs:string</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das Airline-Attribut legt das Airlinekürzel dieses TransportRestriction-Elementes fest.</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">Der gültige Wert ist ein String von maximal 4 Zeichen Länge.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The Airline attribute specifies the airline abbreviation of this TransportRestriction element.</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">A string up to a max. of 4 characters is valid.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id37" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component ArrivalAirport&#39;)">ArrivalAirport</a></b></td>
+                                    <td>restriction of <b>xs:string</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das ArrivalAirport-Attribut legt fest, für welchen Zielflughafen das TransportRestriction-Element gültig ist.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Der Wert ist ein 3-buchstabiger IATA-Code.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The ArrivalAirport attribute specifies for which arrival airport the TransportRestriction-Element is valid.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">The value is a three-letter IATA code.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id44" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component ArrivalTimeMax&#39;)">ArrivalTimeMax</a></b></td>
+                                    <td><b>xs:time</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das ArrivalTimeMax-Attribut legt die späteste Ankunftszeit fest. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The ArrivalTimeMax attribute specifies the latest possible arrival time. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id43" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component ArrivalTimeMin&#39;)">ArrivalTimeMin</a></b></td>
+                                    <td><b>xs:time</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das ArrivalTimeMin-Attribut legt die früheste Ankunftszeit fest. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The ArrivalTimeMin attribute specifies the earliest possible arrival time. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id40" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component BookingClass&#39;)">BookingClass</a></b></td>
+                                    <td><b>xs:string</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das BookingClass-Attribut legt fest, für welche Buchungsklasse das TransportRestriction-Element gültig ist.</span><span class="tI">
+</span><span class="tT">Der gültige Wert ist ein String von maximal 4 Zeichen Länge.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The BookingClass attribute specifies for which booking class the TransportRestriction element is valid.</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">A string up to a max. of 4 characters is valid.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id36" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component DepartureAirport&#39;)">DepartureAirport</a></b></td>
+                                    <td>restriction of <b>xs:string</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das DepartureAirport-Attribut legt fest, für welchen Startflughafen das TransportRestriction-Element gültig ist.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Der Wert ist ein 3-buchstabiger IATA-Code.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Beispiel:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">Dies verwirft alle Flüge (Hinflüge und Rückflüge) ab DUS.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Beispiel:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">Dies verwirft alle Hinflüge ab DUS.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The DepartureAirport attribute specifies for which departure airport the TransportRestriction element is valid.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">The value is a three-letter IATA code.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all flights (outbound and inbound) departing from DUS.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all outbound flights departing from DUS.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id42" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component DepartureTimeMax&#39;)">DepartureTimeMax</a></b></td>
+                                    <td><b>xs:time</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das DepartureTimeMax-Attribut legt die späteste Abflugzeit fest. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The DepartureTimeMax attribute specifies the latest possible departure time. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id41" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component DepartureTimeMin&#39;)">DepartureTimeMin</a></b></td>
+                                    <td><b>xs:time</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das DepartureTimeMin-Attribut legt die früheste Abflugzeit fest. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The DepartureTimeMin attribute specifies the earliest possible departure time. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id39" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component FlightNumber&#39;)">FlightNumber</a></b></td>
+                                    <td><b>xs:string</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das FlightNumber-Attribut legt die externe Flugnummer des Segments fest. Beispiel: AB9564</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">Der gültige Wert ist ein String von maximal 7 Zeichen Länge.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The FlightNumber attribute specifies the external flight number of the segment. Example: AB9564</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">A string up to a max. of 7 characters is valid.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id46" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component MinConnectingTimeDuration&#39;)">MinConnectingTimeDuration</a></b></td>
+                                    <td><b>xs:unsignedShort</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das MinConnectingTimeDuration-Attribut legt die minimale Transferdauer in Minuten zwischen zwei Flugsegmenten fest, ab der die Restriktion gilt. Bei mehreren Flugsegmenten wird die maximale Transferdauer aller Segmente ausgewertet.</span><span class="tI">
+</span><span class="tT">Das Attribut wird ausschließlich im PXB-Merge-Prozess ab der Player-Version 2.37.0 unterstützt.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The MinConnectingTimeDuration attribute specifies the minimum connecting time in minutes between two flight segments which results in validity of the restriction. In case of multiple segments, the maximum connecting time of all segments is evaluated.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction MinConnectingTimeDuration="60"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all flights with connecting times between two segments greater or equal than 60 minutes. </span><span class="tI">
+</span><span class="tT">Example flight with 3 segments: (seg1: departure=12:30, arrival=14:15; seg2: departure=15:10, arrival=18:50; seg3: departure=19:50, arrival=22:35); this flight would be discarded with the restriction above, because the maximum connecting time of all segments is 60 minutes (seg1-&gt;seg2: 55 min., seg2-&gt;seg3: 60 min.). </span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">					This attribute is only supported in the PXB merge process from the Player version 2.37.0</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id38" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component MinSegments&#39;)">MinSegments</a></b></td>
+                                    <td><b>xs:integer</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das MinSegments-Attribut legt die Anzahl der Flugsegmente fest, ab welcher das TransportRestriction-Element gilt.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Beispiel:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction MinSegments="2"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">Dies verwirft alle Flüge mit zwei oder mehr Segmenten.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Mögliche Werte: "1", "2", "3".</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The MinSegments attribute specifies the minimum number of flight segments of the FlightRestriction element.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction MinSegments="2"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all flights with two or more segments.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Possible values: "1", "2", "3".</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id34" target="mainFrame" title="No namespace" onclick="updatePageTitle(&#39;Schema documentation for component Type&#39;)">Type</a></b></td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index6.html#id35" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TypeEnum&#39;)">TypeEnum</a></b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>optional</td>
+                                    <td>
+                                       <div class="annotation">
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">Das Type-Attribut legt fest, ob das TransportRestriction-Element für den Hinflug oder den Rückflug gilt.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Mögliche Werte:</span><span class="tI">
+</span><span class="tT">* Inbound: Rückflug</span><span class="tI">
+</span><span class="tT">* Outbound: Hinflug</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Beispiel:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">Dies verwirft alle Hinflüge ab DUS.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                          <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                             <tbody><tr>
+                                                <td width="100%"><pre><span class="tT">The Type attribute specifies, whether the TransportRestriction element applies to an outbound or an inbound flight.</span><span class="tI">
+</span><span class="tT">Possible values:</span><span class="tI">
+</span><span class="tT">* Inbound</span><span class="tI">
+</span><span class="tT">* Outbound</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all outbound flights departing from DUS.</span></pre></td>
+                                             </tr>
+                                          </tbody></table>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id33" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id33&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id33" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:complexType</span><span class="tAN"> name=</span><span class="tAV">"TransportRestriction"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das TransportRestriction-Element definiert eine Einschränkung, die sich auf einen Flug bezieht.
+
+Die Attribute eines TransportRestriction-Elements sind untereinander mit einem logischen UND verknüpft.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The TransportRestriction element defines a restriction that is related to a flight.
+
+The attributes of a TransportRestriction element are always joined by a logical AND.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"Type"</span><span class="tAN"> type=</span><span class="tAV">"TypeEnum"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">Das Type-Attribut legt fest, ob das TransportRestriction-Element für den Hinflug oder den Rückflug gilt.
+
+Mögliche Werte:
+* Inbound: Rückflug
+* Outbound: Hinflug
+
+Beispiel:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+Dies verwirft alle Hinflüge ab DUS.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">The Type attribute specifies, whether the TransportRestriction element applies to an outbound or an inbound flight.
+Possible values:
+* Inbound
+* Outbound
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all outbound flights departing from DUS.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"DepartureAirport"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">Das DepartureAirport-Attribut legt fest, für welchen Startflughafen das TransportRestriction-Element gültig ist.
+
+Der Wert ist ein 3-buchstabiger IATA-Code.
+
+Beispiel:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+Dies verwirft alle Flüge (Hinflüge und Rückflüge) ab DUS.
+
+Beispiel:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+Dies verwirft alle Hinflüge ab DUS.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">The DepartureAirport attribute specifies for which departure airport the TransportRestriction element is valid.
+
+The value is a three-letter IATA code.
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all flights (outbound and inbound) departing from DUS.
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all outbound flights departing from DUS.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:simpleType</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:restriction</span><span class="tAN"> base=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:pattern</span><span class="tAN"> value=</span><span class="tAV">"[A-Z]{3}"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:restriction&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:simpleType&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ArrivalAirport"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ArrivalAirport-Attribut legt fest, für welchen Zielflughafen das TransportRestriction-Element gültig ist.
+
+Der Wert ist ein 3-buchstabiger IATA-Code.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ArrivalAirport attribute specifies for which arrival airport the TransportRestriction-Element is valid.
+
+The value is a three-letter IATA code.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:simpleType</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:restriction</span><span class="tAN"> base=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tEl">&lt;xs:pattern</span><span class="tAN"> value=</span><span class="tAV">"[A-Z]{3}"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:restriction&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:simpleType&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"MinSegments"</span><span class="tAN"> type=</span><span class="tAV">"xs:integer"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">Das MinSegments-Attribut legt die Anzahl der Flugsegmente fest, ab welcher das TransportRestriction-Element gilt.
+
+Beispiel:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction MinSegments="2"/&gt;
+&lt;/TransportRestrictions&gt;
+Dies verwirft alle Flüge mit zwei oder mehr Segmenten.
+
+Mögliche Werte: "1", "2", "3".
+
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">The MinSegments attribute specifies the minimum number of flight segments of the FlightRestriction element.
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction MinSegments="2"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all flights with two or more segments.
+
+Possible values: "1", "2", "3".
+
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"FlightNumber"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das FlightNumber-Attribut legt die externe Flugnummer des Segments fest. Beispiel: AB9564
+				
+				Der gültige Wert ist ein String von maximal 7 Zeichen Länge.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The FlightNumber attribute specifies the external flight number of the segment. Example: AB9564
+				
+				A string up to a max. of 7 characters is valid.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"BookingClass"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tAN"> use=</span><span class="tAV">"optional"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das BookingClass-Attribut legt fest, für welche Buchungsklasse das TransportRestriction-Element gültig ist.
+				Der gültige Wert ist ein String von maximal 4 Zeichen Länge.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The BookingClass attribute specifies for which booking class the TransportRestriction element is valid.
+				
+				A string up to a max. of 4 characters is valid.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"DepartureTimeMin"</span><span class="tAN"> type=</span><span class="tAV">"xs:time"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das DepartureTimeMin-Attribut legt die früheste Abflugzeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The DepartureTimeMin attribute specifies the earliest possible departure time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"DepartureTimeMax"</span><span class="tAN"> type=</span><span class="tAV">"xs:time"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das DepartureTimeMax-Attribut legt die späteste Abflugzeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The DepartureTimeMax attribute specifies the latest possible departure time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ArrivalTimeMin"</span><span class="tAN"> type=</span><span class="tAV">"xs:time"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ArrivalTimeMin-Attribut legt die früheste Ankunftszeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ArrivalTimeMin attribute specifies the earliest possible arrival time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ArrivalTimeMax"</span><span class="tAN"> type=</span><span class="tAV">"xs:time"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ArrivalTimeMax-Attribut legt die späteste Ankunftszeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ArrivalTimeMax attribute specifies the latest possible arrival time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"Airline"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das Airline-Attribut legt das Airlinekürzel dieses TransportRestriction-Elementes fest.
+				
+				Der gültige Wert ist ein String von maximal 4 Zeichen Länge.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The Airline attribute specifies the airline abbreviation of this TransportRestriction element.
+				
+				A string up to a max. of 4 characters is valid.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"MinConnectingTimeDuration"</span><span class="tAN"> type=</span><span class="tAV">"xs:unsignedShort"</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das MinConnectingTimeDuration-Attribut legt die minimale Transferdauer in Minuten zwischen zwei Flugsegmenten fest, ab der die Restriktion gilt. Bei mehreren Flugsegmenten wird die maximale Transferdauer aller Segmente ausgewertet.
+Das Attribut wird ausschließlich im PXB-Merge-Prozess ab der Player-Version 2.37.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tI">
+        </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">The MinConnectingTimeDuration attribute specifies the minimum connecting time in minutes between two flight segments which results in validity of the restriction. In case of multiple segments, the maximum connecting time of all segments is evaluated.
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction MinConnectingTimeDuration="60"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all flights with connecting times between two segments greater or equal than 60 minutes. 
+Example flight with 3 segments: (seg1: departure=12:30, arrival=14:15; seg2: departure=15:10, arrival=18:50; seg3: departure=19:50, arrival=22:35); this flight would be discarded with the restriction above, because the maximum connecting time of all segments is 60 minutes (seg1-&gt;seg2: 55 min., seg2-&gt;seg3: 60 min.). 
+
+					This attribute is only supported in the PXB merge process from the Player version 2.37.0</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:attribute&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:complexType&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id34"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @Type</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id34" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id34&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id34" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das Type-Attribut legt fest, ob das TransportRestriction-Element für den Hinflug oder den Rückflug gilt.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Mögliche Werte:</span><span class="tI">
+</span><span class="tT">* Inbound: Rückflug</span><span class="tI">
+</span><span class="tT">* Outbound: Hinflug</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Beispiel:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">Dies verwirft alle Hinflüge ab DUS.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The Type attribute specifies, whether the TransportRestriction element applies to an outbound or an inbound flight.</span><span class="tI">
+</span><span class="tT">Possible values:</span><span class="tI">
+</span><span class="tT">* Inbound</span><span class="tI">
+</span><span class="tT">* Outbound</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all outbound flights departing from DUS.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index6.html#id35" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TypeEnum&#39;)">TypeEnum</a></b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id34" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id34&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id34" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Facets</b></div>
+                           <div class="floatRight"><input id="button_facets_id34" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;facets_id34&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="facets_id34" style="display:block">
+                              <table class="facetsTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">enumeration</td>
+                                    <td width="30%"><b>Inbound</b></td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn">enumeration</td>
+                                    <td width="30%"><b>Outbound</b></td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id34" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id34&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id34" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id34" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id34&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id34" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"Type"</span><span class="tAN"> type=</span><span class="tAV">"TypeEnum"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">Das Type-Attribut legt fest, ob das TransportRestriction-Element für den Hinflug oder den Rückflug gilt.
+
+Mögliche Werte:
+* Inbound: Rückflug
+* Outbound: Hinflug
+
+Beispiel:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+Dies verwirft alle Hinflüge ab DUS.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">The Type attribute specifies, whether the TransportRestriction element applies to an outbound or an inbound flight.
+Possible values:
+* Inbound
+* Outbound
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all outbound flights departing from DUS.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id36"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @DepartureAirport</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id36" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id36&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id36" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das DepartureAirport-Attribut legt fest, für welchen Startflughafen das TransportRestriction-Element gültig ist.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Der Wert ist ein 3-buchstabiger IATA-Code.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Beispiel:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">Dies verwirft alle Flüge (Hinflüge und Rückflüge) ab DUS.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Beispiel:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">Dies verwirft alle Hinflüge ab DUS.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The DepartureAirport attribute specifies for which departure airport the TransportRestriction element is valid.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">The value is a three-letter IATA code.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all flights (outbound and inbound) departing from DUS.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all outbound flights departing from DUS.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td>restriction of <b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id36" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id36&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id36" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Facets</b></div>
+                           <div class="floatRight"><input id="button_facets_id36" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;facets_id36&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="facets_id36" style="display:block">
+                              <table class="facetsTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">pattern</td>
+                                    <td width="30%"><b>[A-Z]{3}</b></td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id36" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id36&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id36" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id36" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id36&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id36" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"DepartureAirport"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">Das DepartureAirport-Attribut legt fest, für welchen Startflughafen das TransportRestriction-Element gültig ist.
+
+Der Wert ist ein 3-buchstabiger IATA-Code.
+
+Beispiel:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+Dies verwirft alle Flüge (Hinflüge und Rückflüge) ab DUS.
+
+Beispiel:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+Dies verwirft alle Hinflüge ab DUS.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">The DepartureAirport attribute specifies for which departure airport the TransportRestriction element is valid.
+
+The value is a three-letter IATA code.
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all flights (outbound and inbound) departing from DUS.
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction Type="Outbound" DepartureAirport="DUS"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all outbound flights departing from DUS.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:simpleType</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:restriction</span><span class="tAN"> base=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:pattern</span><span class="tAN"> value=</span><span class="tAV">"[A-Z]{3}"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:restriction&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:simpleType&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id37"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @ArrivalAirport</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id37" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id37&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id37" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das ArrivalAirport-Attribut legt fest, für welchen Zielflughafen das TransportRestriction-Element gültig ist.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Der Wert ist ein 3-buchstabiger IATA-Code.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The ArrivalAirport attribute specifies for which arrival airport the TransportRestriction-Element is valid.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">The value is a three-letter IATA code.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td>restriction of <b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id37" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id37&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id37" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Facets</b></div>
+                           <div class="floatRight"><input id="button_facets_id37" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;facets_id37&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="facets_id37" style="display:block">
+                              <table class="facetsTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">pattern</td>
+                                    <td width="30%"><b>[A-Z]{3}</b></td>
+                                    <td>
+                                       <div class="annotation"></div>
+                                    </td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id37" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id37&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id37" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id37" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id37&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id37" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ArrivalAirport"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ArrivalAirport-Attribut legt fest, für welchen Zielflughafen das TransportRestriction-Element gültig ist.
+
+Der Wert ist ein 3-buchstabiger IATA-Code.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ArrivalAirport attribute specifies for which arrival airport the TransportRestriction-Element is valid.
+
+The value is a three-letter IATA code.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:simpleType</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:restriction</span><span class="tAN"> base=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xs:pattern</span><span class="tAN"> value=</span><span class="tAV">"[A-Z]{3}"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:restriction&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:simpleType&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id38"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @MinSegments</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id38" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id38&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id38" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das MinSegments-Attribut legt die Anzahl der Flugsegmente fest, ab welcher das TransportRestriction-Element gilt.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Beispiel:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction MinSegments="2"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">Dies verwirft alle Flüge mit zwei oder mehr Segmenten.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Mögliche Werte: "1", "2", "3".</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The MinSegments attribute specifies the minimum number of flight segments of the FlightRestriction element.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction MinSegments="2"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all flights with two or more segments.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Possible values: "1", "2", "3".</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:integer</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id38" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id38&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id38" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id38" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id38&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id38" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id38" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id38&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id38" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"MinSegments"</span><span class="tAN"> type=</span><span class="tAV">"xs:integer"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">Das MinSegments-Attribut legt die Anzahl der Flugsegmente fest, ab welcher das TransportRestriction-Element gilt.
+
+Beispiel:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction MinSegments="2"/&gt;
+&lt;/TransportRestrictions&gt;
+Dies verwirft alle Flüge mit zwei oder mehr Segmenten.
+
+Mögliche Werte: "1", "2", "3".
+
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">The MinSegments attribute specifies the minimum number of flight segments of the FlightRestriction element.
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction MinSegments="2"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all flights with two or more segments.
+
+Possible values: "1", "2", "3".
+
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id39"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @FlightNumber</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id39" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id39&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id39" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das FlightNumber-Attribut legt die externe Flugnummer des Segments fest. Beispiel: AB9564</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">Der gültige Wert ist ein String von maximal 7 Zeichen Länge.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The FlightNumber attribute specifies the external flight number of the segment. Example: AB9564</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">A string up to a max. of 7 characters is valid.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id39" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id39&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id39" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id39" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id39&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id39" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id39" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id39&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id39" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"FlightNumber"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das FlightNumber-Attribut legt die externe Flugnummer des Segments fest. Beispiel: AB9564
+				
+				Der gültige Wert ist ein String von maximal 7 Zeichen Länge.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The FlightNumber attribute specifies the external flight number of the segment. Example: AB9564
+				
+				A string up to a max. of 7 characters is valid.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id40"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @BookingClass</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id40" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id40&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id40" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das BookingClass-Attribut legt fest, für welche Buchungsklasse das TransportRestriction-Element gültig ist.</span><span class="tI">
+</span><span class="tT">Der gültige Wert ist ein String von maximal 4 Zeichen Länge.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The BookingClass attribute specifies for which booking class the TransportRestriction element is valid.</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">A string up to a max. of 4 characters is valid.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id40" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id40&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id40" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">use:
+                                       
+                                    </td>
+                                    <td><b>optional</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id40" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id40&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id40" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id40" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id40&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id40" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"BookingClass"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tAN"> use=</span><span class="tAV">"optional"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das BookingClass-Attribut legt fest, für welche Buchungsklasse das TransportRestriction-Element gültig ist.
+				Der gültige Wert ist ein String von maximal 4 Zeichen Länge.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The BookingClass attribute specifies for which booking class the TransportRestriction element is valid.
+				
+				A string up to a max. of 4 characters is valid.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id41"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @DepartureTimeMin</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id41" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id41&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id41" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das DepartureTimeMin-Attribut legt die früheste Abflugzeit fest. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The DepartureTimeMin attribute specifies the earliest possible departure time. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:time</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id41" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id41&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id41" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id41" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id41&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id41" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id41" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id41&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id41" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"DepartureTimeMin"</span><span class="tAN"> type=</span><span class="tAV">"xs:time"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das DepartureTimeMin-Attribut legt die früheste Abflugzeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The DepartureTimeMin attribute specifies the earliest possible departure time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id42"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @DepartureTimeMax</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id42" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id42&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id42" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das DepartureTimeMax-Attribut legt die späteste Abflugzeit fest. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The DepartureTimeMax attribute specifies the latest possible departure time. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:time</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id42" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id42&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id42" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id42" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id42&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id42" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id42" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id42&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id42" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"DepartureTimeMax"</span><span class="tAN"> type=</span><span class="tAV">"xs:time"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das DepartureTimeMax-Attribut legt die späteste Abflugzeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The DepartureTimeMax attribute specifies the latest possible departure time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id43"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @ArrivalTimeMin</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id43" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id43&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id43" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das ArrivalTimeMin-Attribut legt die früheste Ankunftszeit fest. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The ArrivalTimeMin attribute specifies the earliest possible arrival time. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:time</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id43" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id43&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id43" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id43" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id43&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id43" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id43" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id43&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id43" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ArrivalTimeMin"</span><span class="tAN"> type=</span><span class="tAV">"xs:time"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ArrivalTimeMin-Attribut legt die früheste Ankunftszeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ArrivalTimeMin attribute specifies the earliest possible arrival time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id44"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @ArrivalTimeMax</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id44" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id44&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id44" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das ArrivalTimeMax-Attribut legt die späteste Ankunftszeit fest. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The ArrivalTimeMax attribute specifies the latest possible arrival time. Format: hh:mm:ss</span><span class="tI">
+</span><span class="tT">This attribute is supported in the PXB merge process from the Player version 2.10.0</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:time</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id44" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id44&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id44" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id44" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id44&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id44" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id44" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id44&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id44" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"ArrivalTimeMax"</span><span class="tAN"> type=</span><span class="tAV">"xs:time"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das ArrivalTimeMax-Attribut legt die späteste Ankunftszeit fest. Format: hh:mm:ss
+Das Attribut wird im PXB-Merge-Prozess ab der Player-Version 2.10.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The ArrivalTimeMax attribute specifies the latest possible arrival time. Format: hh:mm:ss
+This attribute is supported in the PXB merge process from the Player version 2.10.0</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id45"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @Airline</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id45" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id45&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id45" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das Airline-Attribut legt das Airlinekürzel dieses TransportRestriction-Elementes fest.</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">Der gültige Wert ist ein String von maximal 4 Zeichen Länge.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The Airline attribute specifies the airline abbreviation of this TransportRestriction element.</span><span class="tI">
+</span><span class="tT">				</span><span class="tI">
+</span><span class="tT">A string up to a max. of 4 characters is valid.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:string</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id45" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id45&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id45" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id45" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id45&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id45" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id45" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id45&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id45" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"Airline"</span><span class="tAN"> type=</span><span class="tAV">"xs:string"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das Airline-Attribut legt das Airlinekürzel dieses TransportRestriction-Elementes fest.
+				
+				Der gültige Wert ist ein String von maximal 4 Zeichen Länge.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tT">The Airline attribute specifies the airline abbreviation of this TransportRestriction element.
+				
+				A string up to a max. of 4 characters is valid.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table><a id="id46"></a><div class="componentTitle">Attribute <span class="qname"><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b> / @MinConnectingTimeDuration</span></div>
+      <table class="rt">
+         <tbody><tr>
+            <td class="rt_cornerTopLeft"></td>
+            <td class="rt_lineTop"></td>
+            <td class="rt_cornerTopRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft"></td>
+            <td class="rt_content">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn"><b>Namespace</b></td>
+                        <td>No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_id46" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;annotations_id46&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="annotations_id46" style="display:block">
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">Das MinConnectingTimeDuration-Attribut legt die minimale Transferdauer in Minuten zwischen zwei Flugsegmenten fest, ab der die Restriktion gilt. Bei mehreren Flugsegmenten wird die maximale Transferdauer aller Segmente ausgewertet.</span><span class="tI">
+</span><span class="tT">Das Attribut wird ausschließlich im PXB-Merge-Prozess ab der Player-Version 2.37.0 unterstützt.</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                              <div class="annotation">
+                                 <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                    <tbody><tr>
+                                       <td width="100%"><pre><span class="tT">The MinConnectingTimeDuration attribute specifies the minimum connecting time in minutes between two flight segments which results in validity of the restriction. In case of multiple segments, the maximum connecting time of all segments is evaluated.</span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">Example:</span><span class="tI">
+</span><span class="tT">&lt;TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">&lt;TransportRestriction MinConnectingTimeDuration="60"/&gt;</span><span class="tI">
+</span><span class="tT">&lt;/TransportRestrictions&gt;</span><span class="tI">
+</span><span class="tT">This discards all flights with connecting times between two segments greater or equal than 60 minutes. </span><span class="tI">
+</span><span class="tT">Example flight with 3 segments: (seg1: departure=12:30, arrival=14:15; seg2: departure=15:10, arrival=18:50; seg3: departure=19:50, arrival=22:35); this flight would be discarded with the restriction above, because the maximum connecting time of all segments is 60 minutes (seg1-&gt;seg2: 55 min., seg2-&gt;seg3: 60 min.). </span><span class="tI">
+</span><span class="tT"></span><span class="tI">
+</span><span class="tT">					This attribute is only supported in the PXB merge process from the Player version 2.37.0</span></pre></td>
+                                    </tr>
+                                 </tbody></table>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn"><b>Type</b></td>
+                        <td><b>xs:unsignedShort</b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_id46" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;properties_id46&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="properties_id46" style="display:block">
+                              <table class="propertiesTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">content:
+                                       
+                                    </td>
+                                    <td><b>simple</b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_id46" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;usedBy_id46&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="usedBy_id46" style="display:block">
+                              <table class="usedByTable">
+                                 <tbody><tr>
+                                    <td class="firstColumn">Complex Type </td>
+                                    <td><b><a href="https://documentation.peakwork.com/additional-material/edf_schema_files/sales_control/2.3.0/doc/index2.html#id33" target="mainFrame" title="http://www.vilauma.de/edf/SalesControl" onclick="updatePageTitle(&#39;Schema documentation for component TransportRestriction&#39;)">TransportRestriction</a></b></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_id46" type="image" src="./btM.gif" value="-" onclick="switchState(&#39;source_id46&#39;);" class="control"></div>
+                        </td>
+                        <td>
+                           <div id="source_id46" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tbody><tr>
+                                    <td width="100%"><pre><span class="tEl">&lt;xs:attribute</span><span class="tAN"> name=</span><span class="tAV">"MinConnectingTimeDuration"</span><span class="tAN"> type=</span><span class="tAV">"xs:unsignedShort"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xs:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"de"</span><span class="tEl">&gt;</span><span class="tT">Das MinConnectingTimeDuration-Attribut legt die minimale Transferdauer in Minuten zwischen zwei Flugsegmenten fest, ab der die Restriktion gilt. Bei mehreren Flugsegmenten wird die maximale Transferdauer aller Segmente ausgewertet.
+Das Attribut wird ausschließlich im PXB-Merge-Prozess ab der Player-Version 2.37.0 unterstützt.</span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xs:documentation</span><span class="tAN"> xml:lang=</span><span class="tAV">"en"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tCD">&lt;![CDATA[</span><span class="tCD">The MinConnectingTimeDuration attribute specifies the minimum connecting time in minutes between two flight segments which results in validity of the restriction. In case of multiple segments, the maximum connecting time of all segments is evaluated.
+
+Example:
+&lt;TransportRestrictions&gt;
+&lt;TransportRestriction MinConnectingTimeDuration="60"/&gt;
+&lt;/TransportRestrictions&gt;
+This discards all flights with connecting times between two segments greater or equal than 60 minutes. 
+Example flight with 3 segments: (seg1: departure=12:30, arrival=14:15; seg2: departure=15:10, arrival=18:50; seg3: departure=19:50, arrival=22:35); this flight would be discarded with the restriction above, because the maximum connecting time of all segments is 60 minutes (seg1-&gt;seg2: 55 min., seg2-&gt;seg3: 60 min.). 
+
+					This attribute is only supported in the PXB merge process from the Player version 2.37.0</span><span class="tCD">]]</span><span class="tCD">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xs:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xs:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xs:attribute&gt;</span></pre></td>
+                                 </tr>
+                              </tbody></table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight"></td>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft"></td>
+            <td class="rt_lineBottom"></td>
+            <td class="rt_cornerBottomRight"></td>
+         </tr>
+      </tbody></table>
+      <div class="footer">
+         <hr>
+         <div align="center">XML Schema documentation generated by <a href="http://www.oxygenxml.com/" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Editor.
+         </div>
+      </div><script type="text/javascript">
+         <!--                     
+                     // The namespace is the selected option in the TOC combo.
+                    
+                     // Floats the toolbar.
+                     var globalControls = getElementObject("global_controls"); 
+                     
+                     if(globalControls != null){
+	                     var browser=navigator.appName;
+						 var version = parseFloat(navigator.appVersion.split('MSIE')[1]);
+						 
+						 var IE6 = false;
+						 if ((browser=="Microsoft Internet Explorer") && (version < 7)){
+						 	IE6 = true;
+						 }
+	
+	                     //alert (IE6 + " |V| " + version);
+	                     
+	                     if(IE6){
+	                     	// On IE 6 the 'fixed' property is not supported. We must use javascript. 
+	                         globalControls.style.position='absolute';                         
+	                         // The global controls will do not exist in the TOC frame, when chunking.
+	                         findAndFloat("global_controls", 225, 30);    
+	                     } else {
+	                      	  globalControls.style.position='fixed';                     	
+	                     }
+	                     
+	                     globalControls.style.right='0';                       
+                     }
+                --></script>
+</body></html>
