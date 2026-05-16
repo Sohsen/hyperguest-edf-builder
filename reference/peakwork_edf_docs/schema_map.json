@@ -1,0 +1,163 @@
+[
+  {
+    "filePath": "reference/peakwork_edf_docs/xsd/edf_accommodation_tax-2.2.0.xsd",
+    "complexTypes": []
+  },
+  {
+    "filePath": "reference/peakwork_edf_docs/xsd/edf_calculation-6.1.0 (1).xsd",
+    "complexTypes": [
+      {
+        "name": "Currency",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "LocationType",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "Rounding",
+        "attributes": [],
+        "elements": [
+          {
+            "name": "Appliance",
+            "minOccurs": "1",
+            "maxOccurs": "unbounded"
+          }
+        ]
+      },
+      {
+        "name": "Sources",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "TransportRestriction",
+        "attributes": [],
+        "elements": []
+      }
+    ]
+  },
+  {
+    "filePath": "reference/peakwork_edf_docs/xsd/edf_calculation-6.1.0.xsd",
+    "complexTypes": [
+      {
+        "name": "Currency",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "LocationType",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "Rounding",
+        "attributes": [],
+        "elements": [
+          {
+            "name": "Appliance",
+            "minOccurs": "1",
+            "maxOccurs": "unbounded"
+          }
+        ]
+      },
+      {
+        "name": "Sources",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "TransportRestriction",
+        "attributes": [],
+        "elements": []
+      }
+    ]
+  },
+  {
+    "filePath": "reference/peakwork_edf_docs/xsd/edf_content-0.2.7.xsd",
+    "complexTypes": [
+      {
+        "name": "DescriptionType",
+        "attributes": [
+          {
+            "name": "Language",
+            "required": true
+          }
+        ],
+        "elements": []
+      },
+      {
+        "name": "FeaturesType",
+        "attributes": [],
+        "elements": [
+          {
+            "name": "Feature",
+            "minOccurs": "1",
+            "maxOccurs": "unbounded"
+          },
+          {
+            "name": "Name",
+            "minOccurs": "1",
+            "maxOccurs": "unbounded"
+          }
+        ]
+      },
+      {
+        "name": "Link",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "MultiMediaType",
+        "attributes": [],
+        "elements": [
+          {
+            "name": "Image",
+            "minOccurs": "1",
+            "maxOccurs": "unbounded"
+          }
+        ]
+      },
+      {
+        "name": "ParagraphType",
+        "attributes": [],
+        "elements": []
+      }
+    ]
+  },
+  {
+    "filePath": "reference/peakwork_edf_docs/xsd/edf_hotel_globalextra_box-5.0.0 (2).xsd",
+    "complexTypes": []
+  },
+  {
+    "filePath": "reference/peakwork_edf_docs/xsd/edf_hotel_globalextra_pxb_merge-5.3.1.xsd",
+    "complexTypes": []
+  },
+  {
+    "filePath": "reference/peakwork_edf_docs/xsd/matching_basicdata_edf-1.0.6.xsd",
+    "complexTypes": [
+      {
+        "name": "LocationType",
+        "attributes": [],
+        "elements": []
+      }
+    ]
+  },
+  {
+    "filePath": "reference/peakwork_edf_docs/xsd/salescontrol-2.3.0.xsd",
+    "complexTypes": [
+      {
+        "name": "HotelRestriction",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "TransportRestriction",
+        "attributes": [],
+        "elements": []
+      }
+    ]
+  }
+]
