@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "node server.ts",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "edf:smoke": "tsx src/edf-engine/smoke-test.ts",
+    "edf:smoke:write": "tsx src/edf-engine/export-smoke-output.ts"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",
