@@ -1,6 +1,9 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { ENABLE_NEW_EDF_ENGINE } from './edf-engine/feature-flags';
-import { runNewEdfEngineSmokeBridge } from './edf-engine/ui-bridge';
+import {
+  runNewEdfEngineSmokeBridge,
+  runNewEdfEngineUiBridge
+} from './edf-engine/ui-bridge';
 import { createPortal } from 'react-dom';
 import { 
   Search, 
@@ -6772,7 +6775,11 @@ function App() {
 
   const handleExportEDF = async () => {
     if (ENABLE_NEW_EDF_ENGINE) {
-      const bridgeResult = await runNewEdfEngineSmokeBridge();
+      const bridgeResult = runNewEdfEngineUiBridge({
+        selectedHotels: inScopeHotels,
+        productDefinition: product,
+        ariDataByHotelId: workingAriData,
+      });
       console.log('New EDF engine bridge result', bridgeResult);
 
       if (bridgeResult.success) {
