@@ -1309,6 +1309,598 @@
     ]
   },
   {
+    "filePath": "reference/peakwork_edf_docs/xsd/edf_hotel-5.2.0.xsd",
+    "complexTypes": [
+      {
+        "name": "ArrivalAirport",
+        "attributes": [
+          {
+            "name": "IataCode",
+            "required": true
+          }
+        ],
+        "elements": []
+      },
+      {
+        "name": "BaseChargeGuestRestriction",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "BaseChargesGuestRestrictions",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "BoardDescriptions",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "ChargeGuestRestriction",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "ChargeGuestRestrictions",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "ComplexDescription",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "DepartureAirport",
+        "attributes": [
+          {
+            "name": "IataCode",
+            "required": true
+          }
+        ],
+        "elements": []
+      },
+      {
+        "name": "ExtraDescriptions",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "ExtraRestrictions",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "LocationType",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "MultiLanguageDescription",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "OccupancyType",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "Restrictions",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "RoomDescriptions",
+        "attributes": [],
+        "elements": []
+      },
+      {
+        "name": "SellingDataRounding",
+        "attributes": [],
+        "elements": []
+      }
+    ],
+    "globalElements": [
+      {
+        "name": "Address",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Airport",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Appliance",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Appliances",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalAirports",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Attribute",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Attributes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BaseCharge",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BaseCharges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BasicData",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Bed",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BlockedOccupancies",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BlockedOccupancy",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Board",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardCharge",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardCharges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Boards",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Brochure",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Brochures",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Channel",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Charge",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ChargeBlock",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ChargeBlocks",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ChargeGroup",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Charges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Children",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "City",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "CompatibleExtras",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "CompatibleWith",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Country",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureAirports",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Description",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Descriptions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Distribution",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DRVGlobalType",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DRVGlobalTypes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Email",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Exchange",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Exchanges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Extra",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Extras",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Fax",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FullPayerDoesNotAffectBoardCharges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GeoCode",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GeoInfos",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GiataCode",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GlobalType",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GlobalTypes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GTAttribute",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestCharge",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestCharges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelChain",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelKey",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRoot",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Infants",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "INFX",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "INFXAttribute",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "INFXAttributes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Location",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Name",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Occupancies",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Occupancy",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "OverrideName",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "OverrideNames",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PersonType",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Phone",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Reduction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Reductions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "References",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Restriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Restrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Room",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Rooms",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Rounding",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SeasonDefinition",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SeasonDefinitions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SeasonRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SeasonRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Section",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Sections",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SellingData",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Street",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Tag",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Website",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "WeekdayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "WeekdayRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ZipCode",
+        "source": "global",
+        "elements": []
+      }
+    ]
+  },
+  {
     "filePath": "reference/peakwork_edf_docs/xsd/matching_basicdata_edf-1.0.6.xsd",
     "complexTypes": [
       {

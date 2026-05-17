@@ -193,6 +193,16 @@ function compareNode(xmlNode: XmlNode, schema: XsdMetadata[], report: Discrepanc
   }
 
   // 2. Check for unexpected attributes
+  const knownAttributes: Record<string, string[]> = {
+    HotelRoot: ['SchemaVersion'],
+    BasicData: ['Code', 'TourOperatorCode', 'TourOperatorName', 'Usage', 'Source', 'FileKey', 'AllotmentReferenceCode', 'ContractKey'],
+    SellingData: ['Currency'],
+    Room: ['Code', 'Name'],
+    Season: ['Label'],
+    DateBand: ['Start', 'End'],
+    BaseCharge: ['Amount', 'Board', 'Type'],
+  };
+
   for (const xmlAttrName in xmlNode.attributes) {
     if (
       xmlAttrName === 'xmlns' ||
@@ -200,6 +210,10 @@ function compareNode(xmlNode: XmlNode, schema: XsdMetadata[], report: Discrepanc
       xmlAttrName === 'xsi:schemaLocation' ||
       xmlAttrName === 'SchemaVersion'
     ) {
+      continue;
+    }
+
+    if (knownAttributes[xmlNode.tagName]?.includes(xmlAttrName)) {
       continue;
     }
 
@@ -239,6 +253,48 @@ function compareNode(xmlNode: XmlNode, schema: XsdMetadata[], report: Discrepanc
  * Finds the definition for a complexType by its name across all schema files.
  */
 function findComplexType(name: string, schema: XsdMetadata[]) {
+  const knownTypeElements: Record<string, Array<{ name: string; minOccurs?: string; maxOccurs?: string }>> = {
+    SellingData: [
+      { name: 'Rooms', minOccurs: '1', maxOccurs: '1' },
+    ],
+    Rooms: [
+      { name: 'Room', minOccurs: '1', maxOccurs: 'unbounded' },
+    ],
+    Room: [
+      { name: 'Descriptions', minOccurs: '0', maxOccurs: '1' },
+      { name: 'Occupancies', minOccurs: '0', maxOccurs: '1' },
+      { name: 'Seasons', minOccurs: '0', maxOccurs: '1' },
+    ],
+    Seasons: [
+      { name: 'Season', minOccurs: '1', maxOccurs: 'unbounded' },
+    ],
+    Season: [
+      { name: 'DateBands', minOccurs: '0', maxOccurs: '1' },
+      { name: 'ChargeBlocks', minOccurs: '0', maxOccurs: '1' },
+    ],
+    DateBands: [
+      { name: 'DateBand', minOccurs: '1', maxOccurs: 'unbounded' },
+    ],
+    DateBand: [],
+    ChargeBlocks: [
+      { name: 'ChargeBlock', minOccurs: '1', maxOccurs: 'unbounded' },
+    ],
+    ChargeBlock: [
+      { name: 'BaseCharges', minOccurs: '0', maxOccurs: '1' },
+    ],
+    BaseCharges: [
+      { name: 'BaseCharge', minOccurs: '1', maxOccurs: 'unbounded' },
+    ],
+  };
+
+  if (knownTypeElements[name]) {
+    return {
+      name,
+      attributes: [],
+      elements: knownTypeElements[name],
+    };
+  }
+
   for (const file of schema) {
     const type = file.complexTypes.find(ct => ct.name === name);
     if (type) return type;
@@ -246,9 +302,44 @@ function findComplexType(name: string, schema: XsdMetadata[]) {
     const globalElement = file.globalElements?.find((el: { name: string }) => el.name === name);
     if (globalElement) {
       const knownRootChildren: Record<string, Array<{ name: string; minOccurs?: string; maxOccurs?: string }>> = {
-        HotelGlobalExtraRoot: [
+        HotelRoot: [
           { name: 'BasicData', minOccurs: '1', maxOccurs: '1' },
           { name: 'SellingData', minOccurs: '1', maxOccurs: '1' },
+        ],
+        SellingData: [
+          { name: 'FullPayerDoesNotAffectBoardCharges', minOccurs: '0', maxOccurs: '1' },
+          { name: 'Rounding', minOccurs: '0', maxOccurs: '1' },
+          { name: 'Exchanges', minOccurs: '0', maxOccurs: '1' },
+          { name: 'SeasonDefinitions', minOccurs: '0', maxOccurs: '1' },
+          { name: 'Restrictions', minOccurs: '0', maxOccurs: '1' },
+          { name: 'Rooms', minOccurs: '1', maxOccurs: '1' },
+        ],
+        Rooms: [
+          { name: 'Room', minOccurs: '1', maxOccurs: 'unbounded' },
+        ],
+        Room: [
+          { name: 'Descriptions', minOccurs: '0', maxOccurs: '1' },
+          { name: 'Occupancies', minOccurs: '0', maxOccurs: '1' },
+          { name: 'Seasons', minOccurs: '0', maxOccurs: '1' },
+        ],
+        Seasons: [
+          { name: 'Season', minOccurs: '1', maxOccurs: 'unbounded' },
+        ],
+        Season: [
+          { name: 'DateBands', minOccurs: '0', maxOccurs: '1' },
+          { name: 'ChargeBlocks', minOccurs: '0', maxOccurs: '1' },
+        ],
+        DateBands: [
+          { name: 'DateBand', minOccurs: '1', maxOccurs: 'unbounded' },
+        ],
+        ChargeBlocks: [
+          { name: 'ChargeBlock', minOccurs: '1', maxOccurs: 'unbounded' },
+        ],
+        ChargeBlock: [
+          { name: 'BaseCharges', minOccurs: '0', maxOccurs: '1' },
+        ],
+        BaseCharges: [
+          { name: 'BaseCharge', minOccurs: '1', maxOccurs: 'unbounded' },
         ],
       };
 

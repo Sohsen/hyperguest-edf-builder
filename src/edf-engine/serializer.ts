@@ -106,5 +106,5 @@ export function serializeHotelEdf(model: HotelEdfModel): string {
         'SchemaVersion': "5.2.0"
     };
 
-    return renderNode('HotelGlobalExtraRoot', hotelRootAttrs, hotelRootContent);
+    return renderNode('HotelRoot', hotelRootAttrs, hotelRootContent);
 }
