@@ -1,4 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { ENABLE_NEW_EDF_ENGINE } from './edf-engine/feature-flags';
+import { runNewEdfEngineSmokeBridge } from './edf-engine/ui-bridge';
 import { createPortal } from 'react-dom';
 import { 
   Search, 
@@ -6769,6 +6771,25 @@ function App() {
   };
 
   const handleExportEDF = async () => {
+    if (ENABLE_NEW_EDF_ENGINE) {
+      const bridgeResult = await runNewEdfEngineSmokeBridge();
+      console.log('New EDF engine bridge result', bridgeResult);
+
+      if (bridgeResult.success) {
+        setNotification({
+          message: `New EDF engine bridge OK: ${bridgeResult.xmlFileNames?.length || 0} files generated.`,
+          type: 'success'
+        });
+        return;
+      }
+
+      setNotification({
+        message: `New EDF engine bridge failed: ${bridgeResult.errorMessage || 'Unknown error'}`,
+        type: 'error'
+      });
+      return;
+    }
+
     // EDF EXPORT DEBUG
     console.error("EDF EXPORT DEBUG: Initiation", {
       productExists: !!product,
