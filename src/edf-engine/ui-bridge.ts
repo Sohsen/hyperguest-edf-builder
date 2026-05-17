@@ -1,6 +1,6 @@
 import { ENABLE_NEW_EDF_ENGINE } from './feature-flags';
 import { generateEdfExport } from './index';
-import { fixtures } from './fixtures';
+import { validHotel, blockedHotelNoAri, sampleProductDefinition } from './fixtures';
 
 interface EdfEngineResult {
   enabled: boolean;
@@ -20,13 +20,25 @@ export async function runNewEdfEngineSmokeBridge(): Promise<EdfEngineResult> {
   }
 
   try {
-    const result = await generateEdfExport(fixtures.smoke);
+    const selectedHotels = [validHotel, blockedHotelNoAri];
+
+    const result = generateEdfExport(
+      selectedHotels,
+      sampleProductDefinition,
+      {
+        startedAtIso: '2026-01-01T00:00:00.000Z',
+        endedAtIso: '2026-01-01T00:00:01.000Z',
+      }
+    );
     return {
       enabled: true,
       success: true,
-      xmlFileNames: result.xmlFileNames,
-      blockedHotelCount: result.blockedHotelCount,
-      reportSummary: result.reportSummary,
+      xmlFileNames: result.files.map(file => file.fileName),
+      blockedHotelCount: result.report.blockedHotels.length,
+      reportSummary: [
+        `successfulHotels=${result.report.runSummary.successfulHotels}`,
+        `blockedHotels=${result.report.runSummary.blockedHotels}`,
+      ],
     };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
