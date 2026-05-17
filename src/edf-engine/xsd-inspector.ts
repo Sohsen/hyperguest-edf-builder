@@ -96,7 +96,7 @@ const extractMetadataFromString = (xsdContent: string, filePath: string): XsdMet
     }
 
     // Regex to find elements within a sequence/choice/all group
-    const elementRegex = /<xs:element name="([^"]+)" minOccurs="([^"]+)" maxOccurs="([^"]+)"/g;
+    const elementRegex = /<xs:element\s+([^>]*name="([^"]+)"[^>]*)>/g;
     let elementMatch;
     while ((elementMatch = elementRegex.exec(innerContent)) !== null) {
       const [, elemName, minOccurs, maxOccurs] = elementMatch;
@@ -112,7 +112,7 @@ const extractMetadataFromString = (xsdContent: string, filePath: string): XsdMet
     complexTypes.push({ name, attributes, elements });
   }
 
-  return { filePath, complexTypes };
+  return { filePath, complexTypes, globalElements: extractGlobalElements(xsdContent) };
 };
 
 // --- Exported Function ---
@@ -137,9 +137,55 @@ export const inspectPeakworkXsds = (): XsdMetadata[] => {
       return extractMetadataFromString(content, filePath);
     } catch (error) {
       console.error(`Failed to read or parse XSD at ${filePath}:`, error);
-      return { filePath, complexTypes: [] }; // Return empty metadata on error
+      return { filePath, complexTypes: [], globalElements: [] }; // Return empty metadata on error
     }
   });
 
   return allMetadata;
 };
+
+
+function extractGlobalElements(content: string): Array<{ name: string; type?: string; source: 'global'; elements?: Array<{ name: string; minOccurs?: string; maxOccurs?: string }> }> {
+  const globalElements: Array<{ name: string; type?: string; source: 'global'; elements?: Array<{ name: string; minOccurs?: string; maxOccurs?: string }> }> = [];
+  const seen = new Set<string>();
+
+  const rootNames = Array.from(content.matchAll(/<xs:element\s+[^>]*name="([^"]+)"[^>]*>/g)).map(match => match[1]);
+
+  for (const name of rootNames) {
+    if (seen.has(name)) continue;
+    seen.add(name);
+
+    const startToken = new RegExp('<xs:element\\s+[^>]*name="' + name + '"[^>]*>');
+    const startMatch = startToken.exec(content);
+    const startIndex = startMatch ? startMatch.index : -1;
+    const bodyStart = startMatch ? startIndex + startMatch[0].length : -1;
+    const nextGlobalStart = bodyStart >= 0 ? content.slice(bodyStart).search(/\n\s*<xs:element\s+name="/) : -1;
+    const bodyEnd = nextGlobalStart >= 0 ? bodyStart + nextGlobalStart : content.length;
+    const body = bodyStart >= 0 ? content.slice(bodyStart, bodyEnd) : '';
+
+    const childElements: Array<{ name: string; minOccurs?: string; maxOccurs?: string }> = [];
+    const sequenceMatch = body.match(/<xs:sequence>([\s\S]*?)<\/xs:sequence>/);
+
+    if (sequenceMatch) {
+      const directChildRegex = /<xs:element\s+([^>]*name="([^"]+)"[^>]*)>/g;
+      let childMatch: RegExpExecArray | null;
+
+      while ((childMatch = directChildRegex.exec(sequenceMatch[1])) !== null) {
+        const childAttrs = childMatch[1];
+        const childName = childMatch[2];
+        const minOccurs = childAttrs.match(/minOccurs="([^"]+)"/)?.[1];
+        const maxOccurs = childAttrs.match(/maxOccurs="([^"]+)"/)?.[1];
+
+        childElements.push({ name: childName, minOccurs, maxOccurs });
+      }
+    }
+
+    globalElements.push({
+      name,
+      source: 'global',
+      elements: childElements,
+    });
+  }
+
+  return globalElements.sort((a, b) => a.name.localeCompare(b.name));
+}

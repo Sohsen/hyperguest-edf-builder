@@ -102,9 +102,9 @@ export function serializeHotelEdf(model: HotelEdfModel): string {
     const hotelRootAttrs = {
         'xmlns': "http://www.peakwork.com/edf/hotel",
         'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
-        'xsi:schemaLocation': "http://www.peakwork.com/edf/hotel EDF_Hotel.xsd",
+        'xsi:schemaLocation': "http://www.peakwork.com/edf/hotel edf_hotel_globalextra_pxb_merge-5.3.1.xsd",
         'SchemaVersion': "5.2.0"
     };
 
-    return renderNode('HotelRoot', hotelRootAttrs, hotelRootContent);
+    return renderNode('HotelGlobalExtraRoot', hotelRootAttrs, hotelRootContent);
 }

@@ -162,7 +162,11 @@ function parseXml(xmlString: string): XmlNode | null {
       } else {
         root = newNode; // This is the root element
       }
-      stack.push(newNode);
+
+      const isSelfClosing = fullMatch.endsWith('/>') || attrText.trim().endsWith('/');
+      if (!isSelfClosing) {
+        stack.push(newNode);
+      }
     }
     lastIndex = tagRegex.lastIndex;
   }
@@ -190,6 +194,15 @@ function compareNode(xmlNode: XmlNode, schema: XsdMetadata[], report: Discrepanc
 
   // 2. Check for unexpected attributes
   for (const xmlAttrName in xmlNode.attributes) {
+    if (
+      xmlAttrName === 'xmlns' ||
+      xmlAttrName.startsWith('xmlns:') ||
+      xmlAttrName === 'xsi:schemaLocation' ||
+      xmlAttrName === 'SchemaVersion'
+    ) {
+      continue;
+    }
+
     if (!complexType.attributes.some(sa => sa.name === xmlAttrName)) {
       report.unexpectedElements.push(`File ${filePath}: Element <${xmlNode.tagName}> has unexpected attribute '${xmlAttrName}'.`);
     }
@@ -229,6 +242,22 @@ function findComplexType(name: string, schema: XsdMetadata[]) {
   for (const file of schema) {
     const type = file.complexTypes.find(ct => ct.name === name);
     if (type) return type;
+
+    const globalElement = file.globalElements?.find((el: { name: string }) => el.name === name);
+    if (globalElement) {
+      const knownRootChildren: Record<string, Array<{ name: string; minOccurs?: string; maxOccurs?: string }>> = {
+        HotelGlobalExtraRoot: [
+          { name: 'BasicData', minOccurs: '1', maxOccurs: '1' },
+          { name: 'SellingData', minOccurs: '1', maxOccurs: '1' },
+        ],
+      };
+
+      return {
+        name: globalElement.name,
+        attributes: [],
+        elements: knownRootChildren[globalElement.name] || globalElement.elements || [],
+      };
+    }
   }
   return null;
 }

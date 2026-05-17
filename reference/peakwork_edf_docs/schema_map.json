@@ -1,7 +1,104 @@
 [
   {
     "filePath": "reference/peakwork_edf_docs/xsd/edf_accommodation_tax-2.2.0.xsd",
-    "complexTypes": []
+    "complexTypes": [],
+    "globalElements": [
+      {
+        "name": "AccommodationIdentifier",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "AccommodationTaxesRoot",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Appliances",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Charge",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Currency",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PersonAppliance",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "RoomRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "RoomRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Tax",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "TaxAppliance",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Taxes",
+        "source": "global",
+        "elements": []
+      }
+    ]
   },
   {
     "filePath": "reference/peakwork_edf_docs/xsd/edf_calculation-6.1.0 (1).xsd",
@@ -19,13 +116,7 @@
       {
         "name": "Rounding",
         "attributes": [],
-        "elements": [
-          {
-            "name": "Appliance",
-            "minOccurs": "1",
-            "maxOccurs": "unbounded"
-          }
-        ]
+        "elements": []
       },
       {
         "name": "Sources",
@@ -35,6 +126,323 @@
       {
         "name": "TransportRestriction",
         "attributes": [],
+        "elements": []
+      }
+    ],
+    "globalElements": [
+      {
+        "name": "AirportRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Appliance",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Appliances",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalAirport",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalAirports",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalLocation",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalLocations",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Calculation",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "CalculationRoot",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Calculations",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Categories",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Category",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Channel",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Charge",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Charges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "CompatibleRules",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "CompatibleWith",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Currency",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureAirport",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureAirports",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureLocation",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureLocations",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Distribution",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Exchange",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Exchanges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Hotel",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelCurrencyRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Hotels",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Location",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "LocationRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Locations",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PersonTypeDefinition",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PersonTypeDefinitions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PriceRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PriceRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Pricing",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Range",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "RateCode",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "RateCodes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Rounding",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Rule",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Rules",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Source",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SourcePriorities",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SourcePriority",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Sources",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Tax",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "TransportRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "TransportRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "WeekdayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "WeekdayRestrictions",
+        "source": "global",
         "elements": []
       }
     ]
@@ -55,13 +463,7 @@
       {
         "name": "Rounding",
         "attributes": [],
-        "elements": [
-          {
-            "name": "Appliance",
-            "minOccurs": "1",
-            "maxOccurs": "unbounded"
-          }
-        ]
+        "elements": []
       },
       {
         "name": "Sources",
@@ -71,6 +473,323 @@
       {
         "name": "TransportRestriction",
         "attributes": [],
+        "elements": []
+      }
+    ],
+    "globalElements": [
+      {
+        "name": "AirportRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Appliance",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Appliances",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalAirport",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalAirports",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalLocation",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalLocations",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Calculation",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "CalculationRoot",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Calculations",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Categories",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Category",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Channel",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Charge",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Charges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "CompatibleRules",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "CompatibleWith",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Currency",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureAirport",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureAirports",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureLocation",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureLocations",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Distribution",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Exchange",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Exchanges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Hotel",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelCurrencyRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Hotels",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Location",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "LocationRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Locations",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PersonTypeDefinition",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PersonTypeDefinitions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PriceRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PriceRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Pricing",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Range",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "RateCode",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "RateCodes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Rounding",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Rule",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Rules",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Source",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SourcePriorities",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SourcePriority",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Sources",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Tax",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "TransportRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "TransportRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "WeekdayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "WeekdayRestrictions",
+        "source": "global",
         "elements": []
       }
     ]
@@ -91,18 +810,7 @@
       {
         "name": "FeaturesType",
         "attributes": [],
-        "elements": [
-          {
-            "name": "Feature",
-            "minOccurs": "1",
-            "maxOccurs": "unbounded"
-          },
-          {
-            "name": "Name",
-            "minOccurs": "1",
-            "maxOccurs": "unbounded"
-          }
-        ]
+        "elements": []
       },
       {
         "name": "Link",
@@ -112,28 +820,493 @@
       {
         "name": "MultiMediaType",
         "attributes": [],
-        "elements": [
-          {
-            "name": "Image",
-            "minOccurs": "1",
-            "maxOccurs": "unbounded"
-          }
-        ]
+        "elements": []
       },
       {
         "name": "ParagraphType",
         "attributes": [],
         "elements": []
       }
+    ],
+    "globalElements": [
+      {
+        "name": "Address",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Airport",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Airports",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BasicData",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "City",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ContentRoot",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Country",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Description",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Descriptions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DescriptiveData",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Email",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Fax",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Feature",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FeatureLink",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FeatureLinks",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Features",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GeoCode",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GeoInfos",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GlobalType",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GlobalTypes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GTAttribute",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelChain",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HouseNumber",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ID",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Image",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Images",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "MultiMedia",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "MultiMediaAttributes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "MultiMediaLink",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "MultiMediaLinks",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Name",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Paragraph",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Paragraphs",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Phone",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "References",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Resolution",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Review",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Reviews",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Service",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Services",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Street",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Tag",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Tags",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Text",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Title",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "URL",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Value",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Website",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ZipCode",
+        "source": "global",
+        "elements": []
+      }
     ]
   },
   {
     "filePath": "reference/peakwork_edf_docs/xsd/edf_hotel_globalextra_box-5.0.0 (2).xsd",
-    "complexTypes": []
+    "complexTypes": [],
+    "globalElements": [
+      {
+        "name": "HotelGlobalExtraRoots",
+        "source": "global",
+        "elements": []
+      }
+    ]
   },
   {
     "filePath": "reference/peakwork_edf_docs/xsd/edf_hotel_globalextra_pxb_merge-5.3.1.xsd",
-    "complexTypes": []
+    "complexTypes": [],
+    "globalElements": [
+      {
+        "name": "Appliance",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Appliances",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BasicData",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BoardRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Channel",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Charge",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Charges",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Description",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Descriptions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Distribution",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DRVGlobalType",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DRVGlobalTypes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Extra",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ExtraAppliance",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ExtraApplianceGroup",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ExtraApplianceGroups",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Extras",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GTAttribute",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GuestRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelGlobalExtraRoot",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "INFX",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "INFXAttribute",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "INFXAttributes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Reduction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Reductions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Restriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Restrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SellingData",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Source",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Sources",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "WeekdayAppliance",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "WeekdayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "WeekdayRestrictions",
+        "source": "global",
+        "elements": []
+      }
+    ]
   },
   {
     "filePath": "reference/peakwork_edf_docs/xsd/matching_basicdata_edf-1.0.6.xsd",
@@ -141,6 +1314,193 @@
       {
         "name": "LocationType",
         "attributes": [],
+        "elements": []
+      }
+    ],
+    "globalElements": [
+      {
+        "name": "Address",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Airport",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ArrivalAirports",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Attribute",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Attributes",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "BasicData",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Brochure",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Brochures",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Channel",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "City",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Country",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DepartureAirports",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Distribution",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DRVCode",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Email",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Fax",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GeoCode",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GeoInfos",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "GiataCode",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelChain",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelKey",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "IffCode",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Location",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "MainHotel",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "MatchingRoot",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Name",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Phone",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "RailwayStation",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "RailwayStations",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "References",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Review",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Reviews",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Street",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "TransferInfo",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "TransferInfos",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Website",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "ZipCode",
+        "source": "global",
         "elements": []
       }
     ]
@@ -156,6 +1516,93 @@
       {
         "name": "TransportRestriction",
         "attributes": [],
+        "elements": []
+      }
+    ],
+    "globalElements": [
+      {
+        "name": "DateRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "DateRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "FlightRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "HotelRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PriceRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "PriceRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Restriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "Restrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SalesControlRoot",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SourceRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "SourceRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "StayRestrictions",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "TransportRestriction",
+        "source": "global",
+        "elements": []
+      },
+      {
+        "name": "TransportRestrictions",
+        "source": "global",
         "elements": []
       }
     ]
