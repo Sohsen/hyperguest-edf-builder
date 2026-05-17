@@ -1,5 +1,7 @@
 import { ENABLE_NEW_EDF_ENGINE } from './feature-flags';
 import { generateEdfExport } from './index';
+import { prepareEdfEngineInputFromUi } from './adapter';
+import type { Hotel, ProductDefinition } from './types';
 import { validHotel, blockedHotelNoAri, sampleProductDefinition } from './fixtures';
 
 interface EdfEngineResult {
@@ -30,6 +32,50 @@ export async function runNewEdfEngineSmokeBridge(): Promise<EdfEngineResult> {
         endedAtIso: '2026-01-01T00:00:01.000Z',
       }
     );
+    return {
+      enabled: true,
+      success: true,
+      xmlFileNames: result.files.map(file => file.fileName),
+      blockedHotelCount: result.report.blockedHotels.length,
+      reportSummary: [
+        `successfulHotels=${result.report.runSummary.successfulHotels}`,
+        `blockedHotels=${result.report.runSummary.blockedHotels}`,
+      ],
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return {
+      enabled: true,
+      success: false,
+      errorMessage,
+    };
+  }
+}
+
+
+export function runNewEdfEngineUiBridge(input: {
+  selectedHotels: Hotel[];
+  productDefinition: ProductDefinition;
+  ariDataByHotelId: Record<string, any>;
+}): EdfEngineResult {
+  if (!ENABLE_NEW_EDF_ENGINE) {
+    return {
+      enabled: false,
+      success: false,
+    };
+  }
+
+  try {
+    const engineInput = prepareEdfEngineInputFromUi(input);
+
+    const result = generateEdfExport(
+      engineInput.hotels.map(item => item.hotel),
+      engineInput.product_definition,
+      {
+        startedAtIso: new Date().toISOString(),
+      }
+    );
+
     return {
       enabled: true,
       success: true,
