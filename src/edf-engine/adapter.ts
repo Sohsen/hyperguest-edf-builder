@@ -29,3 +29,26 @@ export function prepareEdfEngineInput(input: PrepareInput): GenerateEdfExportInp
     product_definition: productDefinition,
   };
 }
+
+
+interface PrepareUiInput {
+  selectedHotels: Hotel[];
+  productDefinition: ProductDefinition;
+  ariDataByHotelId: Record<string, any>;
+}
+
+/**
+ * Prepares EDF engine input from the real UI export flow.
+ * This preserves the UI-provided ARI source instead of generating lazy dummy ARI.
+ */
+export function prepareEdfEngineInputFromUi(input: PrepareUiInput): GenerateEdfExportInput {
+  const { selectedHotels, productDefinition, ariDataByHotelId } = input;
+
+  return {
+    hotels: selectedHotels.map(hotel => ({
+      hotel,
+      ariData: ariDataByHotelId[hotel.hgId] || {},
+    })),
+    product_definition: productDefinition,
+  };
+}
